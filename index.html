@@ -2,462 +2,697 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pepstein Files Live</title>
-<meta name="description" content="Every official document in the Manchester City 115-charges case, searchable in one place: the Commission decision, Premier League and club statements, the APT awards and the 2020 UEFA/CAS rulings.">
-<meta property="og:title" content="Pepstein Files: Man City and the 115 charges">
-<meta property="og:description" content="Every official document in the case, searchable in one place.">
-<meta property="og:url" content="https://pepsteinfiles.com/">
-<meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23D3101F'/%3E%3Ctext x='16' y='24' font-family='Arial' font-weight='900' font-size='22' fill='white' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E">
-
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Pepstein Files — Charge Roulette</title>
+<meta name="description" content="Spin the wheel, draw one of Manchester City's 115 Premier League charges, and read the official documents.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,800;1,6..96,500;1,6..96,800&family=Newsreader:opsz,wght@6..72,400;6..72,600&family=IBM+Plex+Mono:wght@400;600&display=swap">
 <style>
-/* Layout: regional tabloid news site. Red masthead, dark nav, breaking strip, lead story + card grid, right rail with the Ask widget. Light only, on purpose. */
+/* Layout: a private card room after hours — copy + betting felt on the left, tilted wheel under an op-art halo on the right, the 115-tile ledger below. Single committed dark look. */
 :root{
-  --red:#D3101F; --red-dk:#9E0B16; --ink:#121212; --ink-2:#4A4A4A; --ink-3:#7A7A7A; --bg:#FFFFFF; --grey:#F1F1F1; --line:#DCDCDC; --nav:#1E1E1E; --yellow:#FFD400;
-  --head:"Barlow Condensed","Arial Narrow",Impact,sans-serif; --body:"Barlow",Arial,Helvetica,sans-serif;
-  color-scheme:light;
+  --ink:#f2efe7; --ivory:#e9e4d6; --mute:#8a867c; --line:#2b2a27; --bg:#090908; --lacquer:#121210;
+  --red:#c8372b; --paper:#f4f1e8; --paper-ink:#141412; --paper-mute:#6c685f;
+  --display:"Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --body:"Newsreader", Georgia, serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme:dark;
 }
-html,body{background:var(--bg);color:var(--ink)}
-body{font:16px/1.5 var(--body)}
 *{box-sizing:border-box}
-button,input{font:inherit;color:inherit}
-button{cursor:pointer;background:none;border:0;padding:0;text-align:left}
-a{color:inherit}
-:focus-visible{outline:3px solid var(--yellow);outline-offset:1px}
-mark{background:var(--yellow);color:var(--ink)}
-.wrap{max-width:1180px;margin:0 auto;padding-inline:16px}
+html,body{background:var(--bg)}
+body{color:var(--ink);font-family:var(--body);margin:0;padding-inline:16px;padding-block:20px 56px;overflow-x:hidden}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:44px}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px}
 
-/* masthead */
-.mast{background:var(--red);color:#fff}
-.mast .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
-.logo{display:flex;flex-direction:column;line-height:.9}
-.logo b{font:800 40px/0.9 var(--head);letter-spacing:-.01em;text-transform:uppercase}
-.logo small{font:600 12.5px var(--body);letter-spacing:.02em;opacity:.9;margin-top:4px}
-.msearch{display:flex;background:#fff;border-radius:2px;overflow:hidden;width:min(360px,100%)}
-.msearch input{flex:1;min-width:0;border:0;padding:8px 10px;color:var(--ink);outline:none}
-.msearch button{background:var(--ink);color:#fff;padding:0 14px;font-weight:600;font-size:14px}
-.nav{background:var(--nav);color:#fff;position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
-.nav .wrap{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
-.nav button{padding:11px 12px;font:700 15px var(--head);letter-spacing:.03em;text-transform:uppercase;white-space:nowrap;border-bottom:3px solid transparent}
-.nav button:hover{background:#2E2E2E}
-.nav button[aria-current="true"]{border-bottom-color:var(--red)}
-.ticker{background:var(--grey);border-bottom:1px solid var(--line)}
-.ticker .wrap{display:flex;align-items:center;gap:12px;padding-block:8px;font-size:15px;font-weight:500}
-.ticker b{background:var(--red);color:#fff;font:700 13px var(--head);letter-spacing:.06em;padding:3px 8px;text-transform:uppercase;flex:none}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.top b{color:var(--ink);font-weight:600}
+.pill{border:1px solid var(--line);padding:6px 10px;display:inline-flex;gap:8px;align-items:center;background:none;cursor:pointer;letter-spacing:.12em}
+.pill:hover{border-color:var(--mute)}
+.bank{font-variant-numeric:tabular-nums}
 
-/* page grid */
-.page{display:grid;grid-template-columns:minmax(0,1fr) 336px;gap:28px;padding-block:22px 60px}
-.kick{font:700 14px var(--head);color:var(--red);text-transform:uppercase;letter-spacing:.04em}
-.secthead{display:flex;align-items:center;gap:10px;margin:30px 0 14px;font:800 22px var(--head);text-transform:uppercase}
-.secthead::after{content:"";flex:1;height:3px;background:var(--ink)}
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:40px;align-items:center}
+@media (max-width:900px){.hero{grid-template-columns:1fr}.copy{order:2}}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--red);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(46px,7.4vw,96px);line-height:.88;letter-spacing:-.02em;margin:12px 0 18px;text-wrap:balance}
+h1 i{font-weight:500}
+.lede{font-size:19px;line-height:1.45;color:#cfcabd;max-width:42ch;margin:0 0 26px}
 
-/* lead */
-.lead{display:grid;grid-template-columns:1.15fr 1fr;gap:20px;border-bottom:1px solid var(--line);padding-bottom:22px}
-.leadart{background:var(--ink);color:#fff;position:relative;min-height:300px;display:flex;flex-direction:column;justify-content:flex-end;padding:20px;overflow:hidden}
-.leadart::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 22px,rgba(255,255,255,.04) 22px 44px)}
-.leadart .fig{position:relative;font:800 clamp(60px,8vw,100px)/.85 var(--head);color:#fff;letter-spacing:-.02em}
-.leadart .fig span{color:var(--red)}
-.leadart .cap{position:relative;font-size:14px;color:#ddd;margin-top:10px;max-width:40ch}
-.lead h1{margin:6px 0 10px;font:800 clamp(30px,3.4vw,40px)/1.02 var(--head);letter-spacing:-.005em}
-.lead h1 button:hover,.card h3 button:hover,.row h4 button:hover{text-decoration:underline;text-decoration-thickness:2px}
-.lead .stand{font-size:17px;color:var(--ink-2);margin:0 0 14px}
-.related{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
-.related li{border-bottom:1px solid var(--line)}
-.related button{display:block;width:100%;padding:8px 0 8px 14px;position:relative;font-weight:600;line-height:1.3}
-.related button::before{content:"";position:absolute;left:0;top:14px;width:6px;height:6px;background:var(--red)}
-.related button:hover{color:var(--red)}
+/* betting felt */
+.felt-h{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:8px;gap:8px;flex-wrap:wrap}
+.felt{display:grid;grid-template-columns:minmax(64px,54fr) minmax(64px,14fr) minmax(56px,5fr) minmax(56px,7fr) minmax(64px,35fr);border:1px solid #4a473f;background:#0e0e0c}
+.bet{all:unset;box-sizing:border-box;cursor:pointer;padding:12px 10px 10px;border-right:1px solid #4a473f;display:grid;gap:4px;align-content:start;position:relative;min-width:0;transition:background .15s}
+.bet:last-child{border-right:0}
+.bet:hover{background:#1a1916}
+.bet:focus-visible{outline:2px solid var(--red);outline-offset:-2px}
+.bet .n{font-family:var(--display);font-weight:800;font-size:30px;line-height:1}
+.bet .lb{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#bdb8aa;overflow-wrap:break-word}
+.bet .od{font-family:var(--mono);font-size:10px;color:var(--mute)}
+.bet .chip{position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;background:var(--red);border:3px dashed #f2efe7;display:none;place-items:center;font-family:var(--mono);font-size:9px;font-weight:600;color:#fff}
+.bet[aria-pressed="true"]{background:#1d1b17}
+.bet[aria-pressed="true"] .chip{display:grid;animation:drop .3s ease-out}
+@keyframes drop{from{transform:translateY(-14px) scale(1.3);opacity:0}}
+.hint{font-size:14px;color:var(--mute);margin:10px 0 0}
 
-.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:18px}
-.card{border-top:4px solid var(--red);padding-top:8px}
-.card h3{margin:4px 0 6px;font:700 22px/1.05 var(--head)}
-.card p{margin:0;font-size:14.5px;color:var(--ink-2)}
-.card time{display:block;margin-top:8px;font-size:13px;color:var(--ink-3)}
+.spinrow{display:flex;gap:14px;align-items:center;margin-top:24px;flex-wrap:wrap}
+#spin{all:unset;cursor:pointer;background:var(--ivory);color:var(--paper-ink);font-family:var(--display);font-style:italic;font-weight:800;font-size:28px;padding:12px 34px 14px;border-radius:999px;box-shadow:0 0 0 1px #000,0 0 0 4px var(--ivory),0 10px 30px #0008;transition:transform .12s}
+#spin:hover{transform:translateY(-2px)}
+#spin:active{transform:translateY(1px)}
+#spin:focus-visible{outline:2px solid var(--red);outline-offset:8px}
+#spin[disabled]{opacity:.55;cursor:progress;transform:none}
+.spinrow small{font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.06em}
 
-.charges{border:1px solid var(--line)}
-.ch{display:grid;grid-template-columns:56px minmax(0,1fr) 112px;align-items:center;border-bottom:1px solid var(--line);font-size:15px}
-.ch:last-child{border-bottom:0}
-.ch .c{font:700 18px var(--head);padding:8px 10px;background:var(--grey);align-self:stretch;display:flex;align-items:center}
-.ch .d{padding:8px 12px}
-.ch .d small{color:var(--ink-3)}
-.ch .v{align-self:stretch;display:flex;align-items:center;justify-content:center;font:700 15px var(--head);text-transform:uppercase;letter-spacing:.04em;background:var(--red);color:#fff}
-.ch .v.np{background:var(--yellow);color:var(--ink)}
+/* stage */
+.stagewrap{position:relative;display:grid;justify-items:center}
+.readout{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--mute);text-transform:uppercase;text-align:center;z-index:2}
+.readout b{display:block;font-family:var(--display);font-weight:800;font-style:italic;font-size:clamp(56px,9vw,104px);letter-spacing:-.03em;line-height:.9;color:var(--ink);font-variant-numeric:tabular-nums;margin-top:4px;min-width:3ch}
+.readout span{display:block;margin-top:6px;color:#bdb8aa;min-height:1.2em;letter-spacing:.12em}
+.halo{position:absolute;left:50%;top:58%;width:150%;aspect-ratio:1;max-width:none;transform:translate(-50%,-50%) scaleY(.62);pointer-events:none;
+  background:repeating-conic-gradient(from 0deg,#f2efe7 0deg 1.5652deg,transparent 1.5652deg 3.1304deg);
+  -webkit-mask:radial-gradient(circle,#000 0 20%,transparent 21% 33%,#0007 34%,transparent 70%);mask:radial-gradient(circle,#000 0 20%,transparent 21% 33%,#0007 34%,transparent 70%);opacity:.13}
+.halo.go{animation:halo 9s cubic-bezier(.1,.6,.2,1) forwards}
+@keyframes halo{to{transform:translate(-50%,-50%) scaleY(.62) rotate(-140deg)}}
+.stage{position:relative;width:min(100%,600px);aspect-ratio:1/.8;perspective:1300px;margin-top:-8px}
+.plane{position:absolute;left:0;top:50%;width:100%;aspect-ratio:1;transform:translateY(-50%) rotateX(46deg);transform-style:preserve-3d}
+.plane canvas{position:absolute;inset:0;width:100%;height:100%}
+#wheel{will-change:transform}
+.shadow{position:absolute;left:8%;right:8%;bottom:2%;height:22%;background:radial-gradient(ellipse at center,#000 0%,transparent 70%);filter:blur(10px)}
 
-.list .row{display:grid;grid-template-columns:110px minmax(0,1fr);gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
-.row time{font:700 15px var(--head);color:var(--ink-3);text-transform:uppercase;padding-top:3px}
-.row h4{margin:2px 0 4px;font:700 21px/1.08 var(--head)}
-.row p{margin:0;font-size:14.5px;color:var(--ink-2)}
+/* ledger */
+.ledger-h{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:22px}
+.ledger-h h2{font-family:var(--display);font-weight:800;font-size:clamp(30px,4vw,44px);margin:0;line-height:1}
+.ledger-h h2 i{font-weight:500}
+.prog{font-family:var(--mono);font-size:12px;color:var(--mute);display:grid;gap:6px;min-width:220px}
+.bar{height:3px;background:var(--line)}
+.bar i{display:block;height:100%;background:var(--ivory);width:0;transition:width .6s}
+.rows{display:grid;gap:18px;margin-top:20px}
+.row{display:grid;grid-template-columns:170px minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:640px){.row{grid-template-columns:1fr;gap:8px}}
+.row h3{margin:0;font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#bdb8aa;line-height:1.5}
+.row h3 small{display:block;color:var(--mute)}
+.tiles{display:flex;flex-wrap:wrap;gap:4px}
+.tile{all:unset;box-sizing:border-box;cursor:pointer;width:34px;height:34px;display:grid;place-items:center;font-family:var(--mono);font-size:11px;color:#5d5a52;border:1px solid #2e2d29;font-variant-numeric:tabular-nums;transition:background .2s,color .2s}
+.tile:hover{border-color:var(--mute);color:var(--ink)}
+.tile:focus-visible{outline:2px solid var(--red);outline-offset:1px}
+.tile.seen{background:var(--ivory);color:var(--paper-ink);border-color:var(--ivory)}
+.tile.last{box-shadow:0 0 0 2px var(--red)}
+.tile.flip{animation:flip .5s}
+@keyframes flip{0%{transform:rotateY(90deg)}100%{transform:none}}
 
-/* article */
-.crumbs{font-size:13.5px;color:var(--ink-3);margin-bottom:10px}
-.crumbs button{text-decoration:underline}
-.art h1{margin:6px 0 12px;font:800 clamp(32px,4.4vw,48px)/1 var(--head);letter-spacing:-.01em}
-.art .stand{font-size:20px;line-height:1.4;font-weight:500;margin:0 0 16px}
-.byline{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;font-size:14px;color:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 0;margin-bottom:20px}
-.byline b{color:var(--ink)}
-.byline a{color:var(--red);font-weight:600}
-.alert{background:var(--grey);border-left:5px solid var(--red);padding:12px 14px;font-weight:500;margin:0 0 20px}
-.art .note{font-size:14px;color:var(--ink-3);font-style:italic;margin:24px 0 10px}
-.para{display:grid;grid-template-columns:40px minmax(0,1fr);gap:6px;transition:background-color .8s}
-.para .n{font:700 15px var(--head);color:var(--red);padding-top:3px}
-.para p{margin:0 0 16px;font-size:18px;line-height:1.6;max-width:66ch}
-.para.sum p{color:var(--ink-2)}
-.para.flash{background:var(--yellow)}
-.pull{margin:26px 0;padding:14px 0 14px 18px;border-left:6px solid var(--red);font:700 26px/1.12 var(--head)}
-.pull cite{display:block;font:500 14px var(--body);color:var(--ink-3);margin-top:6px;font-style:normal}
+footer{font-family:var(--mono);font-size:11px;color:var(--mute);line-height:1.7;border-top:1px solid var(--line);padding-top:14px;max-width:90ch}
 
-/* rail */
-.rail{display:flex;flex-direction:column;gap:22px}
-.box h2{margin:0;padding:9px 12px;font:800 19px var(--head);text-transform:uppercase;letter-spacing:.02em;background:var(--ink);color:#fff;display:flex;justify-content:space-between;align-items:baseline}
-.box h2 small{font:600 12px var(--body);text-transform:none;letter-spacing:0;color:#bbb}
-.askbox{border:1px solid var(--ink)}
-.askbox .thread{max-height:440px;overflow:auto;padding:12px}
-.qa+.qa{border-top:1px solid var(--line);margin-top:12px;padding-top:12px}
-.ex{margin:0 0 4px;font:700 12px var(--head);text-transform:uppercase;color:var(--red);letter-spacing:.06em}
-.q{margin:0 0 6px;font:700 19px/1.1 var(--head)}
-.a{font-size:14.5px;line-height:1.5}
-.a p{margin:0 0 8px}.a ul{margin:0 0 8px;padding-left:18px}
-.a sup{line-height:0}
-.fn{font:700 11px var(--body);color:#fff;background:var(--red);border-radius:2px;padding:0 3px;margin-left:1px}
-.srcs{list-style:none;margin:8px 0 0;padding:8px 0 0;border-top:1px dashed var(--line);font-size:13px}
-.srcs li{display:flex;gap:6px}.srcs span{color:var(--red);font-weight:700}
-.srcs button:hover{text-decoration:underline}
-.thinking{color:var(--ink-3);font-style:italic}
-.err{font-size:13.5px;background:var(--grey);padding:6px 8px;border-left:3px solid var(--red)}
-.tries{padding:4px 12px 10px;margin-top:4px;border-top:1px solid var(--line);padding-top:10px;display:flex;flex-direction:column;gap:6px}
-.tries button{font-size:14px;font-weight:600;line-height:1.3;color:var(--red)}
-.tries button:hover{text-decoration:underline}
-.askform{display:flex;border-top:1px solid var(--ink)}
-.askform input{flex:1;min-width:0;border:0;padding:10px 12px;outline:none}
-.askform button{background:var(--red);color:#fff;font:700 16px var(--head);text-transform:uppercase;padding:0 16px;letter-spacing:.04em}
-.askform button:disabled{opacity:.5}
-.fine{font-size:12px;color:var(--ink-3);padding:6px 12px 8px;margin:0;border-top:1px solid var(--line)}
-.mostread ol{list-style:none;margin:0;padding:0;counter-reset:mr}
-.mostread li{counter-increment:mr;display:grid;grid-template-columns:38px minmax(0,1fr);gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
-.mostread li::before{content:counter(mr);font:800 34px/0.9 var(--head);color:var(--red)}
-.mostread button{font-size:15px;font-weight:600;line-height:1.3}
-.mostread button:hover{text-decoration:underline}
-.mostread small{display:block;color:var(--ink-3);font-weight:500;font-size:12.5px;margin-top:2px}
+/* drawer */
+.scrim{position:fixed;inset:0;background:#000a;z-index:9;opacity:0;pointer-events:none;transition:opacity .3s}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(100%,640px);background:var(--paper);color:var(--paper-ink);z-index:10;transform:translateX(102%);transition:transform .45s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;box-shadow:-30px 0 60px #0009}
+.drawer.on{transform:none}
+.d-head{background:var(--paper-ink);color:var(--paper);padding:calc(18px + env(safe-area-inset-top,0px)) 22px 20px;display:grid;gap:12px}
+.d-nav{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:#9d998e}
+.d-nav div{display:flex;gap:6px}
+.d-nav button{all:unset;cursor:pointer;border:1px solid #444139;padding:5px 9px;color:var(--paper)}
+.d-nav button:focus-visible{outline:2px solid var(--red)}
+.d-num{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.d-num b{font-family:var(--display);font-weight:800;font-style:italic;font-size:84px;line-height:.8;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.d-num span{font-family:var(--mono);font-size:12px;color:#9d998e}
+.d-title{font-family:var(--display);font-weight:800;font-size:28px;line-height:1.05;margin:0;text-wrap:balance}
+.d-meta{font-family:var(--mono);font-size:11px;color:#b5b0a3;letter-spacing:.04em;line-height:1.6}
+.payout{font-family:var(--mono);font-size:12px;padding:8px 10px;border:1px solid #444139}
+.payout.win{border-color:var(--red);color:#fff;background:var(--red)}
+.d-body{overflow:auto;flex:1;padding-bottom:env(safe-area-inset-bottom,0px)}
+.sec{padding:20px 22px;border-bottom:1px dashed #cbc6ba}
+.sec h4{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--paper-mute);margin:0 0 12px;font-weight:600}
+.lanes{display:grid;grid-template-columns:78px minmax(0,1fr) minmax(0,1fr);font-size:14px;line-height:1.35}
+.lanes .hd{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-mute);padding-bottom:8px;border-bottom:2px solid var(--paper-ink)}
+.lanes .d{font-family:var(--mono);font-size:11px;color:var(--paper-mute);padding:10px 8px 10px 0;border-bottom:1px solid #e1dccf;font-variant-numeric:tabular-nums}
+.lanes .c{padding:10px 10px 10px 0;border-bottom:1px solid #e1dccf;min-width:0}
+.lanes .city{padding-left:10px;border-left:1px solid #e1dccf}
+.lanes a{color:inherit;text-underline-offset:2px;text-decoration-thickness:1px}
+.lanes .hl{background:#ebe5d4}
+.lanes .next{color:var(--paper-mute);font-style:italic}
+.lanes .no{color:#c3bdae}
+.verdict{border:2px solid var(--paper-ink);padding:14px;display:grid;gap:8px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.vchip{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border:1px solid #b9b3a5;color:var(--paper-mute)}
+.vchip.on{background:var(--paper-ink);color:var(--paper);border-color:var(--paper-ink)}
+.verdict p{margin:0;font-size:15px;line-height:1.4}
+.verdict .ph{font-family:var(--mono);font-size:11px;color:var(--red)}
+.docs{list-style:none;margin:0;padding:0}
+.docs li{border-top:1px solid #e1dccf}
+.docs a{display:grid;grid-template-columns:42px minmax(0,1fr);gap:12px;padding:11px 0;color:inherit;text-decoration:none}
+.docs a:hover .dt{text-decoration:underline}
+.docs .ty{font-family:var(--mono);font-size:10px;border:1px solid var(--paper-ink);text-align:center;padding:2px 0;align-self:start;margin-top:2px}
+.docs .dt{display:block;font-size:15px;line-height:1.3}
+.docs .src{display:block;font-family:var(--mono);font-size:10px;color:var(--paper-mute);margin-top:3px}
+.d-foot{display:flex;gap:10px;justify-content:space-between;align-items:center;padding:16px 22px;flex-wrap:wrap}
+.d-foot small{font-family:var(--mono);font-size:10px;color:var(--paper-mute)}
+.again{all:unset;cursor:pointer;background:var(--paper-ink);color:var(--paper);font-family:var(--display);font-style:italic;font-weight:800;font-size:20px;padding:9px 22px 11px;border-radius:999px}
+.again:focus-visible{outline:2px solid var(--red);outline-offset:3px}
 
-.foot{background:var(--nav);color:#bbb;font-size:13px}
-.foot .wrap{padding-block:20px}
+/* betting table */
+.rack{display:grid;gap:8px;margin-bottom:18px}
+.coins{display:flex;gap:10px;flex-wrap:wrap}
+.coin{all:unset;cursor:pointer;width:50px;height:50px;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:13px;color:var(--paper-ink);background:var(--ivory);
+  box-shadow:inset 0 0 0 4px var(--ivory),inset 0 0 0 7px var(--c,#141412),inset 0 0 0 9px var(--ivory);transition:transform .12s}
+.coin:hover{transform:translateY(-2px)}
+.coin[aria-checked="true"]{transform:translateY(-5px);outline:2px solid var(--red);outline-offset:3px}
+.coin:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.bet .stack,.ob .stack,.ib .stack{position:absolute;top:6px;right:6px;min-width:26px;height:26px;padding:0 5px;border-radius:13px;background:var(--red);border:2px dashed #f2efe7;display:grid;place-items:center;font-family:var(--mono);font-size:10px;font-weight:600;color:#fff;animation:drop .25s ease-out}
+.outside{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid #4a473f;border-top:0;background:#0e0e0c}
+.ob{all:unset;box-sizing:border-box;cursor:pointer;position:relative;padding:10px;border-right:1px solid #4a473f;font-family:var(--display);font-size:18px;font-weight:800;display:grid;gap:2px;min-width:0}
+.ob:last-child{border-right:0}
+.ob em,.ib em{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:400;color:var(--mute)}
+.ob:hover,.ib:hover{background:#1a1916}
+.ob:focus-visible,.ib:focus-visible{outline:2px solid var(--red);outline-offset:-2px}
+.inside{display:flex;gap:0;border:1px solid #4a473f;border-top:0;background:#0e0e0c;flex-wrap:wrap}
+.inside label{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);padding:12px 0 12px 10px;align-self:center}
+.inside input{width:66px;background:transparent;border:0;border-bottom:1px solid #6b675d;color:var(--ink);font-family:var(--display);font-style:italic;font-weight:800;font-size:24px;margin:6px 10px;text-align:center}
+.inside input:focus-visible{outline:2px solid var(--red)}
+.ib{all:unset;box-sizing:border-box;cursor:pointer;position:relative;flex:1;min-width:110px;padding:10px 40px 10px 12px;border-left:1px solid #4a473f;font-family:var(--display);font-size:18px;font-weight:800;display:grid;gap:2px}
+.felt .bet[disabled],.ob[disabled],.ib[disabled]{cursor:not-allowed;opacity:.6}
+.slip{margin-top:12px;font-family:var(--mono);font-size:12px;color:#cfcabd;display:grid;gap:4px}
+.slip .ln{display:grid;grid-template-columns:minmax(0,1fr) auto auto 22px;gap:12px;align-items:center;border-bottom:1px solid var(--line);padding:4px 0;font-variant-numeric:tabular-nums}
+.slip .ln button{all:unset;cursor:pointer;color:var(--mute);text-align:center}
+.slip .ln button:hover{color:var(--red)}
+.slip .tot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding-top:6px;color:var(--mute)}
+.slip .tot b{color:var(--ink)}
+.slip .acts{display:flex;gap:8px}
+.slip .acts button{all:unset;cursor:pointer;border:1px solid var(--line);padding:3px 8px;font-size:11px;color:#cfcabd}
+.slip .acts button:hover{border-color:var(--mute)}
+.slip .empty{color:var(--mute);font-family:var(--body);font-size:14px}
+.broke{margin-top:16px;border:1px solid var(--red);padding:12px 14px;font-size:15px;line-height:1.4;color:#e4ded0}
+.broke b{color:var(--ink)}
+/* hidden coins in files */
+.stash{all:unset;cursor:pointer;display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#efe9da;border:1px dashed #b9b3a5;color:#b9b3a5;font-family:var(--display);font-style:italic;font-weight:800;font-size:13px;vertical-align:middle;animation:glint 3.5s ease-in-out infinite}
+.stash:hover,.stash:focus-visible{background:var(--red);color:#fff;border-style:solid;border-color:var(--red);outline:none}
+@keyframes glint{0%,86%,100%{box-shadow:none}92%{box-shadow:0 0 0 6px #c8372b33}}
+.stash-row{display:flex;justify-content:flex-end;padding:6px 22px 0}
+.footnote{font-family:var(--mono);font-size:10px;color:var(--mute);margin-top:6px}
+@media (prefers-reduced-motion:reduce){.stash{animation:none}}
 
-@media (max-width:960px){
-  .page{grid-template-columns:minmax(0,1fr)}
-  .lead{grid-template-columns:minmax(0,1fr)}
-  .leadart{min-height:200px}
-}
-@media (max-width:640px){
-  .mast .wrap{flex-direction:column;align-items:stretch}
-  .logo b{font-size:34px}
-  .msearch{width:100%}
-  .cards{grid-template-columns:minmax(0,1fr)}
-  .list .row{grid-template-columns:minmax(0,1fr);gap:2px}
-  .ch{grid-template-columns:48px minmax(0,1fr) 92px;font-size:14px}
-  .ticker .wrap{font-size:14px}
-}
-@media (prefers-reduced-motion:reduce){.para{transition:none}}
+/* gamification */
+.pill.rank b{color:var(--ink)}
+.pill.fire{border-color:var(--red);color:var(--ink)}
+.pill.fire[data-n="0"]{border-color:var(--line);color:var(--mute)}
+.house{margin-top:18px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:center;border:1px dashed #4a473f;padding:12px 14px}
+.house .hn{font-family:var(--display);font-style:italic;font-weight:800;font-size:40px;line-height:.9;color:var(--red);font-variant-numeric:tabular-nums}
+.house p{margin:0;font-size:15px;line-height:1.35;color:#cfcabd}
+.house small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-bottom:2px}
+.house.hit{border-style:solid;border-color:var(--red)}
+.mult{font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.06em;display:flex;gap:4px;align-items:center}
+.mult i{width:16px;height:6px;background:var(--line);display:inline-block}
+.mult i.on{background:var(--red)}
+
+.cabinet{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:36px;border-top:1px solid var(--line);padding-top:22px}
+@media (max-width:860px){.cabinet{grid-template-columns:1fr}}
+.cabinet h2{font-family:var(--display);font-weight:800;font-size:clamp(30px,4vw,44px);margin:0 0 14px;line-height:1}
+.cabinet h2 i{font-weight:500}
+.ladder{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.ladder li{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:10px;align-items:baseline;padding:9px 0;border-top:1px solid var(--line);color:var(--mute)}
+.ladder li b{font-family:var(--mono);font-size:11px;font-weight:400;font-variant-numeric:tabular-nums}
+.ladder li span{font-family:var(--display);font-size:20px}
+.ladder li em{font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.ladder li.done{color:#cfcabd}
+.ladder li.cur{color:var(--ink)}
+.ladder li.cur span{font-style:italic;font-weight:800}
+.ladder li.cur em{color:var(--red)}
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.badge{border:1px solid var(--line);padding:12px;display:grid;gap:6px;align-content:start;min-width:0}
+.badge .ic{width:38px;height:38px;border-radius:50%;border:2px dashed #3a3833;display:grid;place-items:center;font-family:var(--display);font-style:italic;font-weight:800;font-size:16px;color:#4a473f}
+.badge b{font-family:var(--display);font-size:17px;font-weight:800;color:#6b675d;line-height:1.1}
+.badge p{margin:0;font-size:13px;line-height:1.3;color:var(--mute)}
+.badge.got{border-color:#4a473f;background:#12110f}
+.badge.got .ic{border:2px solid var(--ivory);background:var(--ivory);color:var(--paper-ink)}
+.badge.got b{color:var(--ink)}
+.badge.got p{color:#bdb8aa}
+.badge.new{animation:glow 1.6s ease-out}
+@keyframes glow{0%{box-shadow:0 0 0 0 var(--red)}100%{box-shadow:0 0 0 14px transparent}}
+.tile.house{position:relative}
+.tile.house::after{content:"";position:absolute;top:3px;right:3px;width:6px;height:6px;border-radius:50%;background:var(--red)}
+
+.toasts{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));display:grid;gap:8px;z-index:20;max-width:min(360px,calc(100% - 32px));pointer-events:none}
+.toast{background:var(--ivory);color:var(--paper-ink);padding:10px 14px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:center;box-shadow:0 12px 30px #000a;animation:tin .35s cubic-bezier(.2,.9,.3,1.3)}
+.toast .ic{font-family:var(--display);font-style:italic;font-weight:800;font-size:22px;color:var(--red)}
+.toast b{display:block;font-family:var(--display);font-size:17px;line-height:1.1}
+.toast span{font-family:var(--mono);font-size:11px;color:var(--paper-mute)}
+.toast.out{opacity:0;transform:translateY(8px);transition:.3s}
+@keyframes tin{from{transform:translateY(20px);opacity:0}}
+.payout.streak{border-color:#444139;color:#e9e4d6}
+
+@media (prefers-reduced-motion:reduce){.toast,.badge.new{animation:none}.halo.go{animation:none}.drawer{transition:none}.tile.flip{animation:none}}
 </style>
-<style>body{margin:0}</style>
 </head>
 <body>
+<div class="wrap">
+  <div class="top">
+    <span><b>The Pepstein Files</b> · Charge Roulette</span>
+    <span style="display:flex;gap:8px;flex-wrap:wrap">
+      <span class="pill rank" id="rankpill">Rank <b>Spectator</b></span>
+      <span class="pill fire" id="firepill" data-n="0">New-file streak 0</span>
+      <span class="pill bank" id="bank">Chips 100</span>
+      <button class="pill" id="snd" aria-pressed="true">Sound on</button>
+    </span>
+  </div>
 
+  <section class="hero">
+    <div class="copy">
+      <div class="kicker">Premier League v Manchester City</div>
+      <h1>115 charges.<br><i>One spin.</i></h1>
+      <p class="lede">You start with 50 chips. Spread them across the table, spin, and open whichever charge the ball finds. Run dry and you'll have to dig through the files for hidden coins.</p>
 
-<header class="mast"><div class="wrap">
-  <div class="logo"><b>Pepstein Files</b><small>Man City and the 115 charges · every official document</small></div>
-  <form class="msearch" id="searchForm" role="search"><input id="q" type="search" placeholder="Search the documents" aria-label="Search the documents"><button>Search</button></form>
-</div></header>
-<nav class="nav" aria-label="Sections"><div class="wrap" id="nav">
-  <button data-go="home">Home</button><button data-go="doc:CD-26">The Verdict</button><button data-go="docs">All documents</button><button data-go="timeline">Timeline</button><button data-go="ask">Ask the Files</button>
-</div></nav>
-<div class="ticker"><div class="wrap"><b>Latest</b><span>Man City have until 2 October to appeal the Commission’s findings. A sanctions hearing is still to come.</span></div></div>
+      <div class="rack">
+        <div class="felt-h" style="margin:0"><span>1 · Pick a chip</span><span id="minnote">Table minimum 5</span></div>
+        <div class="coins" id="coins" role="radiogroup" aria-label="Chip value"></div>
+      </div>
 
-<div class="wrap page">
-  <main id="main"></main>
-  <aside class="rail">
-    <section class="box askbox" id="askbox" aria-label="Ask the Files">
-      <h2>Ask the Files <small>Answers from the documents only</small></h2>
-      <div class="thread" id="thread" aria-live="polite"></div>
-      <div class="tries" id="tries"></div>
-      <form class="askform" id="askform"><input id="askInput" placeholder="Ask a question about the case" aria-label="Ask a question"><button id="askBtn">Ask</button></form>
-      <p class="fine" id="fine">Not legal advice. Check the source before you share it.</p>
-    </section>
-    <section class="box mostread"><h2>Key lines</h2><ol id="keylines"></ol></section>
-  </aside>
+      <div class="felt-h"><span>2 · Place chips · stack as many as you like</span><span>Pays ×</span></div>
+      <div class="felt" id="felt" role="group" aria-label="Rule group bets"></div>
+      <div class="outside" id="outside" role="group" aria-label="Outside bets"></div>
+      <div class="inside">
+        <label for="numIn">Number</label>
+        <input id="numIn" type="number" min="1" max="115" value="47" inputmode="numeric">
+        <button class="ib" data-bt="s">Straight<em>×114</em></button>
+        <button class="ib" data-bt="p">Split <span id="splitlbl">47 & 48</span><em>×56</em></button>
+      </div>
+
+      <div class="slip" id="slip" aria-live="polite"></div>
+
+      <div class="spinrow">
+        <button id="spin">Spin the wheel</button>
+        <div style="display:grid;gap:6px"><small id="spins">0 spins so far</small><span class="mult" id="mult"></span></div>
+      </div>
+      <div class="broke" id="broke" hidden><b>You're out of chips.</b> Coins are hidden in some charge files. Open files from the ledger below to look for them, open a source document for +5, or come back tomorrow for the daily stake.</div>
+      <div class="house" id="house"><div class="hn" id="hn">—</div><p><small>Today's house charge</small><span id="htxt">Land on it for a 100-chip jackpot. Changes at midnight.</span></p></div>
+    </div>
+
+    <div class="stagewrap">
+      <div class="halo" id="halo" aria-hidden="true"></div>
+      <div class="readout" aria-live="polite">Ball on<b id="rnum">—</b><span id="rcat">Waiting for the first spin</span></div>
+      <div class="stage">
+        <div class="shadow"></div>
+        <div class="plane">
+          <canvas id="bowl" width="1200" height="1200"></canvas>
+          <canvas id="wheel" width="1200" height="1200"></canvas>
+          <canvas id="ball" width="1200" height="1200"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cabinet">
+    <div><h2>Your <i>rank</i></h2><ol class="ladder" id="ladder"></ol></div>
+    <div><h2>Trophy <i>cabinet</i></h2><div class="badges" id="badges"></div></div>
+  </section>
+
+  <section>
+    <div class="ledger-h">
+      <h2>The ledger <i>of 115</i></h2>
+      <div class="prog"><span id="progtxt">0 of 115 files drawn</span><div class="bar"><i id="progbar"></i></div></div>
+    </div>
+    <div class="rows" id="rows"></div>
+  </section>
+
+  <footer><b style="color:var(--ink)">Play money only. No purchases, no prizes, nothing to cash out.</b> Mockup.Rule groups and counts come from the Premier League's referral statement of 6 Feb 2023. Charge numbers are grouped by category for this mockup; the live site would map each number to its paragraph in the Redacted Core Decision. Findings are placeholders. Chips are play money and are stored only in your browser. <a href="/v1/" style="color:var(--ink)">See the original Pepstein Files (v1)</a>.</footer>
 </div>
-<footer class="foot"><div class="wrap">Pepstein Files is an independent archive of official documents. It is not affiliated with Manchester City, the Premier League, UEFA or any newspaper.</div></footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="d-title" aria-hidden="true"></aside>
+<div class="toasts" id="toasts" aria-live="polite"></div>
 
 <script>
-/* ---------- Corpus: official documents only ---------- */
-const DOCS = [
- {code:"CD-26", title:"Redacted Core Decision of the Independent Commission", issuer:"Independent Commission (PL Rule W)", date:"2026-09-29", type:"Decision", proc:"Premier League · Section W",
-  url:"https://resources.premierleague.pulselive.com/premierleague/document/2026/09/29/9bb3f063-6312-4d15-a1f1-77280d356a49/Premier-League-Manchester-City-independent-Commission-Redacted-Core-Decision.pdf",
-  facts:[["Hearing","Sep–Dec 2024"],["Form","Redacted, 159 paragraphs"]],
-  findings:[
-   ["1(A)","Accurate financial information — sponsorship agreements","Rules C.71 / E.3","Proven"],
-   ["1(B)","Accurate financial information — player payment arrangements","Rules C.71 / E.3","Proven"],
-   ["1(C)","Accurate financial information — the “Fordham Arrangement”","¶¶136–141","Proven"],
-   ["1(D)","Related party disclosures","Rules C.71 / E.3","Proven"],
-   ["2","UEFA Club Licensing & FFP Regulations","Rule B.14.6","Proven"],
-   ["3","PL Profitability & Sustainability Rules","Rules E.52–E.60","Proven"],
-   ["4(A)","Duty to co-operate with the PL investigation","Majority of allegations","Proven"],
-   ["4(B)","Duty to co-operate with the PL investigation","¶157","Not proven"],
-   ["4(C)","Duty to co-operate with the PL investigation","All respects","Proven"],
-   ["4(D)","Duty to co-operate with the PL investigation","One respect","Proven"]],
-  m:{outcome:"All charges proven except 4(B)", figure:"Income overstated by over £830m (¶101)", basis:"PL Rules B, C, E, W; UEFA FFP via B.14.6", status:["Appeal window","pending"]},
-  paras:[
-   {n:6,t:"…with the exception of Charge 4(B) we were satisfied to the requisite standard that there was such evidence."},
-   {n:7,t:"[The Commission] found each of the Charges proven against the Club bar Charge 4(B)."},
-   {n:9,t:"The proceedings were at all times extremely hard fought on both sides."},
-   {n:29,t:"…evidence given by a number of important factual witnesses called to give evidence on behalf of the Club was false in a number of key respects… certain of those factual witnesses had given evidence at the hearing that they knew to be untrue and so had been dishonest."},
-   {n:38,t:"Every PL member club has had an obligation under the PL Rules to submit annual accounts to the PL…"},
-   {n:43,t:"[Under the Profitability and Sustainability Rules a club was permitted a] loss of not more than £105million [over the assessment period]."},
-   {n:67,t:"…the Club devised a plan to disguise shareholder funding as ‘commercial partner revenue’… what we have described in Appendix 15 as the Disguised Funding Scheme."},
-   {n:72,t:"…the Club knew of the Disguised Funding Scheme and approved its operation."},
-   {n:79,t:"By using the Disguised Funding Scheme… the Club was able to avoid breaking the record for the largest single season loss in PL history."},
-   {n:84,t:"One was not. That was the Fordham Arrangement."},
-   {n:101,t:"…the Club’s income across those years was consequently hugely overstated by over £830 million… [with expenses understated by £49.414 million in one category, ¶101(e)(ii)]."},
-   {n:109,t:"…conduct (and as we have found, intentional conduct) which would disguise the true nature of certain revenues…"},
-   {n:114,t:"…the Club also acted other than with utmost good faith… By its conduct the Club clearly intended to circumvent the PL Rules."},
-   {n:149,t:"…the Club did not (by a very substantial amount) meet the break-even requirement…"},
-   {n:157,t:"The Club made concerted efforts to stop and frustrate the PL investigation… We find that the Club did not breach duties of co-operation that it owed to the PL in the respects alleged in Charge 4(B)."}
-  ]},
- {code:"PL-26", title:"Premier League statement on Manchester City FC", issuer:"Premier League", date:"2026-09-29", type:"Statement", proc:"Premier League · Section W",
-  url:"https://www.premierleague.com/en/news/4727779/premier-league-statement-manchester-city-fc/",
-  m:{outcome:"Announces Commission findings; sanctions to follow", figure:"Revenues inflated / costs reduced by more than £900m", basis:"PL Rules Section W", status:["Sanction pending","pending"]},
-  paras:[
-   {n:1,s:1,t:"An independent Commission found Manchester City in breach of all charges relating to financial rules across seasons 2009/10 to 2017/18, and the majority of the charges for failing to co-operate with the Premier League’s investigation (three of four)."},
-   {n:2,s:1,t:"The League says the arrangements included sham contracts with commercial partners, misstated accounts, and concealment from auditors and regulators, which inflated revenues and reduced costs by more than £900 million over the period."},
-   {n:3,t:"…by its conduct the club clearly intended to circumvent the PL Rules."},
-   {n:4,s:1,t:"Sanctions will be determined at a separate hearing before the independent Commission. The club may appeal the findings to an Appeal Board under Section W, and has until 2 October 2026 to do so."}
-  ]},
- {code:"MCFC-26", title:"Manchester City club statement on the Commission decision", issuer:"Manchester City FC", date:"2026-09-29", type:"Statement", proc:"Premier League · Section W",
-  url:"https://www.mancity.com/news/club/manchester-city-club-statement-premier-league-63926128",
-  m:{outcome:"Rejects findings; will appeal", figure:"“eight years” of due process", basis:"Appeal avenues under PL Rules", status:["Club response","neutral"]},
-  paras:[
-   {n:1,t:"Manchester City FC is both disappointed and surprised by the opinion of the Premier League Commission, that has been published today."},
-   {n:2,t:"The Club is innocent of the accusations made by the Premier League and a comprehensive body of irrefutable evidence exists in support of all of its positions, relating to this case. The Club will therefore be relentless, and where necessary proactive, in any and all appropriate regulatory and legal forums."},
-   {n:3,t:"The Premier League process remains ongoing, with significant elements uncompleted. Manchester City FC will now pursue the appeal avenues open to it, on the basis that the opinion contains clear material errors, of law, principle and fact, and is unsafe."},
-   {n:4,t:"The Club has diligently respected due process for eight years on the basis that the Premier League Board and Executive would behave as an independent, impartial and fair-minded regulator, free from partisan influence."},
-   {n:5,t:"The Club is obviously restricted in what it can say further until all future proceedings are complete."}
-  ]},
- {code:"PL-23", title:"Premier League statement referring alleged breaches to a Commission", issuer:"Premier League", date:"2023-02-06", type:"Statement", proc:"Premier League · Section W",
-  url:"https://www.premierleague.com/en/news/3045970",
-  m:{outcome:"Case referred to independent Commission", figure:"Nine seasons: 2009/10–2017/18", basis:"Rule W.3.4", status:["Concluded","neutral"]},
-  paras:[
-   {n:1,t:"The Premier League confirms that it has today referred a number of alleged breaches of the Premier League Rules by Manchester City Football Club to an independent Commission under Premier League Rule W.3.4."},
-   {n:2,s:1,t:"Category 1 — seasons 2009/10 to 2017/18: failing to provide accurate financial information giving a true and fair view of the club’s financial position, in particular revenue (including sponsorship), related parties and operating costs."},
-   {n:3,s:1,t:"Category 2 — manager remuneration (2009/10 to 2012/13) and player remuneration (2010/11 to 2015/16): failing to include full details in the relevant contracts."},
-   {n:4,s:1,t:"Category 3 — seasons 2013/14 to 2017/18: failing to comply with UEFA’s Club Licensing and Financial Fair Play Regulations (Rules B.14.6 and B.15.6)."},
-   {n:5,s:1,t:"Category 4 — seasons 2015/16 to 2017/18: breaching the Premier League’s Profitability and Sustainability Rules (Rules E.52 to E.60)."},
-   {n:6,s:1,t:"Category 5 — December 2018 to the date of referral: failing to co-operate with, and assist, the Premier League in its investigations, including by providing documents and information."},
-   {n:7,s:1,t:"The Commission’s proceedings are confidential and heard in private; its decision is to be published on the Premier League website."}
-  ]},
- {code:"PL-25", title:"Premier League statement on the second APT Tribunal award", issuer:"Premier League", date:"2025-02-14", type:"Statement", proc:"APT arbitration · Section X",
-  url:"https://www.premierleague.com/en/news/4244928",
-  m:{outcome:"Previous APT rules unenforceable; new rules unaffected", figure:"Three narrow aspects of the challenge", basis:"Rule X arbitration", status:["Superseded rules","neutral"]},
-  paras:[
-   {n:1,s:1,t:"The Tribunal determined that three narrow aspects of Manchester City’s challenge rendered the previous Associated Party Transaction rules unenforceable."},
-   {n:2,t:"…the previous APT Rules, as a whole, are unenforceable."},
-   {n:3,s:1,t:"The League says the award does not affect the new APT rules clubs voted in in November 2024, on which the Tribunal made no findings."},
-   {n:4,t:"[The League] continues to believe that the new APT Rules are valid and enforceable."}
-  ]},
- {code:"APT-25", title:"Second Partial Final Award (Rule X Arbitral Tribunal)", issuer:"Arbitral Tribunal (PL Rule X)", date:"2025-02-13", type:"Award", proc:"APT arbitration · Section X",
-  url:"https://jusmundi.com/en/document/decision/en-manchester-city-football-club-limited-v-football-association-premier-league-limited-i-second-partial-final-award-thursday-13th-february-2025",
-  m:{outcome:"Previous APT rules unenforceable as a whole", figure:"—", basis:"Competition law; Rule X", status:["Final","neutral"]},
-  paras:[
-   {n:1,s:1,t:"Follow-on award to the October 2024 Partial Final Award, addressing the consequences of the unlawful elements of the APT rules the Tribunal had identified."},
-   {n:2,s:1,t:"The Tribunal concluded that the previous APT rules were unenforceable as a whole."}
-  ]},
- {code:"MCFC-24", title:"Club statement on the Rule X Arbitral Tribunal award", issuer:"Manchester City FC", date:"2024-10-07", type:"Statement", proc:"APT arbitration · Section X",
-  url:"https://www.mancity.com/news/club/club-statement-rule-x-arbitral-tribunal-award-63863904",
-  m:{outcome:"Welcomes award; says APT rules unlawful", figure:"Two transaction decisions set aside", basis:"Competition Act; procedural fairness", status:["Club response","neutral"]},
-  paras:[
-   {n:1,t:"Following today’s publication of the Rule X Arbitral Tribunal Award, Manchester City Football Club thanks the distinguished members of the Arbitral Tribunal for their work and considerations and welcomes their findings."},
-   {n:2,s:1,t:"The club says the APT rules were found unlawful under UK competition law and procedurally unfair, that the League abused its dominant position, and that its decisions on two of the club’s sponsorship transactions were set aside."},
-   {n:3,s:1,t:"The club highlights the finding that excluding shareholder loans from the rules was discriminatory."}
-  ]},
- {code:"APT-24", title:"Partial Final Award (Rule X Arbitral Tribunal)", issuer:"Arbitral Tribunal (PL Rule X)", date:"2024-10-07", type:"Award", proc:"APT arbitration · Section X",
-  url:"https://resources.premierleague.com/premierleague/document/2024/10/07/898efab9-9f51-449b-a393-1a0c05b48824/Manchester-City-and-Premier-League-Partial-Final-Award-071024.pdf",
-  m:{outcome:"APT rules unlawful in part", figure:"Two PL transaction decisions set aside", basis:"Competition Act 1998; Rule X", status:["Final","neutral"]},
-  paras:[
-   {n:1,s:1,t:"Separate from the 115-charge case: Manchester City challenged the Premier League’s Associated Party Transaction (APT) rules, which test whether deals with owner-linked companies are at fair market value."},
-   {n:2,s:1,t:"The Tribunal found parts of the APT rules unlawful, including the exclusion of shareholder loans from the regime, and set aside the League’s decisions on two of the club’s sponsorship transactions on procedural fairness grounds."},
-   {n:3,s:1,t:"Both sides publicly claimed parts of the award as a win; the League said the APT framework itself was upheld as necessary."}
-  ]},
- {code:"CAS-20", title:"CAS 2020/A/6785 Arbitral Award", issuer:"Court of Arbitration for Sport", date:"2020-07-13", type:"Award", proc:"UEFA · CAS",
-  url:"https://jusmundi.com/en/document/decision/en-manchester-city-football-club-limited-v-union-des-associations-europeennes-de-football-uefa-arbitral-award-monday-13th-july-2020-1",
-  m:{outcome:"Ban set aside; fine cut to €10m", figure:"€30m → €10m", basis:"UEFA CL & FFP Regs; 5-year limitation", status:["Overturned UEFA ban","clear"]},
-  paras:[
-   {n:1,s:1,t:"The CAS Panel found that most of the alleged breaches were either not established or were time-barred under the five-year limitation period in UEFA’s regulations."},
-   {n:2,s:1,t:"The two-season exclusion from UEFA competitions was set aside."},
-   {n:3,s:1,t:"The Panel upheld a breach for failing to co-operate with the CFCB investigation and reduced the fine from €30 million to €10 million."}
-  ]},
- {code:"UEFA-20", title:"CFCB Adjudicatory Chamber decision on Manchester City", issuer:"UEFA Club Financial Control Body", date:"2020-02-14", type:"Decision", proc:"UEFA · CAS",
-  url:"https://www.uefa.com/news-media/news/025a-0f8e7535cab3-07272066f9f6-1000--club-financial-control-body-adjudicatory-chamber-decision-on",
-  m:{outcome:"Two-season UEFA ban + €30m fine", figure:"€30m", basis:"UEFA CL & FFP Regulations", status:["Overturned in part","neutral"]},
-  paras:[
-   {n:1,t:"Following a hearing held on 22 January 2020 the Adjudicatory Chamber of the UEFA Club Financial Control Body (CFCB), chaired by José da Cunha Rodrigues, has today notified Manchester City Football Club of the final decision on the case which was referred by the CFCB Chief Investigator."},
-   {n:2,t:"…Manchester City Football Club committed serious breaches of the UEFA Club Licensing and Financial Fair Play Regulations by overstating its sponsorship revenue in its accounts and in the break-even information submitted to UEFA between 2012 and 2016."},
-   {n:3,t:"…in breach of the Regulations the Club failed to cooperate in the investigation of this case by the CFCB."},
-   {n:4,t:"…excluding them from participation in UEFA club competitions for the next two seasons (i.e. the 2020/21 and 2021/22 seasons) and a fine of EUR 30 million."}
-  ]},
- {code:"HB-26", title:"Premier League Handbook 2026/27", issuer:"Premier League", date:"2026-07-31", type:"Rules", proc:"Rules",
-  url:"https://resources.premierleague.pulselive.com/premierleague/document/2026/07/31/8a890ff9-176c-4364-a8ff-e08f995e2c86/TM2040_PL-Handbook-and-Collateral-2026-27_Digital_31.07.pdf",
-  m:{outcome:"Reference text for the rules cited", figure:"—", basis:"Sections B, C, E, W, X", status:["Current rules","neutral"]},
-  paras:[
-   {n:"W",s:1,t:"Section W sets out disciplinary procedure: referral of complaints to an independent Commission, sanctions, and appeals to an Appeal Board."},
-   {n:"X",s:1,t:"Section X covers arbitration between the League and clubs, the route used for the APT challenge."},
-   {n:"E",s:1,t:"Section E sets out club finance obligations, including annual accounts and the profitability and sustainability regime."},
-   {n:"C",s:1,t:"Section C governs the submission of financial information to the League."}
-  ]}
+const CATS=[
+  {k:'A',n:54,short:'Financial info',title:'Accurate financial information',sub:'Revenue, sponsorship, related parties, operating costs',seasons:['2009/10','2010/11','2011/12','2012/13','2013/14','2014/15','2015/16','2016/17','2017/18'],rules:'B.13 · C.71 · C.72 · C.75 · E.3 · E.11 · E.12',city:s=>`Submits ${s} accounts and financial information to the League`,shade:'#e9e4d6'},
+  {k:'B',n:14,short:'Pay',title:'Player & manager remuneration',sub:'Full details of pay arrangements',seasons:['2009/10','2010/11','2011/12','2012/13','2013/14','2014/15','2015/16','2016/17','2017/18'],rules:'See referral statement',city:s=>`Files ${s} player and manager contract details`,shade:'#a7a296'},
+  {k:'C',n:5,short:'UEFA',title:'UEFA FFP compliance',sub:'UEFA licensing and Financial Fair Play rules',seasons:['2013/14','2014/15','2015/16','2016/17','2017/18'],rules:'See referral statement',city:s=>`${s} UEFA licensing submissions`,shade:'#6e6a61'},
+  {k:'D',n:7,short:'PSR',title:'PL profitability & sustainability',sub:'Premier League PSR rules',seasons:['2015/16','2016/17','2017/18'],rules:'E.51 · E.53 (verify)',city:s=>`${s} PSR submission to the League`,shade:'#45423c'},
+  {k:'E',n:35,short:'Co-op',title:'Failure to co-operate',sub:'With the League’s investigation',seasons:['Dec 2018 – Feb 2023'],rules:'See referral statement',city:()=>`Period of alleged non-cooperation with League requests`,shade:'#24231f'}
 ];
-const TIMELINE_FUTURE = [
- {date:"2026-10-02", title:"City’s deadline to appeal the Commission’s findings", what:"Per the Premier League statement of 29 Sep 2026 [PL-26]."},
- {date:null, title:"Sanctions hearing before the independent Commission", what:"Date not yet announced."}
+CATS.forEach(c=>c.odds=Math.round((115-c.n)/c.n*10)/10);
+const CH=[];CATS.forEach(c=>{for(let i=0;i<c.n;i++)CH.push({cat:c,season:c.seasons[i%c.seasons.length]})});
+const N=CH.length,STEP=360/N,pad=i=>String(i+1).padStart(3,'0');
+
+const DOCS=[
+  {t:'PDF',d:'Redacted Core Decision of the Independent Commission',s:'premierleague.com · 29 Sep 2026',u:'https://resources.premierleague.pulselive.com/premierleague/document/2026/09/29/9bb3f063-6312-4d15-a1f1-77280d356a49/Premier-League-Manchester-City-independent-Commission-Redacted-Core-Decision.pdf'},
+  {t:'STMT',d:'Premier League statement on the verdict',s:'premierleague.com · 29 Sep 2026',u:'https://www.premierleague.com/en/news/4727779/premier-league-statement-manchester-city-fc/'},
+  {t:'STMT',d:'Manchester City club statement',s:'mancity.com · 29 Sep 2026',u:'https://www.mancity.com/news/club/manchester-city-club-statement-premier-league-63926128'},
+  {t:'STMT',d:'Original referral to the Commission',s:'premierleague.com · 6 Feb 2023',u:'https://www.premierleague.com/en/news/3045970'},
+  {t:'PDF',d:'Premier League Handbook 2026/27',s:'premierleague.com',u:'https://resources.premierleague.pulselive.com/premierleague/document/2026/07/31/8a890ff9-176c-4364-a8ff-e08f995e2c86/TM2040_PL-Handbook-and-Collateral-2026-27_Digital_31.07.pdf'}
 ];
-const SUGGESTED = [
- "Explain the “Disguised Funding Scheme” like I’m a fan, not a lawyer",
- "Why does the PL say £900m when the decision says £830m?",
- "Compare UEFA/CAS in 2020 with the 2026 Commission. What changed?",
- "Steelman City’s appeal using only its own statement and the decision",
- "Write a 5-post thread on Charge 4 (non-co-operation)",
- "Which charges could the time-bar argument have touched?"
-];
-const EXAMPLE = {q:"Why does the PL say £900m when the decision says £830m?",
- a:"They measure slightly different things.\n\n- The Commission’s figure is about **income**: it found the Club’s income across the relevant years “hugely overstated by over £830 million” [CD-26 ¶101].\n- The League’s statement combines both sides of the ledger, saying revenues were inflated **and costs reduced** by more than £900 million [PL-26 ¶2].\n- The decision also records understated expenses (one line alone is £49.414 million) [CD-26 ¶101], which helps close the gap between the two numbers.\n\nThe redacted decision doesn’t give a single combined total, so the exact reconciliation can’t be confirmed from these documents alone."};
+const UEFA_DOC={t:'PDF',d:'CAS 2020/A/6785 award (UEFA case)',s:'tas-cas.org · Jul 2020',u:'https://www.tas-cas.org/generated/assets/lists/c045720f-0f44-4e36-8b03-63c5dae256ee/CAS_Bulletin_2021_01.pdf'};
 
+/* ---------- state ---------- */
+const KEY='pep-roulette-v2';
+let st={coins:[],seen:[],bank:50,spins:0,badges:[],newStreak:0,bestStreak:0,winStreak:0,days:[],studied:[],daily:''};
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&Array.isArray(s.seen))st=Object.assign(st,s)}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+let bet=null,last=null;
 
-/* ---------- Shared helpers ---------- */
-const SHORT={"CD-26":"Commission decision","PL-26":"Premier League statement","MCFC-26":"Manchester City statement","PL-23":"Premier League referral","PL-25":"PL statement on APT ruling","APT-25":"Second APT award","MCFC-24":"City statement on APT award","APT-24":"APT partial final award","CAS-20":"CAS award","UEFA-20":"UEFA decision","HB-26":"PL Handbook 2026/27"};
-const NEWS={
- "CD-26":{k:"The Verdict",nyt:"Commission Finds Manchester City Broke Premier League Rules, Clearing It on Only One Charge",men:"Man City found guilty on every charge bar one as commission verdict published",st:"The independent Commission’s redacted decision says the club disguised owner funding as sponsorship income, overstating income by more than £830 million. Sanctions will be decided later."},
- "PL-26":{k:"Premier League",nyt:"League Says Sanctions Will Be Set at a Separate Hearing",men:"Premier League confirms Man City sanctions hearing is still to come",st:"The League puts the combined effect at more than £900 million and says City have until 2 October to appeal."},
- "MCFC-26":{k:"The Club’s Response",nyt:"City Calls the Decision ‘Unsafe’ and Says It Will Appeal",men:"Man City hit back: ‘The club is innocent’",st:"In a five-paragraph statement the club said the opinion contains ‘clear material errors, of law, principle and fact’."},
- "PL-23":{k:"February 2023",nyt:"Premier League Refers City to an Independent Commission",men:"Premier League charges Man City over nine seasons of finances",st:"The original referral set out five categories of alleged breaches, running from 2009/10 to the date of referral."},
- "PL-25":{k:"Sponsorship Rules",nyt:"League Insists Its New Sponsorship Rules Still Stand",men:"Premier League insists new APT rules are ‘valid and enforceable’",st:"The League said the tribunal made no findings on the rules clubs voted in during November 2024."},
- "APT-25":{k:"Sponsorship Rules",nyt:"Second Award Leaves the Old Sponsorship Rules Unenforceable",men:"Old Premier League sponsorship rules ruled unenforceable",st:"A follow-on award from the Rule X tribunal on the consequences of its October 2024 findings."},
- "MCFC-24":{k:"Sponsorship Rules",nyt:"City Welcomes Tribunal’s Findings on Sponsorship Rules",men:"Man City welcome tribunal ruling on Premier League sponsorship rules",st:"The club highlighted the finding that leaving shareholder loans out of the rules was discriminatory."},
- "APT-24":{k:"Sponsorship Rules",nyt:"Tribunal Finds Parts of the League’s Sponsorship Rules Unlawful",men:"Man City win partial victory in Premier League sponsorship rules fight",st:"A separate arbitration over Associated Party Transaction rules, which test whether owner-linked deals are at fair value."},
- "CAS-20":{k:"UEFA, 2020",nyt:"Sport’s Top Court Lifts City’s European Ban",men:"Man City’s Champions League ban overturned",st:"CAS found most allegations not established or time-barred, and cut the fine from €30 million to €10 million."},
- "UEFA-20":{k:"UEFA, 2020",nyt:"UEFA Bars City From Europe for Two Seasons",men:"Man City banned from Champions League for two seasons",st:"UEFA’s financial watchdog found City overstated sponsorship revenue between 2012 and 2016 and fined the club €30 million."},
- "HB-26":{k:"Rulebook",nyt:"The Rules at the Center of the Case",men:"The Premier League rulebook, explained",st:"Sections W, X, E and C of the 2026/27 Handbook: discipline, arbitration and club finances."}
-};
-const byCode=Object.fromEntries(DOCS.map(d=>[d.code,d]));
-const $=id=>document.getElementById(id);
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],MONL=["January","February","March","April","May","June","July","August","September","October","November","December"];
-const dShort=iso=>{if(!iso)return"Date TBC";const[y,m,d]=iso.split("-");return `${+d} ${MON[m-1]} ${y}`};
-const dLong=iso=>{const[y,m,d]=iso.split("-");return `${+d} ${MONL[m-1]} ${y}`};
-const dUS=iso=>{const[y,m,d]=iso.split("-");return `${MONL[m-1]} ${+d}, ${y}`};
-const byDate=()=>[...DOCS].sort((a,b)=>b.date.localeCompare(a.date));
-function hl(text,q){const e=esc(text);if(!q||q.length<2)return e;return e.replace(new RegExp("("+esc(q).replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","gi"),"<mark>$1</mark>")}
-function snip(t,q){const i=t.toLowerCase().indexOf(q.toLowerCase());if(i<0||t.length<170)return t;const s=Math.max(0,i-60);return(s?"…":"")+t.slice(s,s+180).trim()+(s+180<t.length?"…":"")}
-function searchHits(q){const h=[];q=q.toLowerCase();DOCS.forEach(d=>d.paras.forEach(p=>{if(p.t.toLowerCase().includes(q))h.push({d,p})}));return h}
-function summaryNote(d){const n=d.paras.filter(p=>p.s).length;return n===d.paras.length?"This is a summary of the document, not its wording. Read the original for exact language.":n?"Paragraphs in grey are a summary. Everything else is quoted; “…” marks a cut and square brackets mark our words.":"Quoted from the original. “…” marks a cut and square brackets mark our words."}
+/* ---------- sound ---------- */
+let ac=null,soundOn=true;
+const snd=document.getElementById('snd');
+snd.onclick=()=>{soundOn=!soundOn;snd.textContent=soundOn?'Sound on':'Sound off';snd.setAttribute('aria-pressed',soundOn)};
+function click(vol=.18,f=2400){
+  if(!soundOn||!ac)return;
+  const o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime;
+  o.type='triangle';o.frequency.setValueAtTime(f*(.9+Math.random()*.2),t);
+  g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.0001,t+.035);
+  o.connect(g).connect(ac.destination);o.start(t);o.stop(t+.04);
+}
+function chime(){if(!soundOn||!ac)return;[660,880,1320].forEach((f,i)=>setTimeout(()=>click(.12,f),i*90))}
 
-/* ---------- Ask ---------- */
-let sampleFn=null;const T={thread:[{role:"user",text:EXAMPLE.q,example:1},{role:"ai",text:EXAMPLE.a,example:1}],busy:false};
-function corpusText(only){return DOCS.filter(d=>!only||d.code===only).map(d=>`### [${d.code}] ${d.title} — ${d.issuer}, ${d.date}\n`+d.paras.map(p=>`(¶${p.n}) ${p.s?"[archive summary] ":""}${p.t}`).join("\n")+(d.findings?"\nFindings: "+d.findings.map(f=>`${f[0]} ${f[1]} — ${f[3]}`).join("; "):"")).join("\n\n")}
-const RULES=`You answer readers' questions on "The Pepstein Files", a public archive of official documents in the Premier League's case against Manchester City (the "115 charges") and related UEFA/CAS and APT proceedings.
-- Use ONLY the documents below. If they don't cover something, say so.
-- Cite each factual claim inline as [CODE ¶N], e.g. [CD-26 ¶101]. Use the exact codes and paragraph labels given.
-- Lines marked [archive summary] are paraphrase; never put them in quotation marks.
-- Creative formats are fine (explainers, threads, steelmen, analogies) but stay faithful, and flag speculation.
-- Be fair to both the League and the Club. Not legal advice.
-- Write like a good sports reporter: plain, direct, no filler, no headings. Under 200 words unless asked. "- " bullets and **bold** sparingly.
-
-DOCUMENTS:
-`;
-function fmtAnswer(t){
-  const refs=[];const idx=(c,n)=>{const k=c+"|"+n;let i=refs.findIndex(r=>r.k===k);if(i<0){refs.push({k,c,n});i=refs.length-1}return i+1};
-  const inline=s=>esc(s).replace(/\s?\[([A-Z]+-\d{2})(?:\s*¶\s*([\w().]+))?\]/g,(m,c,n)=>{if(!byCode[c])return m;n=n?String(n).replace(/\(.*$/,""):"";const i=idx(c,n);return `<sup><button class="fn" data-doc="${c}" ${n?`data-para="${n}"`:""} aria-label="Source ${i}">${i}</button></sup>`}).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
-  const out=[];let list=[];
-  t.split("\n").forEach(l=>{if(/^\s*[-•]\s+/.test(l))list.push(`<li>${inline(l.replace(/^\s*[-•]\s+/,""))}</li>`);else{if(list.length){out.push(`<ul>${list.join("")}</ul>`);list=[]}if(l.trim())out.push(`<p>${inline(l)}</p>`)}});
-  if(list.length)out.push(`<ul>${list.join("")}</ul>`);
-  if(refs.length)out.push(`<ol class="srcs">${refs.map((r,i)=>`<li><span>${i+1}</span><button data-doc="${r.c}" ${r.n?`data-para="${r.n}"`:""}>${SHORT[r.c]}${r.n?`, ¶${esc(r.n)}`:""}</button></li>`).join("")}</ol>`);
-  return out.join("");
+/* ---------- betting table ---------- */
+const MIN=5,DENOMS=[{v:5,c:'#c8372b'},{v:10,c:'#141412'},{v:25,c:'#6e6a61'},{v:50,c:'#c8372b'}];
+let chipV=5,bets={},history=[],lastSlip=null;
+const oddsFor=k=>Math.max(.9,Math.floor((N/k-1)*10)/10); // fair odds, rounded down
+const range=(a,b)=>Array.from({length:b-a+1},(_,j)=>a+j);
+function betDef(key){
+  const [t,v]=key.split(':');
+  if(t==='g'){const c=CATS.find(x=>x.k===v);let s=0;for(const x of CATS){if(x===c)break;s+=x.n}return {label:c.short,covers:range(s,s+c.n-1)}}
+  if(t==='o'){return {low:{label:'1–57',covers:range(0,56)},high:{label:'58–115',covers:range(57,114)},even:{label:'Even',covers:range(0,114).filter(i=>(i+1)%2===0)},odd:{label:'Odd',covers:range(0,114).filter(i=>(i+1)%2===1)}}[v]}
+  const n=+v;if(t==='s')return {label:`Straight ${n+1}`,covers:[n]};
+  if(t==='p')return {label:`Split ${n+1} & ${mod(n+1,N)+1}`,covers:[n,mod(n+1,N)]};
 }
-function threadHTML(){
-  let h="";for(let i=0;i<T.thread.length;i+=2){const u=T.thread[i],a=T.thread[i+1];
-    h+=`<div class="qa">${u.example?`<p class="ex">Example</p>`:""}<p class="q">${esc(u.text)}</p><div class="a">${!a?"":a.pending&&!a.text?`<span class="thinking">Reading the documents…</span>`:fmtAnswer(a.text)}${a?.err?`<p class="err">${esc(a.err)}</p>`:""}</div></div>`}
-  return h;
+const total=()=>Object.values(bets).reduce((a,b)=>a+b,0);
+const coinsEl=document.getElementById('coins'),felt=document.getElementById('felt'),outside=document.getElementById('outside'),slip=document.getElementById('slip'),numIn=document.getElementById('numIn');
+coinsEl.innerHTML=DENOMS.map(d=>`<button class="coin" role="radio" aria-checked="${d.v===chipV}" data-v="${d.v}" style="--c:${d.c}">${d.v}</button>`).join('');
+coinsEl.onclick=e=>{const b=e.target.closest('.coin');if(!b)return;chipV=+b.dataset.v;coinsEl.querySelectorAll('.coin').forEach(x=>x.setAttribute('aria-checked',x===b));click(.12,1400)};
+felt.innerHTML=CATS.map(c=>`<button class="bet" data-key="g:${c.k}"><span class="n">${c.n}</span><span class="lb">${c.short}</span><span class="od">×${oddsFor(c.n)}</span></button>`).join('');
+outside.innerHTML=[['low','1–57'],['even','Even'],['odd','Odd'],['high','58–115']].map(([k,l])=>`<button class="ob" data-key="o:${k}">${l}<em>×${oddsFor(betDef('o:'+k).covers.length)}</em></button>`).join('');
+const numIdx=()=>{const n=Math.min(N,Math.max(1,Math.round(+numIn.value||1)));return n-1};
+numIn.oninput=()=>{const i=numIdx();document.getElementById('splitlbl').textContent=`${i+1} & ${mod(i+1,N)+1}`;renderTable()};
+function place(key){
+  if(spinning)return;
+  if(!ac){try{ac=new (window.AudioContext||window.webkitAudioContext)()}catch(_){}}
+  if(total()+chipV>st.bank){toast('!','Not enough chips',`You have ${st.bank-total()} left to place`);return}
+  bets[key]=(bets[key]||0)+chipV;history.push([key,chipV]);click(.15,900);renderTable();
 }
-function errCopy(c){return({not_granted:"You didn’t allow Claude for this page, so it can’t answer.",sampling_disabled:"Claude isn’t available on this account.",rate_limited:"Too many questions in a row. Give it a minute.",session_expired:"Sign in to Claude again, then retry.",refused:"Claude wouldn’t answer that one. Try rephrasing.",prompt_too_large:"That’s too much text to send."})[c]||"Couldn’t reach Claude. Try again."}
-async function askCore(q,only,render){
-  q=q.trim();if(!q||T.busy)return;
-  T.thread=T.thread.filter(m=>!m.example);T.thread.push({role:"user",text:q});
-  if(!sampleFn){T.thread.push({role:"ai",text:"",err:"Live answers are coming soon. For now, try the search box or browse the documents."});render();return}
-  const msg={role:"ai",text:"",pending:true};T.thread.push(msg);T.busy=true;render();
-  const history=T.thread.slice(0,-2).filter(m=>m.text&&!m.err).slice(-6).map(m=>({role:m.role==="user"?"user":"assistant",content:m.text}));
-  try{const r=await sampleFn([{role:"user",content:RULES+corpusText(only)},...history,{role:"user",content:q}],{cache:false,onText:({text})=>{msg.text=text;render()}});msg.text=r.text}
-  catch(e){msg.text=e.text||"";if(e.code!=="cancelled")msg.err=errCopy(e.code)}
-  msg.pending=false;T.busy=false;render();
-}
-async function initSample(after){try{sampleFn=window.claude?.use?await window.claude.use("sample"):null}catch{sampleFn=null}after&&after()}
-
-/* ---------- Tabloid page ---------- */
-let route="home",q="";
-const KEY=[["CD-26",101],["CD-26",29],["CD-26",114],["MCFC-26",3],["CD-26",157]];
-function card(c){const d=byCode[c],n=NEWS[c];return `<article class="card"><div class="kick">${n.k}</div><h3><button data-doc="${c}">${esc(n.men)}</button></h3><p>${esc(n.st)}</p><time>${dShort(d.date)}</time></article>`}
-function row(c){const d=byCode[c],n=NEWS[c];return `<div class="row"><time>${dShort(d.date)}</time><div><div class="kick">${n.k}</div><h4><button data-doc="${c}">${esc(n.men)}</button></h4><p>${esc(n.st)}</p></div></div>`}
-function charges(){const d=byCode["CD-26"];return `<div class="charges">${d.findings.map(f=>`<div class="ch"><span class="c">${f[0]}</span><span class="d">${esc(f[1])} <small>${esc(f[2])}</small></span><span class="v ${f[3]==="Proven"?"":"np"}">${f[3]}</span></div>`).join("")}</div>`}
-function home(){
-  const n=NEWS["CD-26"];
-  return `<section class="lead"><div class="leadart" aria-hidden="true"><div class="fig">£830m<span>+</span></div><div class="cap">Income overstated across the relevant seasons, according to the Commission’s decision (¶101).</div></div>
-   <div><div class="kick">${n.k}</div><h1><button data-doc="CD-26">${esc(n.men)}</button></h1><p class="stand">${esc(n.st)}</p>
-   <ul class="related"><li><button data-doc="CD-26" data-para="29">Commission says some City witnesses gave evidence they knew was untrue</button></li><li><button data-doc="PL-26">What happens next: sanctions hearing and appeal deadline</button></li><li><button data-go="ask">Ask the Files: put your own question to the documents</button></li></ul></div></section>
-   <div class="cards">${["MCFC-26","PL-26","PL-23"].map(card).join("")}</div>
-   <h2 class="secthead">Charge by charge</h2>${charges()}
-   <h2 class="secthead">How we got here</h2><div class="list">${["APT-25","PL-25","APT-24","MCFC-24","CAS-20","UEFA-20"].map(row).join("")}</div>`;
-}
-function docs(){return `<h2 class="secthead" style="margin-top:0">All documents</h2><div class="list">${byDate().map(d=>row(d.code)).join("")}</div>`}
-function timeline(){
-  return `<h2 class="secthead" style="margin-top:0">Timeline</h2><div class="list">${TIMELINE_FUTURE.map(f=>`<div class="row"><time>${dShort(f.date)}</time><div><div class="kick">Coming up</div><h4>${esc(f.title)}</h4><p>${esc(f.what.replace(/\s*\[.*?\]/g,""))}</p></div></div>`).join("")}${byDate().filter(d=>d.type!=="Rules").map(d=>row(d.code)).join("")}</div>`;
-}
-function search(){
-  const h=searchHits(q);
-  return `<h2 class="secthead" style="margin-top:0">${h.length} result${h.length===1?"":"s"} for “${esc(q)}”</h2>${h.length?`<div class="list">${h.map(({d,p})=>`<div class="row"><time>¶${esc(p.n)}</time><div><div class="kick">${esc(SHORT[d.code])}</div><p style="font-size:16px;color:var(--ink)"><button data-doc="${d.code}" data-para="${esc(p.n)}">${hl(snip(p.t,q),q)}</button></p></div></div>`).join("")}</div>`:`<p>No passage mentions that. <button data-ask="${esc(q)}" style="color:var(--red);font-weight:700;text-decoration:underline">Ask the Files instead</button></p>`}`;
-}
-function article(code,para){
-  const d=byCode[code],n=NEWS[code];
-  let h=`<article class="art"><div class="crumbs"><button data-go="home">Home</button> › ${esc(n.k)}</div><div class="kick">${esc(d.type)}</div><h1>${esc(n.men)}</h1><p class="stand">${esc(n.st)}</p>
-   <div class="byline"><span>Source: <b>${esc(d.issuer)}</b></span><span>${dLong(d.date)}</span><a href="${d.url}" target="_blank" rel="noopener">Read the original document</a></div>`;
-  if(code==="CD-26")h+=`<p class="alert">Sanctions have not been decided. They will be set at a separate hearing, and City have until 2 October to appeal.</p><h2 class="secthead" style="margin-top:0">The findings</h2>${charges()}<h2 class="secthead">What the decision says</h2>`;
-  h+=`<p class="note">${summaryNote(d)}</p>`;
-  d.paras.forEach((p,i)=>{h+=`<div class="para${p.s?" sum":""}" id="p-${p.n}"><span class="n">${esc(p.n)}</span><p>${hl(p.t,q)}</p></div>`;
-    if(code==="CD-26"&&i===5)h+=`<blockquote class="pull">“By its conduct the Club clearly intended to circumvent the PL Rules.”<cite>The Commission, ¶114</cite></blockquote>`;});
-  h+=`</article>`;return h;
-}
-function render(para){
-  const m=$("main");
-  m.innerHTML=route==="home"?home():route==="docs"?docs():route==="timeline"?timeline():route==="search"?search():article(route.slice(4),para);
-  document.querySelectorAll("#nav button").forEach(b=>b.setAttribute("aria-current",b.dataset.go===route||(route==="doc:CD-26"&&b.dataset.go==="doc:CD-26")));
-  if(para!=null){const el=document.getElementById("p-"+para);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});el.classList.add("flash");setTimeout(()=>el.classList.remove("flash"),1400)}}
-  else window.scrollTo({top:0});
-}
-function renderAsk(){
-  $("thread").innerHTML=threadHTML();
-  $("tries").innerHTML=T.thread.every(m=>m.example)?SUGGESTED.filter(s=>s!==EXAMPLE.q).slice(0,3).map(s=>`<button data-ask="${esc(s)}">${esc(s)} →</button>`).join(""):"";
-  $("askBtn").disabled=T.busy;
-  if(!T.thread.every(m=>m.example))$("thread").scrollTop=$("thread").scrollHeight;
-}
-function ask(s){$("askbox").scrollIntoView({behavior:"smooth",block:"start"});askCore(s,null,renderAsk)}
-$("keylines").innerHTML=KEY.map(([c,p])=>{const t=byCode[c].paras.find(x=>x.n==p).t.replace(/^…|…$/g,"");const short=t.length>110?t.slice(0,t.lastIndexOf(" ",105))+"…":t;return `<li><button data-doc="${c}" data-para="${p}">“${esc(short)}”<small>${SHORT[c]}, ¶${p}</small></button></li>`}).join("");
-
-document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
-  if(b.dataset.go){if(b.dataset.go==="ask"){ask("");$("askInput").focus();return}route=b.dataset.go;render();return}
-  if(b.dataset.doc){route="doc:"+b.dataset.doc;render(b.dataset.para??null);return}
-  if(b.dataset.ask){ask(b.dataset.ask);return}
+document.querySelector('.hero .copy').addEventListener('click',e=>{
+  const b=e.target.closest('[data-key]');if(b){place(b.dataset.key);return}
+  const ib=e.target.closest('.ib');if(ib)place(`${ib.dataset.bt}:${numIdx()}`);
 });
-$("searchForm").addEventListener("submit",e=>{e.preventDefault();q=$("q").value.trim();if(q.length<2)return;route="search";render()});
-$("askform").addEventListener("submit",e=>{e.preventDefault();const v=$("askInput").value;$("askInput").value="";ask(v)});
-render();renderAsk();
-initSample(()=>{if(!sampleFn)$("fine").textContent="Live answers are coming soon. The example shows how they’ll work. Not legal advice."});
-</script>
+function renderTable(){
+  document.querySelectorAll('[data-key]').forEach(b=>{b.querySelector('.stack')?.remove();const v=bets[b.dataset.key];if(v)b.insertAdjacentHTML('beforeend',`<span class="stack">${v}</span>`)});
+  document.querySelectorAll('.ib').forEach(b=>{b.querySelector('.stack')?.remove();const v=bets[`${b.dataset.bt}:${numIdx()}`];if(v)b.insertAdjacentHTML('beforeend',`<span class="stack">${v}</span>`)});
+  const keys=Object.keys(bets),t=total();
+  slip.innerHTML=keys.length?keys.map(k=>{const d=betDef(k),o=oddsFor(d.covers.length);return `<div class="ln"><span>${d.label}</span><span>${bets[k]}</span><span>wins ${Math.round(bets[k]*o*mult())}</span><button data-rm="${k}" aria-label="Remove ${d.label} bet">✕</button></div>`}).join('')+
+    `<div class="tot"><span>On the table <b>${t}</b> · chips left <b>${st.bank-t}</b>${t<MIN?` · <span style="color:var(--red)">min ${MIN}</span>`:''}</span><span class="acts"><button id="undo">Undo</button><button id="clear">Clear</button></span></div>`
+    :`<div class="empty">No chips down. Place at least ${MIN} to spin.${lastSlip?' <span class="acts" style="display:inline-flex"><button id="rebet">Rebet last</button></span>':''}</div>`;
+  spinBtn.disabled=spinning||t<MIN;
+  document.getElementById('broke').hidden=!(st.bank<MIN&&t===0&&!spinning);
+}
+slip.addEventListener('click',e=>{
+  if(spinning)return;
+  if(e.target.dataset.rm){delete bets[e.target.dataset.rm];history=history.filter(h=>h[0]!==e.target.dataset.rm)}
+  else if(e.target.id==='undo'){const h=history.pop();if(h){bets[h[0]]-=h[1];if(bets[h[0]]<=0)delete bets[h[0]]}}
+  else if(e.target.id==='clear'){bets={};history=[]}
+  else if(e.target.id==='rebet'){const need=Object.values(lastSlip).reduce((a,b)=>a+b,0);if(need>st.bank){toast('!','Not enough chips',`Last slip needs ${need}`);return}bets={...lastSlip};history=Object.entries(bets)}
+  else return;
+  renderTable();
+});
+function lockTable(on){document.querySelectorAll('.hero [data-key], .ib, #numIn').forEach(b=>b.disabled=on)}
+function renderBank(){document.getElementById('bank').textContent=`Chips ${st.bank}`;document.getElementById('spins').textContent=`${st.spins} spin${st.spins===1?'':'s'} so far`}
 
+/* ---------- canvases ---------- */
+const S=1200,C=S/2;
+const R={rimO:592,rimI:548,track:566,pockO:530,pockI:440,num:500,band:420,cone:412,ballPocket:470};
+const toRad=d=>(d-90)*Math.PI/180;
+function drawBowl(){
+  const g=document.getElementById('bowl').getContext('2d');
+  const gr=g.createRadialGradient(C,C,R.rimI,C,C,R.rimO);gr.addColorStop(0,'#2a2925');gr.addColorStop(.5,'#141412');gr.addColorStop(1,'#060605');
+  g.beginPath();g.arc(C,C,R.rimO,0,Math.PI*2);g.fillStyle=gr;g.fill();
+  g.lineWidth=4;g.strokeStyle='#5a564c';g.beginPath();g.arc(C,C,R.rimO-2,0,Math.PI*2);g.stroke();
+  g.lineWidth=1.5;g.strokeStyle='#3a3833';g.beginPath();g.arc(C,C,R.rimI,0,Math.PI*2);g.stroke();
+  // deflector diamonds
+  for(let k=0;k<8;k++){const a=k*Math.PI/4+Math.PI/8,x=C+Math.cos(a)*R.track,y=C+Math.sin(a)*R.track;
+    g.save();g.translate(x,y);g.rotate(a);g.beginPath();g.moveTo(-14,0);g.lineTo(0,-6);g.lineTo(14,0);g.lineTo(0,6);g.closePath();g.fillStyle='#cfc9b9';g.fill();g.restore();}
+  // tick marks
+  g.strokeStyle='#2f2e2a';g.lineWidth=1;
+  for(let k=0;k<N;k++){const a=toRad(k*STEP);g.beginPath();g.moveTo(C+Math.cos(a)*(R.rimO-10),C+Math.sin(a)*(R.rimO-10));g.lineTo(C+Math.cos(a)*(R.rimO-20),C+Math.sin(a)*(R.rimO-20));g.stroke()}
+}
+function drawWheel(){
+  const g=document.getElementById('wheel').getContext('2d');g.clearRect(0,0,S,S);
+  g.beginPath();g.arc(C,C,R.pockO+6,0,Math.PI*2);g.fillStyle='#0b0b0a';g.fill();
+  CH.forEach((c,i)=>{
+    const a0=toRad(i*STEP-STEP/2),a1=toRad(i*STEP+STEP/2),am=(a0+a1)/2;
+    g.beginPath();g.arc(C,C,R.pockO,a0,a1);g.arc(C,C,R.pockI,a1,a0,true);g.closePath();
+    g.fillStyle=i%2?'#0f0f0e':'#ebe6d8';g.fill();
+    g.beginPath();g.arc(C,C,R.pockI,a0,a1);g.arc(C,C,R.band,a1,a0,true);g.closePath();g.fillStyle=c.cat.shade;g.fill();
+    g.strokeStyle='#6b675d';g.lineWidth=1;g.beginPath();g.moveTo(C+Math.cos(a0)*R.band,C+Math.sin(a0)*R.band);g.lineTo(C+Math.cos(a0)*R.pockO,C+Math.sin(a0)*R.pockO);g.stroke();
+    g.save();g.translate(C+Math.cos(am)*R.num,C+Math.sin(am)*R.num);g.rotate(am+Math.PI/2);
+    g.fillStyle=i%2?'#ebe6d8':'#0f0f0e';g.font='600 14px "IBM Plex Mono", monospace';g.textAlign='center';g.textBaseline='middle';g.fillText(i+1,0,0);g.restore();
+  });
+  g.lineWidth=3;g.strokeStyle='#8a8577';g.beginPath();g.arc(C,C,R.pockO,0,Math.PI*2);g.stroke();
+  // cone
+  const gr=g.createRadialGradient(C-60,C-80,20,C,C,R.cone);gr.addColorStop(0,'#3a3833');gr.addColorStop(.55,'#161614');gr.addColorStop(1,'#232220');
+  g.beginPath();g.arc(C,C,R.cone,0,Math.PI*2);g.fillStyle=gr;g.fill();
+  // op-art rings on the cone
+  for(let r=120;r<R.cone;r+=18){g.beginPath();g.arc(C,C,r,0,Math.PI*2);g.strokeStyle=`rgba(233,228,214,${.03+.05*((r/18)%2)})`;g.lineWidth=1;g.stroke()}
+  // turret
+  g.save();g.translate(C,C);
+  for(let k=0;k<4;k++){g.rotate(Math.PI/2);g.beginPath();g.moveTo(-10,0);g.lineTo(-6,-190);g.quadraticCurveTo(0,-214,6,-190);g.lineTo(10,0);g.closePath();
+    const tg=g.createLinearGradient(-10,0,10,0);tg.addColorStop(0,'#8c877a');tg.addColorStop(.5,'#f2efe7');tg.addColorStop(1,'#6b675d');g.fillStyle=tg;g.fill();
+    g.beginPath();g.arc(0,-196,13,0,Math.PI*2);g.fillStyle='#e9e4d6';g.fill();}
+  g.beginPath();g.arc(0,0,46,0,Math.PI*2);g.fillStyle='#e9e4d6';g.fill();
+  g.beginPath();g.arc(0,0,30,0,Math.PI*2);g.fillStyle='#0f0f0e';g.fill();
+  g.fillStyle='#e9e4d6';g.font='italic 800 26px "Bodoni Moda", Georgia, serif';g.textAlign='center';g.textBaseline='middle';g.fillText('115',0,2);
+  g.restore();
+}
+const bctx=document.getElementById('ball').getContext('2d');
+function drawBall(deg,r){
+  bctx.clearRect(0,0,S,S);if(deg==null)return;
+  const a=toRad(deg),x=C+Math.cos(a)*r,y=C+Math.sin(a)*r;
+  bctx.beginPath();bctx.ellipse(x+6,y+8,15,12,0,0,Math.PI*2);bctx.fillStyle='rgba(0,0,0,.45)';bctx.fill();
+  const g=bctx.createRadialGradient(x-5,y-6,2,x,y,16);g.addColorStop(0,'#ffffff');g.addColorStop(.6,'#e8e3d4');g.addColorStop(1,'#9a9486');
+  bctx.beginPath();bctx.arc(x,y,15,0,Math.PI*2);bctx.fillStyle=g;bctx.fill();
+}
+const draw=()=>{drawBowl();drawWheel()};
+(document.fonts?document.fonts.ready:Promise.resolve()).then(drawWheel);draw();
+
+/* ---------- spin ---------- */
+const wheelEl=document.getElementById('wheel'),spinBtn=document.getElementById('spin'),halo=document.getElementById('halo');
+const rnum=document.getElementById('rnum'),rcat=document.getElementById('rcat');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const mod=(a,m)=>((a%m)+m)%m;
+let W=0,rel=0,spinning=false;
+const easeOut=(p,k)=>1-Math.pow(1-p,k);
+function pocketAt(relDeg){return mod(Math.round(relDeg/STEP),N)}
+function showReadout(i){rnum.textContent=pad(i);rcat.textContent=CH[i].cat.title}
+
+spinBtn.addEventListener('click',()=>{
+  if(spinning||total()<MIN||total()>st.bank)return;
+  if(!ac){try{ac=new (window.AudioContext||window.webkitAudioContext)()}catch(_){}}
+  ac?.resume?.();
+  spinning=true;spinBtn.disabled=true;spinBtn.textContent='No more bets';
+  lockTable(true);
+  st.bank-=total();st.spins++;renderBank();save();
+  const pick=Math.floor(Math.random()*N);
+  const Tw=reduce?1200:9000,Tb=reduce?1000:6400;
+  const W0=W,Wd=reduce?90:360*2+Math.random()*360;
+  const B0=Math.random()*360;           // ball world angle at launch
+  const rel0=B0-W0;
+  const relEnd=rel0-mod(rel0-pick*STEP,360)-360*(reduce?0:7);
+  const t0=performance.now();let lastP=-1,opened=false;
+  if(!reduce){halo.classList.remove('go');void halo.offsetWidth;halo.classList.add('go')}
+  function frame(t){
+    const el=t-t0,pw=Math.min(1,el/Tw),pb=Math.min(1,el/Tb);
+    W=W0+Wd*easeOut(pw,3);wheelEl.style.transform=`rotate(${W}deg)`;
+    let rr=rel0+(relEnd-rel0)*easeOut(pb,3.2),rad=R.track;
+    if(pb>.58){const q=(pb-.58)/.42;
+      rad=R.ballPocket+(R.track-R.ballPocket)*Math.pow(1-q,1.6)*Math.abs(Math.cos(q*Math.PI*3.2));
+      rr+=Math.sin(q*Math.PI*6)*(1-q)*(1-q)*STEP*2.4;}
+    if(pb>=1){rr=relEnd;rad=R.ballPocket}
+    rel=rr;
+    drawBall(W+rel,rad);
+    const p=pocketAt(rel);
+    if(p!==lastP){lastP=p;showReadout(p);click(pb>.58?.22:.07,pb>.58?2600:3400)}
+    if(pb>=1&&!opened){opened=true;setTimeout(()=>land(pick),reduce?50:500)}
+    if(pw<1)requestAnimationFrame(frame);else{spinning=false;spinBtn.textContent='Spin again';lockTable(false);renderTable()}
+  }
+  requestAnimationFrame(frame);
+});
+
+/* ---------- gamification ---------- */
+const RANKS=[[0,'Spectator'],[5,'Season ticket holder'],[15,'Steward'],[30,'Club secretary'],[60,'Investigator'],[90,'Commission member'],[115,'Full house']];
+const BADGES=[
+  {id:'first',ic:'1',name:'First spin',d:'Draw your first charge'},
+  {id:'streak5',ic:'5',name:'Fresh eyes',d:'Five new files in a row'},
+  {id:'streak10',ic:'10',name:'Untouched',d:'Ten new files in a row'},
+  {id:'long',ic:'22',name:'Long shot',d:'Win a bet on the UEFA group (×22)'},
+  {id:'straight',ic:'114',name:'Dead on',d:'Hit a straight-up number'},
+  {id:'split',ic:'56',name:'Split decision',d:'Win a split bet'},
+  {id:'finder',ic:'◎',name:'Coin finder',d:'Find 5 hidden coin stashes'},
+  {id:'allcoins',ic:'12',name:'Pockets turned out',d:'Find all 12 hidden stashes'},
+  {id:'hot',ic:'3',name:'Hot hand',d:'Win three bets in a row'},
+  {id:'house',ic:'H',name:'House charge',d:'Land on the day’s house charge'},
+  {id:'deja',ic:'↺',name:'Déjà vu',d:'Land on a file you already drew'},
+  {id:'nbr',ic:'±',name:'Next door',d:'Land one pocket from your last draw'},
+  {id:'ends',ic:'⇔',name:'Bookends',d:'Draw charge 1 and charge 115'},
+  {id:'reader',ic:'¶',name:'Reads the file',d:'Open a source on five different charges'},
+  {id:'regular',ic:'3d',name:'Regular',d:'Spin on three different days'},
+  {id:'set-C',ic:'C',name:'UEFA set',d:'Draw all 5 UEFA charges'},
+  {id:'set-D',ic:'D',name:'PSR set',d:'Draw all 7 PSR charges'},
+  {id:'set-B',ic:'B',name:'Pay set',d:'Draw all 14 remuneration charges'},
+  {id:'set-E',ic:'E',name:'Co-operation set',d:'Draw all 35 co-operation charges'},
+  {id:'set-A',ic:'A',name:'The accounts',d:'Draw all 54 financial-info charges'}
+];
+const today=(()=>{const d=new Date();return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`})();
+const HOUSE=(()=>{let h=2166136261;for(const ch of 'pepstein'+today){h^=ch.charCodeAt(0);h=Math.imul(h,16777619)}return (h>>>0)%N})();
+/* hidden coin stashes: 12 files, roughly one per ten charges, fixed for everyone */
+const STASH=(()=>{const m=new Map();let s=1151;const rnd=()=>(s=(s*1103515245+12345)%2147483648)/2147483648;
+  for(let b=0;b<12;b++){const lo=Math.floor(b*N/12),hi=Math.floor((b+1)*N/12);const i=lo+Math.floor(rnd()*(hi-lo));m.set(i,[5,10,10,15,20,25][Math.floor(rnd()*6)])}return m})();
+const mult=()=>1+Math.min(st.newStreak,4)*.5;
+const rankOf=n=>{let r=0;RANKS.forEach((x,j)=>{if(n>=x[0])r=j});return r};
+const toastsEl=document.getElementById('toasts');
+function toast(ic,title,sub){
+  const t=document.createElement('div');t.className='toast';t.innerHTML=`<span class="ic">${ic}</span><span><b>${title}</b><span>${sub}</span></span>`;
+  toastsEl.appendChild(t);setTimeout(()=>{t.classList.add('out');setTimeout(()=>t.remove(),320)},3400);
+}
+let newlyBadged=[];
+function award(id){
+  if(st.badges.includes(id))return 0;
+  const b=BADGES.find(x=>x.id===id);st.badges.push(id);newlyBadged.push(id);
+  const bonus=id.startsWith('set-')?50:15;st.bank+=bonus;
+  toast(b.ic,`Trophy: ${b.name}`,`${b.d} · +${bonus} chips`);chime();
+  return bonus;
+}
+function renderHud(){
+  renderBank();
+  const r=rankOf(st.seen.length);
+  document.getElementById('rankpill').innerHTML=`Rank <b>${RANKS[r][1]}</b>`;
+  const fp=document.getElementById('firepill');fp.dataset.n=st.newStreak;fp.textContent=`New-file streak ${st.newStreak}`;
+  document.getElementById('mult').innerHTML=`Bet multiplier ×${mult()} ${[1,2,3,4].map(k=>`<i class="${st.newStreak>=k?'on':''}"></i>`).join('')}`;
+  document.getElementById('hn').textContent=pad(HOUSE);
+  const hit=st.lastHouse===today;document.getElementById('house').classList.toggle('hit',hit);
+  document.getElementById('htxt').textContent=hit?`You hit today's house charge. A new one appears at midnight.`:`Land on it for a 100-chip jackpot. Changes at midnight.`;
+  document.getElementById('ladder').innerHTML=RANKS.map((x,j)=>{
+    const cls=j<r?'done':j===r?'cur':'';const nxt=RANKS[j+1];
+    const em=j===r?(nxt?`${nxt[0]-st.seen.length} to go`:'Complete'):j<r?'Reached':'';
+    return `<li class="${cls}"><b>${x[0]}</b><span>${x[1]}</span><em>${em}</em></li>`}).join('');
+  document.getElementById('badges').innerHTML=BADGES.map(b=>`<div class="badge${st.badges.includes(b.id)?' got':''}${newlyBadged.includes(b.id)?' new':''}"><span class="ic">${b.ic}</span><b>${b.name}</b><p>${b.d}</p></div>`).join('');
+  newlyBadged=[];
+}
+
+let payoutMsg='';
+function land(i){
+  showReadout(i);chime();
+  const c=CH[i],prevRank=rankOf(st.seen.length),fresh=!st.seen.includes(i);
+  if(!st.days.includes(today))st.days.push(today);
+  // streaks
+  const m=mult(); // multiplier earned by the streak going into this spin
+  if(fresh){st.newStreak++;st.bestStreak=Math.max(st.bestStreak,st.newStreak)}
+  let msg='',won=0,staked=total(),anyWin=false;const lines=[];
+  for(const [k,v] of Object.entries(bets)){
+    const d=betDef(k);
+    if(d.covers.includes(i)){const w=Math.round(v*oddsFor(d.covers.length)*m);won+=w+v;anyWin=true;lines.push(`${d.label} +${w}`);
+      if(k==='g:C')award('long');if(k[0]==='s')award('straight');if(k[0]==='p')award('split')}
+  }
+  st.bank+=won;
+  if(anyWin){st.winStreak++;msg+=`<div class="payout win">Winners: ${lines.join(' · ')}${m>1?` (×${m} streak bonus)`:''}. Staked ${staked}, back ${won}. Bank: ${st.bank}.</div>`;if(st.winStreak>=3)award('hot')}
+  else{st.winStreak=0;msg+=`<div class="payout">No winners. The house keeps ${staked}. Bank: ${st.bank}.</div>`}
+  lastSlip={...bets};bets={};history=[];
+  if(!fresh){msg+=`<div class="payout streak">Already in your ledger. New-file streak reset from ${st.newStreak}.</div>`;st.newStreak=0;award('deja')}
+  else if(st.newStreak>1)msg+=`<div class="payout streak">New file · streak ${st.newStreak} · next bet pays ×${mult()}</div>`;
+  if(i===HOUSE&&st.lastHouse!==today){st.lastHouse=today;st.bank+=100;msg+=`<div class="payout win">House charge! +100 chips.</div>`;award('house');toast('H','Jackpot','You hit today’s house charge · +100')}
+  if(fresh)st.seen.push(i);
+  // badges
+  award('first');
+  if(st.newStreak>=5)award('streak5');if(st.newStreak>=10)award('streak10');
+  if(last!=null&&last!==i&&(mod(i-last,N)===1||mod(last-i,N)===1))award('nbr');
+  if(st.seen.includes(0)&&st.seen.includes(N-1))award('ends');
+  if(st.days.length>=3)award('regular');
+  CATS.forEach(k=>{if(st.seen.filter(x=>CH[x].cat===k).length===k.n)award('set-'+k.k)});
+  const nr=rankOf(st.seen.length);
+  if(nr>prevRank){toast('↑',`Promoted: ${RANKS[nr][1]}`,`${st.seen.length} of 115 files drawn`);msg+=`<div class="payout win">Promoted to ${RANKS[nr][1]}.</div>`}
+  if(st.bank<MIN)msg+=`<div class="payout">You're out of chips. Look for hidden coins in the charge files.</div>`;
+  payoutMsg=msg;
+  last=i;save();renderHud();renderLedger(fresh?i:null);renderTable();
+  openFile(i,payoutMsg);
+}
+
+/* ---------- ledger ---------- */
+const rows=document.getElementById('rows');
+function renderLedger(flip){
+  let idx=0;
+  rows.innerHTML=CATS.map(c=>{
+    const tiles=[];for(let j=0;j<c.n;j++,idx++){const s=st.seen.includes(idx);tiles.push(`<button class="tile${s?' seen':''}${idx===last?' last':''}${idx===HOUSE?' house':''}${idx===flip?' flip':''}" data-i="${idx}" aria-label="Charge ${idx+1}${s?', drawn':''}">${idx+1}</button>`)}
+    const got=st.seen.filter(x=>CH[x].cat===c).length;
+    return `<div class="row"><h3>${c.title}<small>${got} / ${c.n} drawn</small></h3><div class="tiles">${tiles.join('')}</div></div>`;
+  }).join('');
+  const n=st.seen.length;
+  document.getElementById('progtxt').textContent=`${n} of 115 files drawn${n===115?' · full house':''} · ${st.coins.length} of 12 coin stashes found`;
+  document.getElementById('progbar').style.width=(n/115*100)+'%';
+}
+rows.addEventListener('click',e=>{const t=e.target.closest('.tile');if(t)openFile(+t.dataset.i,'')});
+
+/* ---------- drawer ---------- */
+const drawer=document.getElementById('drawer'),scrim=document.getElementById('scrim');
+let opener=null;
+function timeline(c){
+  const isE=c.cat.k==='E';
+  const rows=[
+    {d:isE?'2018–23':c.season,pl:isE?'League issues document requests':'Season under review',city:c.cat.city(c.season),hl:1},
+    {d:'Dec 2018',pl:'League opens investigation',city:''}];
+  if(c.cat.k==='C')rows.push({d:'Jul 2020',pl:'',city:'Wins CAS appeal against UEFA ban',cl:UEFA_DOC.u});
+  rows.push(
+    {d:'Jul 2021',pl:'Court of Appeal backs League on disclosure',city:'Had challenged the League’s arbitration and document demands in court'},
+    {d:'6 Feb 2023',pl:'Refers 115 charges to independent Commission',pl_l:DOCS[3].u,city:'Club says it is “surprised” and welcomes independent review'},
+    {d:'Oct 2024',pl:'Related APT arbitration award',city:'Challenge to APT rules partly upheld'},
+    {d:'29 Sep 2026',pl:'Core Decision published (redacted)',pl_l:DOCS[0].u,city:'Club statement on the verdict',cl:DOCS[2].u,hl:1},
+    {d:'2 Oct 2026',pl:'',city:'Appeal deadline',nx:1},
+    {d:'Next',pl:'Sanctions hearing',city:'',nx:1});
+  const cell=(t,l)=>t?(l?`<a href="${l}" target="_blank" rel="noopener">${t}</a>`:t):'<span class="no">—</span>';
+  return rows.map(r=>{const k=(r.hl?' hl':'')+(r.nx?' next':'');return `<div class="d${k}">${r.d}</div><div class="c${k}">${cell(r.pl,r.pl_l)}</div><div class="c city${k}">${cell(r.city,r.cl)}</div>`}).join('');
+}
+function openFile(i,msg){
+  const c=CH[i];opener=opener||document.activeElement;
+  const docs=c.cat.k==='C'?[...DOCS.slice(0,2),UEFA_DOC,...DOCS.slice(2)]:DOCS;
+  drawer.innerHTML=`
+  <div class="d-head">
+    <div class="d-nav"><span>CHARGE FILE</span><div><button data-go="${mod(i-1,N)}" aria-label="Previous charge">← ${pad(mod(i-1,N))}</button><button data-go="${mod(i+1,N)}" aria-label="Next charge">${pad(mod(i+1,N))} →</button><button id="dclose" aria-label="Close">Close ✕</button></div></div>
+    <div class="d-num"><b>${pad(i)}</b><span>of 115 · ${st.seen.includes(i)?'drawn':'not drawn yet'}</span></div>
+    <h2 class="d-title" id="d-title">${c.cat.title}</h2>
+    <div class="d-meta">${c.cat.sub} · ${c.season}<br>Rules ${c.cat.rules}</div>
+    ${msg}
+  </div>
+  <div class="d-body">
+    <div class="sec"><h4>Timeline · League and Club side by side</h4>
+      <div class="lanes"><div class="hd">Date</div><div class="hd">Premier League</div><div class="hd" style="padding-left:10px">Man City</div>${timeline(c)}</div></div>
+    <div class="sec"><h4>Commission finding</h4>
+      <div class="verdict"><div class="chips"><span class="vchip">Proven</span><span class="vchip">Not proven</span><span class="vchip">Withdrawn</span><span class="vchip on">Pending entry</span></div>
+      <p>One line from the Core Decision on this charge, with the paragraph number so anyone can check it.</p><span class="ph">→ Pull from Core Decision ¶ ___</span></div></div>
+    <div class="sec"><h4>Official documents</h4>
+      <ul class="docs">${docs.map(d=>`<li><a href="${d.u}" target="_blank" rel="noopener"><span class="ty">${d.t}</span><span><span class="dt">${d.d}</span><span class="src">${d.s}</span></span></a></li>`).join('')}</ul></div>
+    <div class="d-foot"><small>Primary sources only · numbering illustrative in this mockup</small><button class="again" id="dagain">Spin again</button></div>
+  </div>`;
+  drawer.classList.add('on');scrim.classList.add('on');drawer.setAttribute('aria-hidden','false');
+  drawer.querySelector('#dclose').focus();
+  drawer.querySelector('#dclose').onclick=closeFile;
+  drawer.querySelector('#dagain').onclick=()=>{closeFile();setTimeout(()=>spinBtn.click(),reduce?0:350)};
+  drawer.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>openFile(+b.dataset.go,''));
+  if(STASH.has(i)&&!st.coins.includes(i)){
+    const spots=[drawer.querySelector('.d-head'),drawer.querySelectorAll('.sec')[0],drawer.querySelectorAll('.sec')[1],drawer.querySelectorAll('.sec')[2]];
+    const host=spots[i%4];host.insertAdjacentHTML('beforeend',`<div class="stash-row"><button class="stash" aria-label="Pick up hidden coins">¢</button></div>`);
+    host.querySelector('.stash').onclick=e=>{
+      const amt=STASH.get(i);st.coins.push(i);st.bank+=amt;e.currentTarget.parentElement.remove();
+      toast('¢',`Found ${amt} coins`,`Hidden in charge ${pad(i)} · ${st.coins.length} of 12 stashes`);chime();
+      if(st.coins.length>=5)award('finder');if(st.coins.length>=12)award('allcoins');save();renderHud();renderTable();renderLedger(null);
+    };
+  }
+  drawer.querySelectorAll('.docs a, .lanes a').forEach(a=>a.addEventListener('click',()=>{
+    if(st.studied.includes(i))return;
+    st.studied.push(i);st.bank+=5;toast('¶','Study bonus +5','You opened a source on this charge');
+    if(st.studied.length>=5)award('reader');save();renderHud();renderTable();
+  }));
+  drawer.querySelector('.d-body').scrollTop=0;
+}
+function closeFile(){drawer.classList.remove('on');scrim.classList.remove('on');drawer.setAttribute('aria-hidden','true');(opener&&opener.focus)?opener.focus():spinBtn.focus();opener=null}
+scrim.onclick=closeFile;
+addEventListener('keydown',e=>{if(e.key==='Escape'&&drawer.classList.contains('on'))closeFile()});
+
+/* boot */
+['badges','days','studied','coins'].forEach(k=>{if(!Array.isArray(st[k]))st[k]=[]});
+if(st.daily!==today){const first=!st.daily;st.daily=today;if(!first){st.bank+=20;setTimeout(()=>toast('+','Welcome back','Daily stake · +20 chips'),600)}save()}
+renderHud();renderLedger(null);renderTable();
+drawBall(0,R.track);
+</script>
 </body>
 </html>
