@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pepstein Files Live</title>
+<meta name="description" content="Every official document in the Manchester City 115-charges case, searchable in one place: the Commission decision, Premier League and club statements, the APT awards and the 2020 UEFA/CAS rulings.">
+<meta property="og:title" content="Pepstein Files: Man City and the 115 charges">
+<meta property="og:description" content="Every official document in the case, searchable in one place.">
+<meta property="og:url" content="https://pepsteinfiles.com/">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23D3101F'/%3E%3Ctext x='16' y='24' font-family='Arial' font-weight='900' font-size='22' fill='white' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+<style>
+/* Layout: regional tabloid news site. Red masthead, dark nav, breaking strip, lead story + card grid, right rail with the Ask widget. Light only, on purpose. */
+:root{
+  --red:#D3101F; --red-dk:#9E0B16; --ink:#121212; --ink-2:#4A4A4A; --ink-3:#7A7A7A; --bg:#FFFFFF; --grey:#F1F1F1; --line:#DCDCDC; --nav:#1E1E1E; --yellow:#FFD400;
+  --head:"Barlow Condensed","Arial Narrow",Impact,sans-serif; --body:"Barlow",Arial,Helvetica,sans-serif;
+  color-scheme:light;
+}
+html,body{background:var(--bg);color:var(--ink)}
+body{font:16px/1.5 var(--body)}
+*{box-sizing:border-box}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0;text-align:left}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:1px}
+mark{background:var(--yellow);color:var(--ink)}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px}
+
+/* masthead */
+.mast{background:var(--red);color:#fff}
+.mast .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.logo{display:flex;flex-direction:column;line-height:.9}
+.logo b{font:800 40px/0.9 var(--head);letter-spacing:-.01em;text-transform:uppercase}
+.logo small{font:600 12.5px var(--body);letter-spacing:.02em;opacity:.9;margin-top:4px}
+.msearch{display:flex;background:#fff;border-radius:2px;overflow:hidden;width:min(360px,100%)}
+.msearch input{flex:1;min-width:0;border:0;padding:8px 10px;color:var(--ink);outline:none}
+.msearch button{background:var(--ink);color:#fff;padding:0 14px;font-weight:600;font-size:14px}
+.nav{background:var(--nav);color:#fff;position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.nav .wrap{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.nav button{padding:11px 12px;font:700 15px var(--head);letter-spacing:.03em;text-transform:uppercase;white-space:nowrap;border-bottom:3px solid transparent}
+.nav button:hover{background:#2E2E2E}
+.nav button[aria-current="true"]{border-bottom-color:var(--red)}
+.ticker{background:var(--grey);border-bottom:1px solid var(--line)}
+.ticker .wrap{display:flex;align-items:center;gap:12px;padding-block:8px;font-size:15px;font-weight:500}
+.ticker b{background:var(--red);color:#fff;font:700 13px var(--head);letter-spacing:.06em;padding:3px 8px;text-transform:uppercase;flex:none}
+
+/* page grid */
+.page{display:grid;grid-template-columns:minmax(0,1fr) 336px;gap:28px;padding-block:22px 60px}
+.kick{font:700 14px var(--head);color:var(--red);text-transform:uppercase;letter-spacing:.04em}
+.secthead{display:flex;align-items:center;gap:10px;margin:30px 0 14px;font:800 22px var(--head);text-transform:uppercase}
+.secthead::after{content:"";flex:1;height:3px;background:var(--ink)}
+
+/* lead */
+.lead{display:grid;grid-template-columns:1.15fr 1fr;gap:20px;border-bottom:1px solid var(--line);padding-bottom:22px}
+.leadart{background:var(--ink);color:#fff;position:relative;min-height:300px;display:flex;flex-direction:column;justify-content:flex-end;padding:20px;overflow:hidden}
+.leadart::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 22px,rgba(255,255,255,.04) 22px 44px)}
+.leadart .fig{position:relative;font:800 clamp(60px,8vw,100px)/.85 var(--head);color:#fff;letter-spacing:-.02em}
+.leadart .fig span{color:var(--red)}
+.leadart .cap{position:relative;font-size:14px;color:#ddd;margin-top:10px;max-width:40ch}
+.lead h1{margin:6px 0 10px;font:800 clamp(30px,3.4vw,40px)/1.02 var(--head);letter-spacing:-.005em}
+.lead h1 button:hover,.card h3 button:hover,.row h4 button:hover{text-decoration:underline;text-decoration-thickness:2px}
+.lead .stand{font-size:17px;color:var(--ink-2);margin:0 0 14px}
+.related{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.related li{border-bottom:1px solid var(--line)}
+.related button{display:block;width:100%;padding:8px 0 8px 14px;position:relative;font-weight:600;line-height:1.3}
+.related button::before{content:"";position:absolute;left:0;top:14px;width:6px;height:6px;background:var(--red)}
+.related button:hover{color:var(--red)}
+
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:18px}
+.card{border-top:4px solid var(--red);padding-top:8px}
+.card h3{margin:4px 0 6px;font:700 22px/1.05 var(--head)}
+.card p{margin:0;font-size:14.5px;color:var(--ink-2)}
+.card time{display:block;margin-top:8px;font-size:13px;color:var(--ink-3)}
+
+.charges{border:1px solid var(--line)}
+.ch{display:grid;grid-template-columns:56px minmax(0,1fr) 112px;align-items:center;border-bottom:1px solid var(--line);font-size:15px}
+.ch:last-child{border-bottom:0}
+.ch .c{font:700 18px var(--head);padding:8px 10px;background:var(--grey);align-self:stretch;display:flex;align-items:center}
+.ch .d{padding:8px 12px}
+.ch .d small{color:var(--ink-3)}
+.ch .v{align-self:stretch;display:flex;align-items:center;justify-content:center;font:700 15px var(--head);text-transform:uppercase;letter-spacing:.04em;background:var(--red);color:#fff}
+.ch .v.np{background:var(--yellow);color:var(--ink)}
+
+.list .row{display:grid;grid-template-columns:110px minmax(0,1fr);gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.row time{font:700 15px var(--head);color:var(--ink-3);text-transform:uppercase;padding-top:3px}
+.row h4{margin:2px 0 4px;font:700 21px/1.08 var(--head)}
+.row p{margin:0;font-size:14.5px;color:var(--ink-2)}
+
+/* article */
+.crumbs{font-size:13.5px;color:var(--ink-3);margin-bottom:10px}
+.crumbs button{text-decoration:underline}
+.art h1{margin:6px 0 12px;font:800 clamp(32px,4.4vw,48px)/1 var(--head);letter-spacing:-.01em}
+.art .stand{font-size:20px;line-height:1.4;font-weight:500;margin:0 0 16px}
+.byline{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;font-size:14px;color:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 0;margin-bottom:20px}
+.byline b{color:var(--ink)}
+.byline a{color:var(--red);font-weight:600}
+.alert{background:var(--grey);border-left:5px solid var(--red);padding:12px 14px;font-weight:500;margin:0 0 20px}
+.art .note{font-size:14px;color:var(--ink-3);font-style:italic;margin:24px 0 10px}
+.para{display:grid;grid-template-columns:40px minmax(0,1fr);gap:6px;transition:background-color .8s}
+.para .n{font:700 15px var(--head);color:var(--red);padding-top:3px}
+.para p{margin:0 0 16px;font-size:18px;line-height:1.6;max-width:66ch}
+.para.sum p{color:var(--ink-2)}
+.para.flash{background:var(--yellow)}
+.pull{margin:26px 0;padding:14px 0 14px 18px;border-left:6px solid var(--red);font:700 26px/1.12 var(--head)}
+.pull cite{display:block;font:500 14px var(--body);color:var(--ink-3);margin-top:6px;font-style:normal}
+
+/* rail */
+.rail{display:flex;flex-direction:column;gap:22px}
+.box h2{margin:0;padding:9px 12px;font:800 19px var(--head);text-transform:uppercase;letter-spacing:.02em;background:var(--ink);color:#fff;display:flex;justify-content:space-between;align-items:baseline}
+.box h2 small{font:600 12px var(--body);text-transform:none;letter-spacing:0;color:#bbb}
+.askbox{border:1px solid var(--ink)}
+.askbox .thread{max-height:440px;overflow:auto;padding:12px}
+.qa+.qa{border-top:1px solid var(--line);margin-top:12px;padding-top:12px}
+.ex{margin:0 0 4px;font:700 12px var(--head);text-transform:uppercase;color:var(--red);letter-spacing:.06em}
+.q{margin:0 0 6px;font:700 19px/1.1 var(--head)}
+.a{font-size:14.5px;line-height:1.5}
+.a p{margin:0 0 8px}.a ul{margin:0 0 8px;padding-left:18px}
+.a sup{line-height:0}
+.fn{font:700 11px var(--body);color:#fff;background:var(--red);border-radius:2px;padding:0 3px;margin-left:1px}
+.srcs{list-style:none;margin:8px 0 0;padding:8px 0 0;border-top:1px dashed var(--line);font-size:13px}
+.srcs li{display:flex;gap:6px}.srcs span{color:var(--red);font-weight:700}
+.srcs button:hover{text-decoration:underline}
+.thinking{color:var(--ink-3);font-style:italic}
+.err{font-size:13.5px;background:var(--grey);padding:6px 8px;border-left:3px solid var(--red)}
+.tries{padding:4px 12px 10px;margin-top:4px;border-top:1px solid var(--line);padding-top:10px;display:flex;flex-direction:column;gap:6px}
+.tries button{font-size:14px;font-weight:600;line-height:1.3;color:var(--red)}
+.tries button:hover{text-decoration:underline}
+.askform{display:flex;border-top:1px solid var(--ink)}
+.askform input{flex:1;min-width:0;border:0;padding:10px 12px;outline:none}
+.askform button{background:var(--red);color:#fff;font:700 16px var(--head);text-transform:uppercase;padding:0 16px;letter-spacing:.04em}
+.askform button:disabled{opacity:.5}
+.fine{font-size:12px;color:var(--ink-3);padding:6px 12px 8px;margin:0;border-top:1px solid var(--line)}
+.mostread ol{list-style:none;margin:0;padding:0;counter-reset:mr}
+.mostread li{counter-increment:mr;display:grid;grid-template-columns:38px minmax(0,1fr);gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
+.mostread li::before{content:counter(mr);font:800 34px/0.9 var(--head);color:var(--red)}
+.mostread button{font-size:15px;font-weight:600;line-height:1.3}
+.mostread button:hover{text-decoration:underline}
+.mostread small{display:block;color:var(--ink-3);font-weight:500;font-size:12.5px;margin-top:2px}
+
+.foot{background:var(--nav);color:#bbb;font-size:13px}
+.foot .wrap{padding-block:20px}
+
+@media (max-width:960px){
+  .page{grid-template-columns:minmax(0,1fr)}
+  .lead{grid-template-columns:minmax(0,1fr)}
+  .leadart{min-height:200px}
+}
+@media (max-width:640px){
+  .mast .wrap{flex-direction:column;align-items:stretch}
+  .logo b{font-size:34px}
+  .msearch{width:100%}
+  .cards{grid-template-columns:minmax(0,1fr)}
+  .list .row{grid-template-columns:minmax(0,1fr);gap:2px}
+  .ch{grid-template-columns:48px minmax(0,1fr) 92px;font-size:14px}
+  .ticker .wrap{font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){.para{transition:none}}
+</style>
+<style>body{margin:0}</style>
+</head>
+<body>
+
+
+<header class="mast"><div class="wrap">
+  <div class="logo"><b>Pepstein Files</b><small>Man City and the 115 charges · every official document</small></div>
+  <form class="msearch" id="searchForm" role="search"><input id="q" type="search" placeholder="Search the documents" aria-label="Search the documents"><button>Search</button></form>
+</div></header>
+<nav class="nav" aria-label="Sections"><div class="wrap" id="nav">
+  <button data-go="home">Home</button><button data-go="doc:CD-26">The Verdict</button><button data-go="docs">All documents</button><button data-go="timeline">Timeline</button><button data-go="ask">Ask the Files</button>
+</div></nav>
+<div class="ticker"><div class="wrap"><b>Latest</b><span>Man City have until 2 October to appeal the Commission’s findings. A sanctions hearing is still to come.</span></div></div>
+
+<div class="wrap page">
+  <main id="main"></main>
+  <aside class="rail">
+    <section class="box askbox" id="askbox" aria-label="Ask the Files">
+      <h2>Ask the Files <small>Answers from the documents only</small></h2>
+      <div class="thread" id="thread" aria-live="polite"></div>
+      <div class="tries" id="tries"></div>
+      <form class="askform" id="askform"><input id="askInput" placeholder="Ask a question about the case" aria-label="Ask a question"><button id="askBtn">Ask</button></form>
+      <p class="fine" id="fine">Not legal advice. Check the source before you share it.</p>
+    </section>
+    <section class="box mostread"><h2>Key lines</h2><ol id="keylines"></ol></section>
+  </aside>
+</div>
+<footer class="foot"><div class="wrap">Pepstein Files is an independent archive of official documents. It is not affiliated with Manchester City, the Premier League, UEFA or any newspaper.</div></footer>
+
+<script>
+/* ---------- Corpus: official documents only ---------- */
+const DOCS = [
+ {code:"CD-26", title:"Redacted Core Decision of the Independent Commission", issuer:"Independent Commission (PL Rule W)", date:"2026-09-29", type:"Decision", proc:"Premier League · Section W",
+  url:"https://resources.premierleague.pulselive.com/premierleague/document/2026/09/29/9bb3f063-6312-4d15-a1f1-77280d356a49/Premier-League-Manchester-City-independent-Commission-Redacted-Core-Decision.pdf",
+  facts:[["Hearing","Sep–Dec 2024"],["Form","Redacted, 159 paragraphs"]],
+  findings:[
+   ["1(A)","Accurate financial information — sponsorship agreements","Rules C.71 / E.3","Proven"],
+   ["1(B)","Accurate financial information — player payment arrangements","Rules C.71 / E.3","Proven"],
+   ["1(C)","Accurate financial information — the “Fordham Arrangement”","¶¶136–141","Proven"],
+   ["1(D)","Related party disclosures","Rules C.71 / E.3","Proven"],
+   ["2","UEFA Club Licensing & FFP Regulations","Rule B.14.6","Proven"],
+   ["3","PL Profitability & Sustainability Rules","Rules E.52–E.60","Proven"],
+   ["4(A)","Duty to co-operate with the PL investigation","Majority of allegations","Proven"],
+   ["4(B)","Duty to co-operate with the PL investigation","¶157","Not proven"],
+   ["4(C)","Duty to co-operate with the PL investigation","All respects","Proven"],
+   ["4(D)","Duty to co-operate with the PL investigation","One respect","Proven"]],
+  m:{outcome:"All charges proven except 4(B)", figure:"Income overstated by over £830m (¶101)", basis:"PL Rules B, C, E, W; UEFA FFP via B.14.6", status:["Appeal window","pending"]},
+  paras:[
+   {n:6,t:"…with the exception of Charge 4(B) we were satisfied to the requisite standard that there was such evidence."},
+   {n:7,t:"[The Commission] found each of the Charges proven against the Club bar Charge 4(B)."},
+   {n:9,t:"The proceedings were at all times extremely hard fought on both sides."},
+   {n:29,t:"…evidence given by a number of important factual witnesses called to give evidence on behalf of the Club was false in a number of key respects… certain of those factual witnesses had given evidence at the hearing that they knew to be untrue and so had been dishonest."},
+   {n:38,t:"Every PL member club has had an obligation under the PL Rules to submit annual accounts to the PL…"},
+   {n:43,t:"[Under the Profitability and Sustainability Rules a club was permitted a] loss of not more than £105million [over the assessment period]."},
+   {n:67,t:"…the Club devised a plan to disguise shareholder funding as ‘commercial partner revenue’… what we have described in Appendix 15 as the Disguised Funding Scheme."},
+   {n:72,t:"…the Club knew of the Disguised Funding Scheme and approved its operation."},
+   {n:79,t:"By using the Disguised Funding Scheme… the Club was able to avoid breaking the record for the largest single season loss in PL history."},
+   {n:84,t:"One was not. That was the Fordham Arrangement."},
+   {n:101,t:"…the Club’s income across those years was consequently hugely overstated by over £830 million… [with expenses understated by £49.414 million in one category, ¶101(e)(ii)]."},
+   {n:109,t:"…conduct (and as we have found, intentional conduct) which would disguise the true nature of certain revenues…"},
+   {n:114,t:"…the Club also acted other than with utmost good faith… By its conduct the Club clearly intended to circumvent the PL Rules."},
+   {n:149,t:"…the Club did not (by a very substantial amount) meet the break-even requirement…"},
+   {n:157,t:"The Club made concerted efforts to stop and frustrate the PL investigation… We find that the Club did not breach duties of co-operation that it owed to the PL in the respects alleged in Charge 4(B)."}
+  ]},
+ {code:"PL-26", title:"Premier League statement on Manchester City FC", issuer:"Premier League", date:"2026-09-29", type:"Statement", proc:"Premier League · Section W",
+  url:"https://www.premierleague.com/en/news/4727779/premier-league-statement-manchester-city-fc/",
+  m:{outcome:"Announces Commission findings; sanctions to follow", figure:"Revenues inflated / costs reduced by more than £900m", basis:"PL Rules Section W", status:["Sanction pending","pending"]},
+  paras:[
+   {n:1,s:1,t:"An independent Commission found Manchester City in breach of all charges relating to financial rules across seasons 2009/10 to 2017/18, and the majority of the charges for failing to co-operate with the Premier League’s investigation (three of four)."},
+   {n:2,s:1,t:"The League says the arrangements included sham contracts with commercial partners, misstated accounts, and concealment from auditors and regulators, which inflated revenues and reduced costs by more than £900 million over the period."},
+   {n:3,t:"…by its conduct the club clearly intended to circumvent the PL Rules."},
+   {n:4,s:1,t:"Sanctions will be determined at a separate hearing before the independent Commission. The club may appeal the findings to an Appeal Board under Section W, and has until 2 October 2026 to do so."}
+  ]},
+ {code:"MCFC-26", title:"Manchester City club statement on the Commission decision", issuer:"Manchester City FC", date:"2026-09-29", type:"Statement", proc:"Premier League · Section W",
+  url:"https://www.mancity.com/news/club/manchester-city-club-statement-premier-league-63926128",
+  m:{outcome:"Rejects findings; will appeal", figure:"“eight years” of due process", basis:"Appeal avenues under PL Rules", status:["Club response","neutral"]},
+  paras:[
+   {n:1,t:"Manchester City FC is both disappointed and surprised by the opinion of the Premier League Commission, that has been published today."},
+   {n:2,t:"The Club is innocent of the accusations made by the Premier League and a comprehensive body of irrefutable evidence exists in support of all of its positions, relating to this case. The Club will therefore be relentless, and where necessary proactive, in any and all appropriate regulatory and legal forums."},
+   {n:3,t:"The Premier League process remains ongoing, with significant elements uncompleted. Manchester City FC will now pursue the appeal avenues open to it, on the basis that the opinion contains clear material errors, of law, principle and fact, and is unsafe."},
+   {n:4,t:"The Club has diligently respected due process for eight years on the basis that the Premier League Board and Executive would behave as an independent, impartial and fair-minded regulator, free from partisan influence."},
+   {n:5,t:"The Club is obviously restricted in what it can say further until all future proceedings are complete."}
+  ]},
+ {code:"PL-23", title:"Premier League statement referring alleged breaches to a Commission", issuer:"Premier League", date:"2023-02-06", type:"Statement", proc:"Premier League · Section W",
+  url:"https://www.premierleague.com/en/news/3045970",
+  m:{outcome:"Case referred to independent Commission", figure:"Nine seasons: 2009/10–2017/18", basis:"Rule W.3.4", status:["Concluded","neutral"]},
+  paras:[
+   {n:1,t:"The Premier League confirms that it has today referred a number of alleged breaches of the Premier League Rules by Manchester City Football Club to an independent Commission under Premier League Rule W.3.4."},
+   {n:2,s:1,t:"Category 1 — seasons 2009/10 to 2017/18: failing to provide accurate financial information giving a true and fair view of the club’s financial position, in particular revenue (including sponsorship), related parties and operating costs."},
+   {n:3,s:1,t:"Category 2 — manager remuneration (2009/10 to 2012/13) and player remuneration (2010/11 to 2015/16): failing to include full details in the relevant contracts."},
+   {n:4,s:1,t:"Category 3 — seasons 2013/14 to 2017/18: failing to comply with UEFA’s Club Licensing and Financial Fair Play Regulations (Rules B.14.6 and B.15.6)."},
+   {n:5,s:1,t:"Category 4 — seasons 2015/16 to 2017/18: breaching the Premier League’s Profitability and Sustainability Rules (Rules E.52 to E.60)."},
+   {n:6,s:1,t:"Category 5 — December 2018 to the date of referral: failing to co-operate with, and assist, the Premier League in its investigations, including by providing documents and information."},
+   {n:7,s:1,t:"The Commission’s proceedings are confidential and heard in private; its decision is to be published on the Premier League website."}
+  ]},
+ {code:"PL-25", title:"Premier League statement on the second APT Tribunal award", issuer:"Premier League", date:"2025-02-14", type:"Statement", proc:"APT arbitration · Section X",
+  url:"https://www.premierleague.com/en/news/4244928",
+  m:{outcome:"Previous APT rules unenforceable; new rules unaffected", figure:"Three narrow aspects of the challenge", basis:"Rule X arbitration", status:["Superseded rules","neutral"]},
+  paras:[
+   {n:1,s:1,t:"The Tribunal determined that three narrow aspects of Manchester City’s challenge rendered the previous Associated Party Transaction rules unenforceable."},
+   {n:2,t:"…the previous APT Rules, as a whole, are unenforceable."},
+   {n:3,s:1,t:"The League says the award does not affect the new APT rules clubs voted in in November 2024, on which the Tribunal made no findings."},
+   {n:4,t:"[The League] continues to believe that the new APT Rules are valid and enforceable."}
+  ]},
+ {code:"APT-25", title:"Second Partial Final Award (Rule X Arbitral Tribunal)", issuer:"Arbitral Tribunal (PL Rule X)", date:"2025-02-13", type:"Award", proc:"APT arbitration · Section X",
+  url:"https://jusmundi.com/en/document/decision/en-manchester-city-football-club-limited-v-football-association-premier-league-limited-i-second-partial-final-award-thursday-13th-february-2025",
+  m:{outcome:"Previous APT rules unenforceable as a whole", figure:"—", basis:"Competition law; Rule X", status:["Final","neutral"]},
+  paras:[
+   {n:1,s:1,t:"Follow-on award to the October 2024 Partial Final Award, addressing the consequences of the unlawful elements of the APT rules the Tribunal had identified."},
+   {n:2,s:1,t:"The Tribunal concluded that the previous APT rules were unenforceable as a whole."}
+  ]},
+ {code:"MCFC-24", title:"Club statement on the Rule X Arbitral Tribunal award", issuer:"Manchester City FC", date:"2024-10-07", type:"Statement", proc:"APT arbitration · Section X",
+  url:"https://www.mancity.com/news/club/club-statement-rule-x-arbitral-tribunal-award-63863904",
+  m:{outcome:"Welcomes award; says APT rules unlawful", figure:"Two transaction decisions set aside", basis:"Competition Act; procedural fairness", status:["Club response","neutral"]},
+  paras:[
+   {n:1,t:"Following today’s publication of the Rule X Arbitral Tribunal Award, Manchester City Football Club thanks the distinguished members of the Arbitral Tribunal for their work and considerations and welcomes their findings."},
+   {n:2,s:1,t:"The club says the APT rules were found unlawful under UK competition law and procedurally unfair, that the League abused its dominant position, and that its decisions on two of the club’s sponsorship transactions were set aside."},
+   {n:3,s:1,t:"The club highlights the finding that excluding shareholder loans from the rules was discriminatory."}
+  ]},
+ {code:"APT-24", title:"Partial Final Award (Rule X Arbitral Tribunal)", issuer:"Arbitral Tribunal (PL Rule X)", date:"2024-10-07", type:"Award", proc:"APT arbitration · Section X",
+  url:"https://resources.premierleague.com/premierleague/document/2024/10/07/898efab9-9f51-449b-a393-1a0c05b48824/Manchester-City-and-Premier-League-Partial-Final-Award-071024.pdf",
+  m:{outcome:"APT rules unlawful in part", figure:"Two PL transaction decisions set aside", basis:"Competition Act 1998; Rule X", status:["Final","neutral"]},
+  paras:[
+   {n:1,s:1,t:"Separate from the 115-charge case: Manchester City challenged the Premier League’s Associated Party Transaction (APT) rules, which test whether deals with owner-linked companies are at fair market value."},
+   {n:2,s:1,t:"The Tribunal found parts of the APT rules unlawful, including the exclusion of shareholder loans from the regime, and set aside the League’s decisions on two of the club’s sponsorship transactions on procedural fairness grounds."},
+   {n:3,s:1,t:"Both sides publicly claimed parts of the award as a win; the League said the APT framework itself was upheld as necessary."}
+  ]},
+ {code:"CAS-20", title:"CAS 2020/A/6785 Arbitral Award", issuer:"Court of Arbitration for Sport", date:"2020-07-13", type:"Award", proc:"UEFA · CAS",
+  url:"https://jusmundi.com/en/document/decision/en-manchester-city-football-club-limited-v-union-des-associations-europeennes-de-football-uefa-arbitral-award-monday-13th-july-2020-1",
+  m:{outcome:"Ban set aside; fine cut to €10m", figure:"€30m → €10m", basis:"UEFA CL & FFP Regs; 5-year limitation", status:["Overturned UEFA ban","clear"]},
+  paras:[
+   {n:1,s:1,t:"The CAS Panel found that most of the alleged breaches were either not established or were time-barred under the five-year limitation period in UEFA’s regulations."},
+   {n:2,s:1,t:"The two-season exclusion from UEFA competitions was set aside."},
+   {n:3,s:1,t:"The Panel upheld a breach for failing to co-operate with the CFCB investigation and reduced the fine from €30 million to €10 million."}
+  ]},
+ {code:"UEFA-20", title:"CFCB Adjudicatory Chamber decision on Manchester City", issuer:"UEFA Club Financial Control Body", date:"2020-02-14", type:"Decision", proc:"UEFA · CAS",
+  url:"https://www.uefa.com/news-media/news/025a-0f8e7535cab3-07272066f9f6-1000--club-financial-control-body-adjudicatory-chamber-decision-on",
+  m:{outcome:"Two-season UEFA ban + €30m fine", figure:"€30m", basis:"UEFA CL & FFP Regulations", status:["Overturned in part","neutral"]},
+  paras:[
+   {n:1,t:"Following a hearing held on 22 January 2020 the Adjudicatory Chamber of the UEFA Club Financial Control Body (CFCB), chaired by José da Cunha Rodrigues, has today notified Manchester City Football Club of the final decision on the case which was referred by the CFCB Chief Investigator."},
+   {n:2,t:"…Manchester City Football Club committed serious breaches of the UEFA Club Licensing and Financial Fair Play Regulations by overstating its sponsorship revenue in its accounts and in the break-even information submitted to UEFA between 2012 and 2016."},
+   {n:3,t:"…in breach of the Regulations the Club failed to cooperate in the investigation of this case by the CFCB."},
+   {n:4,t:"…excluding them from participation in UEFA club competitions for the next two seasons (i.e. the 2020/21 and 2021/22 seasons) and a fine of EUR 30 million."}
+  ]},
+ {code:"HB-26", title:"Premier League Handbook 2026/27", issuer:"Premier League", date:"2026-07-31", type:"Rules", proc:"Rules",
+  url:"https://resources.premierleague.pulselive.com/premierleague/document/2026/07/31/8a890ff9-176c-4364-a8ff-e08f995e2c86/TM2040_PL-Handbook-and-Collateral-2026-27_Digital_31.07.pdf",
+  m:{outcome:"Reference text for the rules cited", figure:"—", basis:"Sections B, C, E, W, X", status:["Current rules","neutral"]},
+  paras:[
+   {n:"W",s:1,t:"Section W sets out disciplinary procedure: referral of complaints to an independent Commission, sanctions, and appeals to an Appeal Board."},
+   {n:"X",s:1,t:"Section X covers arbitration between the League and clubs, the route used for the APT challenge."},
+   {n:"E",s:1,t:"Section E sets out club finance obligations, including annual accounts and the profitability and sustainability regime."},
+   {n:"C",s:1,t:"Section C governs the submission of financial information to the League."}
+  ]}
+];
+const TIMELINE_FUTURE = [
+ {date:"2026-10-02", title:"City’s deadline to appeal the Commission’s findings", what:"Per the Premier League statement of 29 Sep 2026 [PL-26]."},
+ {date:null, title:"Sanctions hearing before the independent Commission", what:"Date not yet announced."}
+];
+const SUGGESTED = [
+ "Explain the “Disguised Funding Scheme” like I’m a fan, not a lawyer",
+ "Why does the PL say £900m when the decision says £830m?",
+ "Compare UEFA/CAS in 2020 with the 2026 Commission. What changed?",
+ "Steelman City’s appeal using only its own statement and the decision",
+ "Write a 5-post thread on Charge 4 (non-co-operation)",
+ "Which charges could the time-bar argument have touched?"
+];
+const EXAMPLE = {q:"Why does the PL say £900m when the decision says £830m?",
+ a:"They measure slightly different things.\n\n- The Commission’s figure is about **income**: it found the Club’s income across the relevant years “hugely overstated by over £830 million” [CD-26 ¶101].\n- The League’s statement combines both sides of the ledger, saying revenues were inflated **and costs reduced** by more than £900 million [PL-26 ¶2].\n- The decision also records understated expenses (one line alone is £49.414 million) [CD-26 ¶101], which helps close the gap between the two numbers.\n\nThe redacted decision doesn’t give a single combined total, so the exact reconciliation can’t be confirmed from these documents alone."};
+
+
+/* ---------- Shared helpers ---------- */
+const SHORT={"CD-26":"Commission decision","PL-26":"Premier League statement","MCFC-26":"Manchester City statement","PL-23":"Premier League referral","PL-25":"PL statement on APT ruling","APT-25":"Second APT award","MCFC-24":"City statement on APT award","APT-24":"APT partial final award","CAS-20":"CAS award","UEFA-20":"UEFA decision","HB-26":"PL Handbook 2026/27"};
+const NEWS={
+ "CD-26":{k:"The Verdict",nyt:"Commission Finds Manchester City Broke Premier League Rules, Clearing It on Only One Charge",men:"Man City found guilty on every charge bar one as commission verdict published",st:"The independent Commission’s redacted decision says the club disguised owner funding as sponsorship income, overstating income by more than £830 million. Sanctions will be decided later."},
+ "PL-26":{k:"Premier League",nyt:"League Says Sanctions Will Be Set at a Separate Hearing",men:"Premier League confirms Man City sanctions hearing is still to come",st:"The League puts the combined effect at more than £900 million and says City have until 2 October to appeal."},
+ "MCFC-26":{k:"The Club’s Response",nyt:"City Calls the Decision ‘Unsafe’ and Says It Will Appeal",men:"Man City hit back: ‘The club is innocent’",st:"In a five-paragraph statement the club said the opinion contains ‘clear material errors, of law, principle and fact’."},
+ "PL-23":{k:"February 2023",nyt:"Premier League Refers City to an Independent Commission",men:"Premier League charges Man City over nine seasons of finances",st:"The original referral set out five categories of alleged breaches, running from 2009/10 to the date of referral."},
+ "PL-25":{k:"Sponsorship Rules",nyt:"League Insists Its New Sponsorship Rules Still Stand",men:"Premier League insists new APT rules are ‘valid and enforceable’",st:"The League said the tribunal made no findings on the rules clubs voted in during November 2024."},
+ "APT-25":{k:"Sponsorship Rules",nyt:"Second Award Leaves the Old Sponsorship Rules Unenforceable",men:"Old Premier League sponsorship rules ruled unenforceable",st:"A follow-on award from the Rule X tribunal on the consequences of its October 2024 findings."},
+ "MCFC-24":{k:"Sponsorship Rules",nyt:"City Welcomes Tribunal’s Findings on Sponsorship Rules",men:"Man City welcome tribunal ruling on Premier League sponsorship rules",st:"The club highlighted the finding that leaving shareholder loans out of the rules was discriminatory."},
+ "APT-24":{k:"Sponsorship Rules",nyt:"Tribunal Finds Parts of the League’s Sponsorship Rules Unlawful",men:"Man City win partial victory in Premier League sponsorship rules fight",st:"A separate arbitration over Associated Party Transaction rules, which test whether owner-linked deals are at fair value."},
+ "CAS-20":{k:"UEFA, 2020",nyt:"Sport’s Top Court Lifts City’s European Ban",men:"Man City’s Champions League ban overturned",st:"CAS found most allegations not established or time-barred, and cut the fine from €30 million to €10 million."},
+ "UEFA-20":{k:"UEFA, 2020",nyt:"UEFA Bars City From Europe for Two Seasons",men:"Man City banned from Champions League for two seasons",st:"UEFA’s financial watchdog found City overstated sponsorship revenue between 2012 and 2016 and fined the club €30 million."},
+ "HB-26":{k:"Rulebook",nyt:"The Rules at the Center of the Case",men:"The Premier League rulebook, explained",st:"Sections W, X, E and C of the 2026/27 Handbook: discipline, arbitration and club finances."}
+};
+const byCode=Object.fromEntries(DOCS.map(d=>[d.code,d]));
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],MONL=["January","February","March","April","May","June","July","August","September","October","November","December"];
+const dShort=iso=>{if(!iso)return"Date TBC";const[y,m,d]=iso.split("-");return `${+d} ${MON[m-1]} ${y}`};
+const dLong=iso=>{const[y,m,d]=iso.split("-");return `${+d} ${MONL[m-1]} ${y}`};
+const dUS=iso=>{const[y,m,d]=iso.split("-");return `${MONL[m-1]} ${+d}, ${y}`};
+const byDate=()=>[...DOCS].sort((a,b)=>b.date.localeCompare(a.date));
+function hl(text,q){const e=esc(text);if(!q||q.length<2)return e;return e.replace(new RegExp("("+esc(q).replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","gi"),"<mark>$1</mark>")}
+function snip(t,q){const i=t.toLowerCase().indexOf(q.toLowerCase());if(i<0||t.length<170)return t;const s=Math.max(0,i-60);return(s?"…":"")+t.slice(s,s+180).trim()+(s+180<t.length?"…":"")}
+function searchHits(q){const h=[];q=q.toLowerCase();DOCS.forEach(d=>d.paras.forEach(p=>{if(p.t.toLowerCase().includes(q))h.push({d,p})}));return h}
+function summaryNote(d){const n=d.paras.filter(p=>p.s).length;return n===d.paras.length?"This is a summary of the document, not its wording. Read the original for exact language.":n?"Paragraphs in grey are a summary. Everything else is quoted; “…” marks a cut and square brackets mark our words.":"Quoted from the original. “…” marks a cut and square brackets mark our words."}
+
+/* ---------- Ask ---------- */
+let sampleFn=null;const T={thread:[{role:"user",text:EXAMPLE.q,example:1},{role:"ai",text:EXAMPLE.a,example:1}],busy:false};
+function corpusText(only){return DOCS.filter(d=>!only||d.code===only).map(d=>`### [${d.code}] ${d.title} — ${d.issuer}, ${d.date}\n`+d.paras.map(p=>`(¶${p.n}) ${p.s?"[archive summary] ":""}${p.t}`).join("\n")+(d.findings?"\nFindings: "+d.findings.map(f=>`${f[0]} ${f[1]} — ${f[3]}`).join("; "):"")).join("\n\n")}
+const RULES=`You answer readers' questions on "The Pepstein Files", a public archive of official documents in the Premier League's case against Manchester City (the "115 charges") and related UEFA/CAS and APT proceedings.
+- Use ONLY the documents below. If they don't cover something, say so.
+- Cite each factual claim inline as [CODE ¶N], e.g. [CD-26 ¶101]. Use the exact codes and paragraph labels given.
+- Lines marked [archive summary] are paraphrase; never put them in quotation marks.
+- Creative formats are fine (explainers, threads, steelmen, analogies) but stay faithful, and flag speculation.
+- Be fair to both the League and the Club. Not legal advice.
+- Write like a good sports reporter: plain, direct, no filler, no headings. Under 200 words unless asked. "- " bullets and **bold** sparingly.
+
+DOCUMENTS:
+`;
+function fmtAnswer(t){
+  const refs=[];const idx=(c,n)=>{const k=c+"|"+n;let i=refs.findIndex(r=>r.k===k);if(i<0){refs.push({k,c,n});i=refs.length-1}return i+1};
+  const inline=s=>esc(s).replace(/\s?\[([A-Z]+-\d{2})(?:\s*¶\s*([\w().]+))?\]/g,(m,c,n)=>{if(!byCode[c])return m;n=n?String(n).replace(/\(.*$/,""):"";const i=idx(c,n);return `<sup><button class="fn" data-doc="${c}" ${n?`data-para="${n}"`:""} aria-label="Source ${i}">${i}</button></sup>`}).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+  const out=[];let list=[];
+  t.split("\n").forEach(l=>{if(/^\s*[-•]\s+/.test(l))list.push(`<li>${inline(l.replace(/^\s*[-•]\s+/,""))}</li>`);else{if(list.length){out.push(`<ul>${list.join("")}</ul>`);list=[]}if(l.trim())out.push(`<p>${inline(l)}</p>`)}});
+  if(list.length)out.push(`<ul>${list.join("")}</ul>`);
+  if(refs.length)out.push(`<ol class="srcs">${refs.map((r,i)=>`<li><span>${i+1}</span><button data-doc="${r.c}" ${r.n?`data-para="${r.n}"`:""}>${SHORT[r.c]}${r.n?`, ¶${esc(r.n)}`:""}</button></li>`).join("")}</ol>`);
+  return out.join("");
+}
+function threadHTML(){
+  let h="";for(let i=0;i<T.thread.length;i+=2){const u=T.thread[i],a=T.thread[i+1];
+    h+=`<div class="qa">${u.example?`<p class="ex">Example</p>`:""}<p class="q">${esc(u.text)}</p><div class="a">${!a?"":a.pending&&!a.text?`<span class="thinking">Reading the documents…</span>`:fmtAnswer(a.text)}${a?.err?`<p class="err">${esc(a.err)}</p>`:""}</div></div>`}
+  return h;
+}
+function errCopy(c){return({not_granted:"You didn’t allow Claude for this page, so it can’t answer.",sampling_disabled:"Claude isn’t available on this account.",rate_limited:"Too many questions in a row. Give it a minute.",session_expired:"Sign in to Claude again, then retry.",refused:"Claude wouldn’t answer that one. Try rephrasing.",prompt_too_large:"That’s too much text to send."})[c]||"Couldn’t reach Claude. Try again."}
+async function askCore(q,only,render){
+  q=q.trim();if(!q||T.busy)return;
+  T.thread=T.thread.filter(m=>!m.example);T.thread.push({role:"user",text:q});
+  if(!sampleFn){T.thread.push({role:"ai",text:"",err:"Live answers are coming soon. For now, try the search box or browse the documents."});render();return}
+  const msg={role:"ai",text:"",pending:true};T.thread.push(msg);T.busy=true;render();
+  const history=T.thread.slice(0,-2).filter(m=>m.text&&!m.err).slice(-6).map(m=>({role:m.role==="user"?"user":"assistant",content:m.text}));
+  try{const r=await sampleFn([{role:"user",content:RULES+corpusText(only)},...history,{role:"user",content:q}],{cache:false,onText:({text})=>{msg.text=text;render()}});msg.text=r.text}
+  catch(e){msg.text=e.text||"";if(e.code!=="cancelled")msg.err=errCopy(e.code)}
+  msg.pending=false;T.busy=false;render();
+}
+async function initSample(after){try{sampleFn=window.claude?.use?await window.claude.use("sample"):null}catch{sampleFn=null}after&&after()}
+
+/* ---------- Tabloid page ---------- */
+let route="home",q="";
+const KEY=[["CD-26",101],["CD-26",29],["CD-26",114],["MCFC-26",3],["CD-26",157]];
+function card(c){const d=byCode[c],n=NEWS[c];return `<article class="card"><div class="kick">${n.k}</div><h3><button data-doc="${c}">${esc(n.men)}</button></h3><p>${esc(n.st)}</p><time>${dShort(d.date)}</time></article>`}
+function row(c){const d=byCode[c],n=NEWS[c];return `<div class="row"><time>${dShort(d.date)}</time><div><div class="kick">${n.k}</div><h4><button data-doc="${c}">${esc(n.men)}</button></h4><p>${esc(n.st)}</p></div></div>`}
+function charges(){const d=byCode["CD-26"];return `<div class="charges">${d.findings.map(f=>`<div class="ch"><span class="c">${f[0]}</span><span class="d">${esc(f[1])} <small>${esc(f[2])}</small></span><span class="v ${f[3]==="Proven"?"":"np"}">${f[3]}</span></div>`).join("")}</div>`}
+function home(){
+  const n=NEWS["CD-26"];
+  return `<section class="lead"><div class="leadart" aria-hidden="true"><div class="fig">£830m<span>+</span></div><div class="cap">Income overstated across the relevant seasons, according to the Commission’s decision (¶101).</div></div>
+   <div><div class="kick">${n.k}</div><h1><button data-doc="CD-26">${esc(n.men)}</button></h1><p class="stand">${esc(n.st)}</p>
+   <ul class="related"><li><button data-doc="CD-26" data-para="29">Commission says some City witnesses gave evidence they knew was untrue</button></li><li><button data-doc="PL-26">What happens next: sanctions hearing and appeal deadline</button></li><li><button data-go="ask">Ask the Files: put your own question to the documents</button></li></ul></div></section>
+   <div class="cards">${["MCFC-26","PL-26","PL-23"].map(card).join("")}</div>
+   <h2 class="secthead">Charge by charge</h2>${charges()}
+   <h2 class="secthead">How we got here</h2><div class="list">${["APT-25","PL-25","APT-24","MCFC-24","CAS-20","UEFA-20"].map(row).join("")}</div>`;
+}
+function docs(){return `<h2 class="secthead" style="margin-top:0">All documents</h2><div class="list">${byDate().map(d=>row(d.code)).join("")}</div>`}
+function timeline(){
+  return `<h2 class="secthead" style="margin-top:0">Timeline</h2><div class="list">${TIMELINE_FUTURE.map(f=>`<div class="row"><time>${dShort(f.date)}</time><div><div class="kick">Coming up</div><h4>${esc(f.title)}</h4><p>${esc(f.what.replace(/\s*\[.*?\]/g,""))}</p></div></div>`).join("")}${byDate().filter(d=>d.type!=="Rules").map(d=>row(d.code)).join("")}</div>`;
+}
+function search(){
+  const h=searchHits(q);
+  return `<h2 class="secthead" style="margin-top:0">${h.length} result${h.length===1?"":"s"} for “${esc(q)}”</h2>${h.length?`<div class="list">${h.map(({d,p})=>`<div class="row"><time>¶${esc(p.n)}</time><div><div class="kick">${esc(SHORT[d.code])}</div><p style="font-size:16px;color:var(--ink)"><button data-doc="${d.code}" data-para="${esc(p.n)}">${hl(snip(p.t,q),q)}</button></p></div></div>`).join("")}</div>`:`<p>No passage mentions that. <button data-ask="${esc(q)}" style="color:var(--red);font-weight:700;text-decoration:underline">Ask the Files instead</button></p>`}`;
+}
+function article(code,para){
+  const d=byCode[code],n=NEWS[code];
+  let h=`<article class="art"><div class="crumbs"><button data-go="home">Home</button> › ${esc(n.k)}</div><div class="kick">${esc(d.type)}</div><h1>${esc(n.men)}</h1><p class="stand">${esc(n.st)}</p>
+   <div class="byline"><span>Source: <b>${esc(d.issuer)}</b></span><span>${dLong(d.date)}</span><a href="${d.url}" target="_blank" rel="noopener">Read the original document</a></div>`;
+  if(code==="CD-26")h+=`<p class="alert">Sanctions have not been decided. They will be set at a separate hearing, and City have until 2 October to appeal.</p><h2 class="secthead" style="margin-top:0">The findings</h2>${charges()}<h2 class="secthead">What the decision says</h2>`;
+  h+=`<p class="note">${summaryNote(d)}</p>`;
+  d.paras.forEach((p,i)=>{h+=`<div class="para${p.s?" sum":""}" id="p-${p.n}"><span class="n">${esc(p.n)}</span><p>${hl(p.t,q)}</p></div>`;
+    if(code==="CD-26"&&i===5)h+=`<blockquote class="pull">“By its conduct the Club clearly intended to circumvent the PL Rules.”<cite>The Commission, ¶114</cite></blockquote>`;});
+  h+=`</article>`;return h;
+}
+function render(para){
+  const m=$("main");
+  m.innerHTML=route==="home"?home():route==="docs"?docs():route==="timeline"?timeline():route==="search"?search():article(route.slice(4),para);
+  document.querySelectorAll("#nav button").forEach(b=>b.setAttribute("aria-current",b.dataset.go===route||(route==="doc:CD-26"&&b.dataset.go==="doc:CD-26")));
+  if(para!=null){const el=document.getElementById("p-"+para);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});el.classList.add("flash");setTimeout(()=>el.classList.remove("flash"),1400)}}
+  else window.scrollTo({top:0});
+}
+function renderAsk(){
+  $("thread").innerHTML=threadHTML();
+  $("tries").innerHTML=T.thread.every(m=>m.example)?SUGGESTED.filter(s=>s!==EXAMPLE.q).slice(0,3).map(s=>`<button data-ask="${esc(s)}">${esc(s)} →</button>`).join(""):"";
+  $("askBtn").disabled=T.busy;
+  if(!T.thread.every(m=>m.example))$("thread").scrollTop=$("thread").scrollHeight;
+}
+function ask(s){$("askbox").scrollIntoView({behavior:"smooth",block:"start"});askCore(s,null,renderAsk)}
+$("keylines").innerHTML=KEY.map(([c,p])=>{const t=byCode[c].paras.find(x=>x.n==p).t.replace(/^…|…$/g,"");const short=t.length>110?t.slice(0,t.lastIndexOf(" ",105))+"…":t;return `<li><button data-doc="${c}" data-para="${p}">“${esc(short)}”<small>${SHORT[c]}, ¶${p}</small></button></li>`}).join("");
+
+document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+  if(b.dataset.go){if(b.dataset.go==="ask"){ask("");$("askInput").focus();return}route=b.dataset.go;render();return}
+  if(b.dataset.doc){route="doc:"+b.dataset.doc;render(b.dataset.para??null);return}
+  if(b.dataset.ask){ask(b.dataset.ask);return}
+});
+$("searchForm").addEventListener("submit",e=>{e.preventDefault();q=$("q").value.trim();if(q.length<2)return;route="search";render()});
+$("askform").addEventListener("submit",e=>{e.preventDefault();const v=$("askInput").value;$("askInput").value="";ask(v)});
+render();renderAsk();
+initSample(()=>{if(!sampleFn)$("fine").textContent="Live answers are coming soon. The example shows how they’ll work. Not legal advice."});
+</script>
+
+</body>
+</html>
