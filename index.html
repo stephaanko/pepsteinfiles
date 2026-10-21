@@ -118,6 +118,24 @@ main{padding-block:28px 64px;display:grid;gap:40px}
 .mine{font-family:var(--f-mono);font-size:11px;font-weight:600;padding:2px 6px;border-radius:5px}
 .mine.y{background:var(--yes-soft);color:var(--yes)} .mine.n{background:var(--no-soft);color:var(--no)}
 .spark{width:96px;height:32px;flex:none}
+.card{cursor:pointer}
+.card h3 a{text-decoration:none}
+.card h3 a:hover{text-decoration:underline}
+.vote-row.sm{margin-top:0;gap:8px}
+.vote-row.sm .vbtn{padding:9px 10px;font-size:14px;text-align:center;align-items:center}
+.credit{font-size:12.5px;color:var(--muted)}
+.credit b{color:var(--ink);font-weight:600}
+
+/* results stay blurred until you vote on that market */
+.lockable{position:relative}
+.lockable.is-locked .lk{filter:blur(7px);opacity:.5;pointer-events:none;user-select:none}
+.lockable .veil{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:10px}
+.lockable.is-locked .veil{display:flex}
+.veil .lockpill{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:var(--bg);font-size:12.5px;font-weight:600;padding:6px 11px;border-radius:99px;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+.veil .lockpill svg{width:13px;height:13px;flex:none}
+.veil .vote-row{margin-top:2px;width:min(260px,100%)}
+.veil .vbtn{padding:8px 10px;font-size:13.5px;text-align:center;align-items:center}
+.veil .fine{max-width:30ch}
 
 /* newsletter band */
 .band{background:var(--ink);color:var(--bg);border-radius:14px;padding:28px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:24px;align-items:center}
@@ -214,6 +232,30 @@ table.list th{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text
 .hero-poly{margin-top:16px;font-size:14px;background:var(--surface-2);border-radius:9px;padding:10px 12px;display:flex;gap:8px;flex-wrap:wrap;align-items:baseline}
 .hero-poly b{font-family:var(--f-mono)}
 
+/* suggest a market */
+.sug{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:20px;align-items:start}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg label{border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;display:grid;gap:2px;background:var(--bg)}
+.seg label b{font-size:14.5px}
+.seg label span{font-size:12.5px;color:var(--muted)}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label:has(input:checked){border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink);background:var(--surface)}
+.seg label:has(input:focus-visible){outline:2px solid var(--focus);outline-offset:2px}
+.field textarea{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:10px 12px;width:100%;font:inherit;color:inherit;resize:vertical;min-height:84px}
+.count-hint{font-family:var(--f-mono);font-size:11px;color:var(--muted);justify-self:end}
+.status{font-family:var(--f-mono);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:5px;white-space:nowrap}
+.status.pending{background:var(--surface-2);color:var(--muted)}
+.status.approved,.status.live{background:var(--yes-soft);color:var(--yes)}
+.status.declined{background:var(--no-soft);color:var(--no)}
+.mini-cta{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--surface);border:1px dashed var(--line);border-radius:var(--r);padding:14px 16px;margin-top:14px;font-size:14px}
+
+/* quick question (progressive profile) */
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opts button{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:6px 12px;font-size:13.5px;font-weight:500}
+.opts button:hover{border-color:var(--ink)}
+.nudge{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:55;width:min(360px,calc(100% - 32px));background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:10px;box-shadow:0 12px 32px rgba(0,0,0,.18)}
+.nudge .x{position:absolute;top:8px;right:8px;border:0;background:none;color:var(--muted);font-size:18px;line-height:1;padding:6px}
+
 /* modal */
 .scrim{position:fixed;inset:0;background:var(--shade);z-index:50;display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
 .modal{background:var(--surface);border-radius:14px;width:min(440px,100%);padding:24px;display:grid;gap:14px;max-height:100%;overflow:auto;border:1px solid var(--line)}
@@ -235,7 +277,7 @@ footer{border-top:1px solid var(--line);padding-block:26px 40px;color:var(--mute
 footer .wrap{display:grid;gap:8px}
 
 @media (max-width:860px){
-  .hero,.detail,.acct,.band,.pet{grid-template-columns:1fr}
+  .hero,.detail,.acct,.band,.pet,.sug{grid-template-columns:1fr}
   .pet-hero{padding:20px}
   .hero{padding:20px}
   .band{padding:22px}
@@ -274,6 +316,7 @@ footer .wrap{display:grid;gap:8px}
       <a href="#petition" data-go="petition">Petition</a>
       <a href="#markets" data-go="markets">Markets</a>
       <a href="#leaderboard" data-go="leaderboard">Leaderboard</a>
+      <a href="#suggest" data-go="suggest">Suggest</a>
       <a href="#newsletter" data-go="newsletter">Newsletter</a>
       <a href="#me" data-go="me" id="acctLink" class="btn">Sign in</a>
     </nav>
@@ -286,11 +329,12 @@ footer .wrap{display:grid;gap:8px}
   <div class="wrap">
     <div><strong style="color:var(--ink)">No money. No prizes. Nothing to buy.</strong> Markets here are public votes. Nobody stakes or wins anything.</div>
     <div>Every “Read the files” link goes to an official document from the Premier League, the club, UEFA or CAS. Polymarket odds appear separately, labelled as outside market data. Not affiliated with the Premier League, Manchester City FC or Polymarket.</div>
-    <div>We store your email, first name, country, club and votes. Your name is shown only if you choose to be listed as a signer. Newsletter only if you opt in. Unsubscribe or mute alerts any time from your account.</div>
+    <div>We store your email, first name, country, club, your votes, any market suggestions you send and any optional fan-profile answers. Results are shown in aggregate. Your name is shown only if you choose to be listed as a signer or credited on a market. Newsletter only if you opt in. Unsubscribe, mute alerts, or clear your fan-profile answers any time from your account.</div>
   </div>
 </footer>
 
 <div id="modalRoot"></div>
+<div id="nudgeRoot"></div>
 <div id="toastRoot"></div>
 
 <script>
@@ -362,6 +406,8 @@ const POLY = {
                   "will"   = forecast (settles on a real outcome)
    To settle a forecast, set status:"resolved", outcome:"yes"|"no"
    here AND in the markets table (see SETUP.md).
+   Fan-suggested market? Add by:{name:"Sam", club:"Liverpool"}
+   and it shows "Suggested by Sam · Liverpool fan".
    ------------------------------------------------------------ */
 const MARKETS = [
   {id:"strip-titles", kind:"should", headline:true,
@@ -429,6 +475,38 @@ const byId = Object.fromEntries(MARKETS.map(m=>[m.id,m]));
 
 const CLUBS = ["Arsenal","Aston Villa","Bournemouth","Brentford","Brighton","Burnley","Chelsea","Crystal Palace","Everton","Fulham","Leeds United","Liverpool","Manchester City","Manchester United","Newcastle United","Nottingham Forest","Sunderland","Tottenham Hotspur","West Ham United","Wolves","Another club","No club"];
 const COUNTRIES = ["United Kingdom","Ireland","United States","Canada","Australia","Nigeria","Ghana","Kenya","South Africa","India","Norway","Spain","Portugal","Germany","UAE","Other"];
+// Prefill country from the browser so the sign-up step is one less choice.
+const REGION_TO_COUNTRY = {GB:"United Kingdom",IE:"Ireland",US:"United States",CA:"Canada",AU:"Australia",NG:"Nigeria",GH:"Ghana",KE:"Kenya",ZA:"South Africa",IN:"India",NO:"Norway",ES:"Spain",PT:"Portugal",DE:"Germany",AE:"UAE"};
+function guessCountry(){
+  try{
+    const tz=Intl.DateTimeFormat().resolvedOptions().timeZone||"";
+    if(tz==="Europe/London") return "United Kingdom"; if(tz==="Europe/Dublin") return "Ireland";
+    const langs=navigator.languages||[navigator.language||""];
+    for(const l of langs){ const r=(l.split("-")[1]||"").toUpperCase(); if(REGION_TO_COUNTRY[r]) return REGION_TO_COUNTRY[r]; }
+  }catch(e){}
+  return "";
+}
+
+/* ------------------------------------------------------------
+   Fan profile: progressive questions.
+   Sign-up only asks club + country (+ first name). These extra
+   questions are asked ONE at a time, right after a vote, always
+   skippable, never asked twice. Add, remove or reorder freely.
+   Answers are saved to profiles.fan (jsonb) as {id: value}.
+   The two below are placeholders. Swap in the questions you want.
+   ------------------------------------------------------------ */
+const FAN_QUESTIONS = [
+  {id:"years", q:"How long have you supported your club?", opts:["Under 5 years","5–15 years","15+ years","Since birth"]},
+  {id:"watch", q:"How do you watch most matches?", opts:["At the ground","TV subscription","At the pub","Highlights only"]}
+];
+
+/* ------------------------------------------------------------
+   Suggestions: fans submit petitions/forecasts, you approve.
+   To publish one: add it to MARKETS below with
+   by:{name:"Sam", club:"Liverpool"} and run the approve SQL in
+   SETUP.md (marks the request approved and emails the submitter).
+   ------------------------------------------------------------ */
+const SUGGEST = { maxPending: 3, qMax: 110, detailMax: 600 };
 
 /* ------------------------------------------------------------
    Helpers
@@ -442,6 +520,12 @@ const store = {
   del(k){ try{ localStorage.removeItem(k);}catch(e){} }
 };
 function pct(t){ const tot=(t?.yes||0)+(t?.no||0); return tot? Math.round((t.yes/tot)*100) : 50; }
+function tot(t){ return t? (t.total ?? ((t.yes||0)+(t.no||0))) : 0; }
+// Results unlock per market, once you've voted on it.
+function unlocked(m){ return !!S.votes[m.id]; }
+// Placeholder numbers rendered under the blur, so the real split never reaches the page before you vote.
+function fakePct(id){ return Math.round(22+seedRand(id+"veil")()*56); }
+function fakeSeries(id){ const r=seedRand(id+"veilchart"); let p=50; const out=[]; const now=Date.now(); for(let i=0;i<20;i++){ p=Math.min(85,Math.max(15,p+(r()-.5)*14)); out.push({day:new Date(now-(19-i)*864e5),yesPct:p,total:0}); } return out; }
 function toast(msg){ const r=$("#toastRoot"); r.innerHTML=`<div class="toast" role="status">${esc(msg)}</div>`; clearTimeout(toast._t); toast._t=setTimeout(()=>r.innerHTML="",3200); }
 function seedRand(str){ let h=2166136261; for(const c of str){ h^=c.charCodeAt(0); h=Math.imul(h,16777619);} return ()=>{ h+=0x6D2B79F5; let t=h; t=Math.imul(t^t>>>15,t|1); t^=t+Math.imul(t^t>>>7,t|61); return ((t^t>>>14)>>>0)/4294967296; }; }
 function supNo(n){ return "#"+String(n).padStart(5,"0"); }
@@ -473,7 +557,7 @@ const Demo = {
   async tallies(){
     const mine=store.get("pf_demo_votes",{}); const out={};
     for(const m of MARKETS){ const [s,t]=DEMO_BASE[m.id]; let yes=Math.round(s*t), no=t-yes;
-      if(mine[m.id]==="yes") yes++; if(mine[m.id]==="no") no++; out[m.id]={yes,no}; }
+      if(mine[m.id]==="yes") yes++; if(mine[m.id]==="no") no++; out[m.id]={yes,no,total:yes+no}; }
     return out;
   },
   async history(id){ const h=demoHistory(id); const mine=store.get("pf_demo_votes",{});
@@ -509,8 +593,10 @@ const Demo = {
     let t=Date.now()-20e3; for(let i=0;i<10;i++){ t-= (30+r()*400)*1000; const pl=places[Math.floor(r()*places.length)]; out.push({first_name:pool[i],country:pl[0],club:pl[1],signed_at:new Date(t).toISOString()}); }
     return out;
   },
+  async submitRequest(r){ const list=store.get("pf_demo_requests",[]); list.push({...r,id:"r"+Date.now(),status:"pending",created_at:new Date().toISOString()}); store.set("pf_demo_requests",list); return {ok:true}; },
+  async myRequests(){ return store.get("pf_demo_requests",[]).slice().reverse(); },
   async signOut(){ store.del("pf_demo_user"); },
-  reset(){ ["pf_demo_user","pf_demo_votes","pf_demo_log","pf_demo_mutes","pf_demo_pending_email","pf_pending"].forEach(k=>store.del(k)); }
+  reset(){ ["pf_demo_user","pf_demo_votes","pf_demo_log","pf_demo_mutes","pf_demo_pending_email","pf_pending","pf_pending_suggest","pf_demo_requests","pf_nl_offered","pf_nl_intent"].forEach(k=>store.del(k)); }
 };
 
 /* ------------------------------------------------------------
@@ -529,9 +615,13 @@ const Live = {
   },
   async loadProfile(){ const {data}=await this.sb.from("profiles").select("*").eq("id",this.user.id).maybeSingle(); this.profile=data; },
   session(){ if(!this.user) return null; return {email:this.user.email, ...(this.profile||{}), joined:this.profile?.created_at}; },
-  async tallies(){ const {data,error}=await this.sb.rpc("get_tallies"); if(error) throw error; const o={}; (data||[]).forEach(r=>o[r.market_id]={yes:+r.yes,no:+r.no}); return o; },
-  async history(id){ const {data}=await this.sb.rpc("market_history",{p_market:id}); return (data||[]).map(r=>{ const t=+r.yes + +r.no; return {day:new Date(r.day), yesPct:t? (+r.yes/t)*100 : 50, total:t}; }); },
-  async splits(id){ if(!this.user) return []; const {data}=await this.sb.rpc("market_splits",{p_market:id}); return (data||[]).map(r=>({club:r.club,yes:+r.yes,no:+r.no})); },
+  // Gated on the server (schema-v4.1.sql): yes/no come back null for markets you haven't voted on,
+  // except the petition's signature count, which is public. Totals are always public.
+  async tallies(){ const {data,error}=await this.sb.rpc("get_tallies_v2"); if(error) throw error; const o={}; (data||[]).forEach(r=>o[r.market_id]={yes:r.yes==null?null:+r.yes,no:r.no==null?null:+r.no,total:+r.total}); return o; },
+  async history(id){ const {data}=await this.sb.rpc("market_history_v2",{p_market:id}); return (data||[]).map(r=>{ const t=+r.yes + +r.no; return {day:new Date(r.day), yesPct:t? (+r.yes/t)*100 : 50, total:t}; }); },
+  async splits(id){ if(!this.user) return []; const {data}=await this.sb.rpc("market_splits_v2",{p_market:id}); return (data||[]).map(r=>({club:r.club,yes:+r.yes,no:+r.no})); },
+  async submitRequest(r){ const {error}=await this.sb.from("market_requests").insert({user_id:this.user.id,...r}); if(error) return {ok:false,error:/pending/i.test(error.message)?`You can have ${SUGGEST.maxPending} suggestions waiting at once.`:"Couldn't send it. Try again."}; return {ok:true}; },
+  async myRequests(){ if(!this.user) return []; const {data}=await this.sb.from("market_requests").select("id,kind,question,status,created_at,market_id").eq("user_id",this.user.id).order("created_at",{ascending:false}); return data||[]; },
   async requestLink(email){
     const redirect = CONFIG.SITE_URL ? CONFIG.SITE_URL + "/" : location.origin + location.pathname;
     const {error}=await this.sb.auth.signInWithOtp({email, options:{emailRedirectTo:redirect, shouldCreateUser:true}});
@@ -590,12 +680,14 @@ const App = {
     S.user = api.session();
     if(!S.user) return;
     this.syncAcct();
+    S.votes = await api.myVotes();
     const pending = store.get("pf_pending",null);
     if(!S.user.first_name){ openProfile(pending); return; }
     if(pending){ await finishVote(pending); }
-    else if(!silent){ toast("You're signed in."); }
+    else if(store.get("pf_pending_suggest",null)){ await finishSuggest(); }
+    else if(!silent){ closeModal(); App.route(); toast("You're signed in."); }
   },
-  route(){
+  route(keepScroll){
     let h = decodeURIComponent(location.hash.replace(/^#/,""));
     if(/access_token|error_description|type=/.test(h)) h="markets";
     document.querySelectorAll(".nav a").forEach(a=>a.removeAttribute("aria-current"));
@@ -604,9 +696,10 @@ const App = {
     else if(h==="petition"){ renderPetition(v); mark("petition"); }
     else if(h==="me"){ renderMe(v); mark("me"); }
     else if(h==="leaderboard"){ renderBoard(v); mark("leaderboard"); }
+    else if(h==="suggest"){ renderSuggest(v); mark("suggest"); }
     else if(h==="newsletter"){ renderHome(v); mark("newsletter"); requestAnimationFrame(()=>$("#nl")?.scrollIntoView({behavior:"smooth",block:"start"})); return; }
     else { renderHome(v); mark("markets"); }
-    window.scrollTo({top:0});
+    if(!keepScroll) window.scrollTo({top:0});
   }
 };
 function mark(id){ const a=document.querySelector(`.nav a[data-go="${id}"]`); if(a) a.setAttribute("aria-current","page"); }
@@ -649,6 +742,24 @@ function kindChip(m){ if(m.status==="resolved") return `<span class="chip">Settl
 function yesLabel(m){ return m.yes||"Yes"; } function noLabel(m){ return m.no||"No"; }
 function mineTag(m){ const v=S.votes[m.id]; return v? `<span class="mine ${v==="yes"?"y":"n"}">YOU: ${v==="yes"?esc(yesLabel(m)).toUpperCase():esc(noLabel(m)).toUpperCase()}</span>`:""; }
 
+const LOCK_SVG = `<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1.5" fill="currentColor"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>`;
+// Compact Yes/No pair: used on cards and inside the blur veils.
+function miniVote(m){
+  const v=S.votes[m.id]; const closed=m.status!=="open";
+  return `<div class="vote-row sm">
+    <button class="vbtn y ${v==="yes"?"picked":""}" data-vote="${m.id}" data-side="yes" ${closed?"disabled":""} aria-label="${esc(yesLabel(m))}: ${esc(m.q)}">${esc(yesLabel(m))}</button>
+    <button class="vbtn n ${v==="no"?"picked":""}" data-vote="${m.id}" data-side="no" ${closed?"disabled":""} aria-label="${esc(noLabel(m))}: ${esc(m.q)}">${esc(noLabel(m))}</button></div>`;
+}
+// Wraps results in a blur until the visitor has voted on this market.
+// opts.buttons: show Yes/No inside the veil; opts.note: line under the pill.
+function lockWrap(m, inner, opts={}){
+  const open=unlocked(m);
+  const label=opts.label||"Vote to see results";
+  return `<div class="lockable ${open?"":"is-locked"}"${opts.style?` style="${opts.style}"`:""}><div class="lk" ${open?"":'aria-hidden="true"'}>${inner}</div>
+    ${open?"":`<div class="veil"><span class="lockpill">${LOCK_SVG}${esc(label)}</span>${opts.note?`<span class="fine">${esc(opts.note)}</span>`:""}${opts.buttons?miniVote(m):""}</div>`}</div>`;
+}
+function creditLine(m){ return m.by? `<span class="credit">Suggested by <b>${esc(m.by.name)}</b>${m.by.club&&m.by.club!=="No club"?` · ${esc(m.by.club)} fan`:""}</span>` : ""; }
+
 function voteButtons(m){
   const v=S.votes[m.id]; const closed=m.status!=="open";
   const sub=(side)=> closed? "Voting closed" : v===side? "Your vote" : v? "Change to this" : (side==="yes"? (m.yesSub||"Vote yes") : (m.noSub||"Vote no"));
@@ -659,26 +770,27 @@ function voteButtons(m){
 function bindVotes(root){ root.querySelectorAll("[data-vote]").forEach(b=>b.addEventListener("click",e=>{ e.preventDefault(); e.stopPropagation(); startVote(b.dataset.vote,b.dataset.side); })); }
 
 async function renderHome(v){
-  const h=MARKETS.find(m=>m.headline); const t=S.tallies[h.id]||{yes:0,no:0}; const p=pct(t);
+  const h=MARKETS.find(m=>m.headline); const t=S.tallies[h.id]||{yes:0,no:0}; const hOpen=unlocked(h); const p=hOpen? pct(t) : fakePct(h.id);
   const others=MARKETS.filter(m=>!m.headline);
+  const hp=POLY.m[h.id];
   v.innerHTML = `
   <section class="hero" aria-labelledby="hq">
     <div>
       <div class="chips"><span class="chip should">Petition</span><span class="chip live">Live</span><span class="chip">Headline market</span></div>
       <h1 id="hq">${esc(h.q)}</h1>
-      <p class="lede">Guilty on almost every charge. Sanctions still to come. Pick a side. Your vote counts once you confirm your email, and you can change it any time.</p>
-      <div class="odds">
+      <p class="lede">Guilty on almost every charge. Sanctions still to come. Pick a side to see where everyone else landed. Your vote counts once you confirm your email, and you can change it any time.</p>
+      ${lockWrap(h, `<div class="odds">
         <div><span class="big y num">${p}%</span><span class="lbl">${esc(yesLabel(h))}</span></div>
         <div><span class="big n num">${100-p}%</span><span class="lbl">${esc(noLabel(h))}</span></div>
       </div>
-      <div class="bar" style="margin-top:14px"><span style="width:${p}%"></span></div>
+      <div class="bar" style="margin-top:14px"><span style="width:${p}%"></span></div>`, {label:"Vote to see the split"})}
       ${voteButtons(h)}
-      ${POLY.m[h.id]?`<div class="hero-poly"><span class="poly" style="border:0;padding:0"><span class="tag">$ POLYMARKET</span></span><span>Money says <b>${POLY.m[h.id].pct}%</b> chance it actually happens.</span><a href="#${h.id}" data-go="${h.id}" style="font-size:13px">Money vs. fans →</a></div>`:""}
-      <div class="meta"><span><b class="num">${fmt(t.yes+t.no)}</b> verified votes</span><span><b class="num">${fmt(t.yes)}</b> signed the petition</span><a href="#petition" data-go="petition">Read the petition →</a></div>
+      ${hp? lockWrap(h, `<div class="hero-poly"><span class="poly" style="border:0;padding:0"><span class="tag">$ POLYMARKET</span></span><span>Money says <b>${hOpen?hp.pct:fakePct(h.id+"p")}%</b> chance it actually happens.</span><a href="#${h.id}" data-go="${h.id}" style="font-size:13px">Money vs. fans →</a></div>`, {label:"Money vs. fans unlocks when you vote"}) : ""}
+      <div class="meta"><span><b class="num">${fmt(t.yes)}</b> signed the petition</span>${hOpen?`<span><b class="num">${fmt(tot(t))}</b> verified votes</span>`:""}<a href="#petition" data-go="petition">Read the petition →</a></div>
     </div>
     <div class="chart-box">
       <div class="chart-head"><span class="eyebrow">% saying strip them</span><span class="eyebrow">Since the decision</span></div>
-      <div id="heroChart">${chartSVG(null)}</div>
+      ${lockWrap(h, `<div id="heroChart">${chartSVG(hOpen?null:fakeSeries(h.id))}</div>`, {label:"Vote to see how it's moved"})}
     </div>
   </section>
 
@@ -691,30 +803,35 @@ async function renderHome(v){
         <button data-f="will" aria-pressed="${S.filter==="will"}">Forecasts</button>
       </div>
     </div>
-    <p class="fine" style="margin:-4px 0 14px">Petitions ask what <em>should</em> happen and never settle. Forecasts ask what <em>will</em> happen and settle on the real outcome. Call them right to climb the leaderboard.</p>
+    <p class="fine" style="margin:-4px 0 14px">Petitions ask what <em>should</em> happen and never settle. Forecasts ask what <em>will</em> happen and settle on the real outcome. Results stay hidden until you vote, so nobody just follows the crowd.</p>
     <div class="grid" id="grid">${others.filter(m=>S.filter==="all"||m.kind===S.filter).map(cardHTML).join("")}</div>
+    <div class="mini-cta"><span><strong>Got a question we're missing?</strong> <span class="fine">Suggest a petition or forecast. If we run it, your name goes on it.</span></span><a class="btn" href="#suggest" data-go="suggest">Suggest a market</a></div>
   </section>
 
   ${newsletterBand()}`;
   bindVotes(v);
   v.querySelectorAll("[data-f]").forEach(b=>b.addEventListener("click",()=>{ S.filter=b.dataset.f; renderHome(v); }));
   bindNewsletter(v);
-  $("#heroChart").innerHTML = chartSVG(await hist(h.id));
-  for(const m of others){ const el=v.querySelector(`[data-spark="${m.id}"]`); if(el) el.innerHTML=sparkSVG(await hist(m.id)); }
+  if(hOpen) $("#heroChart").innerHTML = chartSVG(await hist(h.id));
+  for(const m of others){ if(!unlocked(m)) continue; const el=v.querySelector(`[data-spark="${m.id}"]`); if(el) el.innerHTML=sparkSVG(await hist(m.id)); }
 }
 function cardHTML(m){
-  const t=S.tallies[m.id]||{yes:0,no:0}; const p=pct(t);
-  return `<a class="card" href="#${m.id}" data-go="${m.id}">
+  const t=S.tallies[m.id]||{yes:0,no:0}; const open=unlocked(m); const p=open? pct(t) : fakePct(m.id);
+  return `<article class="card" data-go="${m.id}">
     <div class="row">${kindChip(m)}${mineTag(m)}</div>
-    <h3>${esc(m.q)}</h3>
-    <div class="row"><div class="pct num">${p}%<small>yes</small></div><span data-spark="${m.id}">${sparkSVG(null)}</span></div>
-    <div class="bar"><span style="width:${p}%"></span></div>
-    ${polyLine(m,p)}
-    <div class="foot"><span><span class="num">${fmt(t.yes+t.no)}</span> votes</span><span>${m.kind==="will"? (m.closes?"Closes "+esc(m.closes):"Settles on ruling") : "Never settles"}</span></div>
-  </a>`;
+    <h3><a href="#${m.id}" data-go="${m.id}">${esc(m.q)}</a></h3>
+    ${lockWrap(m, `<div style="display:grid;gap:12px">
+      <div class="row"><div class="pct num">${p}%<small>yes</small></div><span data-spark="${m.id}">${sparkSVG(open?null:fakeSeries(m.id))}</span></div>
+      <div class="bar"><span style="width:${p}%"></span></div>
+      ${polyLine(m,p)}</div>`, {label:"Vote to reveal"})}
+    ${miniVote(m)}
+    <div class="foot"><span><span class="num">${fmt(tot(t))}</span> votes</span><span>${m.kind==="will"? (m.closes?"Closes "+esc(m.closes):"Settles on ruling") : "Never settles"}</span></div>
+    ${creditLine(m)}
+  </article>`;
 }
 function polyLine(m,p){ const x=POLY.m[m.id]; if(!x) return "";
-  return `<div class="poly"><span class="tag">$ POLYMARKET</span><span>Money <b>${x.pct}%</b></span><span style="margin-left:auto">Fans <b>${p}%</b></span></div>`; }
+  const money=unlocked(m)? x.pct : fakePct(m.id+"p");
+  return `<div class="poly"><span class="tag">$ POLYMARKET</span><span>Money <b>${money}%</b></span><span style="margin-left:auto">Fans <b>${p}%</b></span></div>`; }
 function gapLine(m,p){ const x=POLY.m[m.id]; const d=p-x.pct;
   if(m.kind==="should") return `${p}% of fans say it should happen. Money puts the chance it does at ${x.pct}%.`;
   if(Math.abs(d)<5) return `Fans and money agree, within ${Math.abs(d)} points.`;
@@ -740,7 +857,7 @@ function bindNewsletter(v){ const b=$("#nlBtn",v); if(!b) return; b.addEventList
   S.user = await api.setNewsletter(true); toast("Subscribed to The Pepstein Files."); App.route(); }); }
 
 async function renderDetail(v,m){
-  const t=S.tallies[m.id]||{yes:0,no:0}; const p=pct(t); const mine=S.votes[m.id];
+  const t=S.tallies[m.id]||{yes:0,no:0}; const mine=S.votes[m.id]; const open=unlocked(m); const p=open? pct(t) : fakePct(m.id);
   const mutes = S.user? await api.mutes() : {};
   v.innerHTML = `
   <div><a class="back" href="#markets" data-go="markets">← All markets</a></div>
@@ -749,43 +866,44 @@ async function renderDetail(v,m){
       <section class="panel">
         <div class="chips">${kindChip(m)}${m.status==="open"?'<span class="chip live">Live</span>':''}${mineTag(m)}</div>
         <h1>${esc(m.q)}</h1>
-        <div class="odds">
+        ${m.by?`<div style="margin-top:8px">${creditLine(m)}</div>`:""}
+        ${lockWrap(m, `<div class="odds">
           <div><span class="big y num">${p}%</span><span class="lbl">${esc(yesLabel(m))}</span></div>
           <div><span class="big n num">${100-p}%</span><span class="lbl">${esc(noLabel(m))}</span></div>
         </div>
-        <div class="bar" style="margin-top:14px"><span style="width:${p}%"></span></div>
+        <div class="bar" style="margin-top:14px"><span style="width:${p}%"></span></div>`, {label:"Vote to see the split"})}
         ${voteButtons(m)}
-        <div class="meta"><span><b class="num">${fmt(t.yes+t.no)}</b> verified votes</span>${mine?'<span>You can change your vote. Every change is kept in the history.</span>':'<span>One vote per verified email.</span>'}</div>
+        <div class="meta"><span><b class="num">${fmt(tot(t))}</b> verified votes</span>${mine?'<span>You can change your vote. Every change is kept in the history.</span>':'<span>Results unlock when you vote. One vote per verified email.</span>'}</div>
       </section>
-      <section class="panel"><h2>Yes over time</h2><div id="dChart">${chartSVG(null)}</div></section>
+      <section class="panel"><h2>Yes over time</h2>${lockWrap(m, `<div id="dChart">${chartSVG(open?null:fakeSeries(m.id))}</div>`, {label:"Vote to see the swings"})}</section>
       <section class="panel"><h2>What this asks</h2><div class="prose">${m.about.map(p=>`<p>${esc(p)}</p>`).join("")}${m.res?`<p><strong>How it settles.</strong> ${esc(m.res)}</p>`:""}</div></section>
     </div>
     <div style="display:grid;gap:20px;min-width:0">
-      <section class="panel ${S.user?"":"locked"}" aria-label="Votes by club">
+      <section class="panel" aria-label="Votes by club">
         <h2>How each club voted</h2>
-        <div class="splits" id="splits">${S.user?'<div class="empty">Loading…</div>':fakeSplits()}</div>
-        ${S.user?"":`<div class="gate"><strong>Members only</strong><span class="fine">Vote to unlock the club-by-club split.</span><button class="btn solid" id="unlock">Sign in to see it</button></div>`}
+        ${lockWrap(m, `<div class="splits" id="splits">${open?'<div class="empty">Loading…</div>':fakeSplits()}</div>`, {label:"Members only", note:"Vote on this market to see the club-by-club split.", buttons:true, style:"min-height:190px"})}
       </section>
       ${POLY.m[m.id]?moneyPanel(m,p):""}
       <section class="panel"><h2>Read the files</h2><ul class="src">${m.src.map(k=>SOURCES[k]).map(s=>`<li><a href="${s.u}" target="_blank" rel="noopener"><span>${esc(s.t)}</span><span class="k">${esc(s.k)}</span></a></li>`).join("")}</ul></section>
       <section class="panel"><h2>Share</h2>
-        <p class="fine" style="margin:0 0 10px">${p}% say ${esc(yesLabel(m).toLowerCase())}. Send it to someone who disagrees.</p>
+        <p class="fine" style="margin:0 0 10px">${open?`${p}% say ${esc(yesLabel(m).toLowerCase())}. Send it to someone who disagrees.`:"Send it to someone who'll disagree with you."}</p>
         <button class="btn" id="copyLink">Copy link</button>
         ${S.user && mine?`<div class="toggle" style="margin-top:12px"><label for="mute">Email me when this market moves or settles</label><input type="checkbox" class="sw" id="mute" ${mutes[m.id]?"":"checked"}></div>`:""}
       </section>
     </div>
   </div>`;
   bindVotes(v);
-  $("#unlock",v)?.addEventListener("click",()=>openEmail(null));
   $("#copyLink",v).addEventListener("click",()=>copy(`${CONFIG.SITE_URL}/#${m.id}`));
   $("#mute",v)?.addEventListener("change",async e=>{ await api.setMute(m.id,!e.target.checked); toast(e.target.checked?"Alerts on for this market.":"Alerts muted for this market."); });
-  $("#dChart").innerHTML = chartSVG(await hist(m.id));
-  if(S.user){ const sp=await api.splits(m.id); $("#splits").innerHTML = sp.length? sp.map(splitRow).join("") : `<div class="empty">Clubs appear here once at least five of their fans have voted.</div>`; }
+  if(open){
+    $("#dChart").innerHTML = chartSVG(await hist(m.id));
+    const sp=await api.splits(m.id); $("#splits").innerHTML = sp.length? sp.map(splitRow).join("") : `<div class="empty">Clubs appear here once at least five of their fans have voted.</div>`;
+  }
 }
-function moneyPanel(m,p){ const x=POLY.m[m.id];
+function moneyPanel(m,p){ const x=POLY.m[m.id]; const open=unlocked(m); const money=open? x.pct : fakePct(m.id+"p");
   return `<section class="panel" aria-label="Money versus fans"><h2>Money vs. fans</h2>
-    <div class="mvf"><div><span>Fans here say ${m.kind==="should"?"it should":"yes"}</span><b style="color:var(--yes)">${p}%</b><span>free votes</span></div><div><span>Polymarket says it will</span><b>${x.pct}%</b><span>real-money odds</span></div></div>
-    <p class="gap">${esc(gapLine(m,p))}</p>
+    ${lockWrap(m, `<div class="mvf"><div><span>Fans here say ${m.kind==="should"?"it should":"yes"}</span><b style="color:var(--yes)">${p}%</b><span>free votes</span></div><div><span>Polymarket says it will</span><b>${money}%</b><span>real-money odds</span></div></div>
+    <p class="gap">${open?esc(gapLine(m,p)):"Fans and money are 00 points apart."}</p>`, {label:"Vote to see fans vs. money", buttons:true})}
     <p class="fine" style="margin:0 0 10px">${x.kind==="same"?"Their market:":"Their question is close, not identical:"} “${esc(x.q)}”</p>
     <a class="btn" href="${x.u}" target="_blank" rel="noopener">See live odds on Polymarket ↗</a>
     <p class="fine" style="margin:10px 0 0">Outside market data, not an official source. Snapshot from ${esc(POLY.updated)}; odds move. Polymarket is a real-money site with its own rules on who can use it. We have no link with it and earn nothing from it.</p>
@@ -830,14 +948,14 @@ async function renderPetition(v){
         <p class="fine" style="margin:0">${left? `${fmt(left)} more to reach the goal. Delivered to the Premier League on ${esc(PETITION.deliverWhen)}.` : `Goal reached. Delivered to the Premier League on ${esc(PETITION.deliverWhen)}.`}</p>
         <div class="vote-row" style="margin-top:4px">
           <button class="vbtn y ${mine==="yes"?"picked":""}" data-vote="${PETITION.market}" data-side="yes">${mine==="yes"?"You've signed":"Sign the petition"}<small>${mine==="yes"?"Now share it":"Free. Takes 30 seconds."}</small></button>
-          <button class="vbtn n ${mine==="no"?"picked":""}" data-vote="${PETITION.market}" data-side="no">${mine==="no"?"You counter-signed":"Sign the counter-petition"}<small>${fmt(t.no)} say keep the titles</small></button>
+          <button class="vbtn n ${mine==="no"?"picked":""}" data-vote="${PETITION.market}" data-side="no">${mine==="no"?"You counter-signed":"Sign the counter-petition"}<small>${mine? `${fmt(t.no)} say keep the titles` : "Count shown after you sign"}</small></button>
         </div>
       </section>
       <section class="panel"><h2>The petition</h2>
         <div class="letter"><p class="to">${esc(PETITION.to)}</p>${PETITION.body.map(x=>`<p>${esc(x)}</p>`).join("")}<p style="color:var(--muted)">Signed, ${fmt(t.yes)} fans</p></div>
       </section>
       <section class="panel"><h2>The counter-petition</h2>
-        <div class="letter"><p>${esc(PETITION.counter)}</p><p class="fine" style="margin:0">${fmt(t.no)} people have counter-signed. Both totals are delivered together.</p></div>
+        <div class="letter"><p>${esc(PETITION.counter)}</p><p class="fine" style="margin:0">${mine? `${fmt(t.no)} people have counter-signed.` : "Sign either side to see how many have counter-signed."} Both totals are delivered together.</p></div>
       </section>
       <section class="panel"><h2>How we count</h2>
         <ol class="steps"><li>One signature per verified email. You confirm by clicking a link we email you.</li><li>Signing the petition and the counter-petition are the same vote, so nobody can do both. You can switch sides, and every switch is logged.</li><li>Totals update live. No bots, no imports, no signatures bought or added by hand.</li><li>We deliver counts and the club-by-club split, not names or emails.</li></ol>
@@ -868,7 +986,7 @@ async function renderMe(v){
       <button class="btn solid" id="signin">Sign in with email</button></section>`;
     $("#signin").addEventListener("click",()=>openEmail(null)); return;
   }
-  const u=S.user; const log=await api.voteLog(); const mutes=await api.mutes();
+  const u=S.user; const log=await api.voteLog(); const mutes=await api.mutes(); const reqs=await api.myRequests(); const fan=u.fan||{};
   const voted=MARKETS.filter(m=>S.votes[m.id]);
   const settled=MARKETS.filter(m=>m.kind==="will"&&m.status==="resolved"&&S.votes[m.id]);
   const right=settled.filter(m=>S.votes[m.id]===m.outcome).length;
@@ -907,12 +1025,23 @@ async function renderMe(v){
         <p class="fine" style="margin:0 0 12px">${esc(u.email)}</p>
         <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="editP">Edit name, country, club</button><button class="btn" id="out">Sign out</button></div>
       </section>
+      ${FAN_QUESTIONS.length?`<section class="panel"><h2>Fan profile</h2>
+        <p class="fine" style="margin:0 0 6px">Optional. Used only in aggregate, for splits like “fans who've been going 15+ years”.</p>
+        <div class="tbl"><table class="list"><tbody>${FAN_QUESTIONS.map(q=>`<tr><td>${esc(q.q)}</td><td style="white-space:nowrap">${fan[q.id]? esc(fan[q.id]) : `<button class="btn" style="padding:5px 10px;font-size:13px" data-askq="${q.id}">Answer</button>`}</td></tr>`).join("")}</tbody></table></div>
+        ${Object.values(fan).some(Boolean)?`<button class="btn" id="clearFan" style="margin-top:10px">Clear my answers</button>`:""}
+      </section>`:""}
+      <section class="panel"><h2>Your suggestions</h2>
+        ${reqs.length? `<div class="tbl"><table class="list"><thead><tr><th>Question</th><th>Status</th></tr></thead><tbody>${reqs.map(r=>`<tr><td>${esc(r.question)}<br><span class="fine">${r.kind==="will"?"Forecast":"Petition"} · ${new Date(r.created_at).toLocaleDateString("en-GB",{day:"numeric",month:"short"})}</span></td><td>${statusTag(r)}</td></tr>`).join("")}</tbody></table></div>`
+          : `<p class="empty">Nothing yet. <a href="#suggest" data-go="suggest">Suggest a market</a> and if we run it, your name goes on it.</p>`}
+      </section>
     </div>
   </div>`;
   $("#nlT").addEventListener("change",async e=>{ S.user=await api.setNewsletter(e.target.checked); toast(e.target.checked?"Subscribed to The Pepstein Files.":"Unsubscribed from the newsletter."); });
   $("#feedT").addEventListener("change",async e=>{ S.user=await api.saveProfile({show_in_feed:e.target.checked}); toast(e.target.checked?"You'll appear in recent signers.":"Removed from recent signers."); });
   v.querySelectorAll("[data-mute]").forEach(i=>i.addEventListener("change",async()=>{ await api.setMute(i.dataset.mute,!i.checked); toast(i.checked?"Alerts on.":"Alerts muted."); }));
   $("#editP").addEventListener("click",()=>openProfile(null,true));
+  v.querySelectorAll("[data-askq]").forEach(b=>b.addEventListener("click",()=>askQuestion(FAN_QUESTIONS.find(q=>q.id===b.dataset.askq),true)));
+  $("#clearFan")?.addEventListener("click",async()=>{ S.user=await api.saveProfile({fan:Object.fromEntries(FAN_QUESTIONS.map(q=>[q.id,""]))}); toast("Fan-profile answers cleared."); App.route(); });
   $("#out").addEventListener("click",async()=>{ await api.signOut(); S.user=null; S.votes={}; App.syncAcct(); toast("Signed out."); go("markets"); });
 }
 
@@ -929,6 +1058,122 @@ async function renderBoard(v){
 }
 
 /* ------------------------------------------------------------
+   Suggest a market: fans submit, you approve (see SETUP.md)
+   ------------------------------------------------------------ */
+function statusTag(r){
+  if(r.market_id && byId[r.market_id]) return `<a class="status live" href="#${r.market_id}" data-go="${r.market_id}">Live</a>`;
+  return {approved:`<span class="status approved">Approved</span>`, declined:`<span class="status declined">Not this time</span>`}[r.status] || `<span class="status pending">In review</span>`;
+}
+function suggestPreview(d){
+  const who = d.credit? (S.user?.first_name ? {name:S.user.first_name, club:S.user.club} : {name:"You", club:""}) : null;
+  const m={id:"preview", kind:d.kind, q:d.question.trim()||(d.kind==="will"?"Will …?":"Should …?"), status:"open", by:who};
+  return `<article class="card" style="cursor:default" aria-label="Preview of your market">
+    <div class="row">${kindChip(m)}<span class="chip">Preview</span></div>
+    <h3>${esc(m.q)}</h3>
+    ${lockWrap(m, `<div style="display:grid;gap:12px"><div class="row"><div class="pct num">${fakePct("p"+m.q)}%<small>yes</small></div>${sparkSVG(fakeSeries("p"+m.q))}</div><div class="bar"><span style="width:50%"></span></div></div>`, {label:"Vote to reveal"})}
+    <div class="vote-row sm"><button class="vbtn y" type="button" disabled>Yes</button><button class="vbtn n" type="button" disabled>No</button></div>
+    ${who? creditLine(m) : `<span class="credit">Suggested by a fan</span>`}
+  </article>`;
+}
+async function renderSuggest(v){
+  const reqs = S.user? await api.myRequests() : [];
+  const d = store.get("pf_suggest_draft",{kind:"should",question:"",detail:"",source_url:"",credit:true});
+  v.innerHTML = `
+  <div class="sug">
+    <section class="panel">
+      <div class="eyebrow">Suggest a market</div>
+      <h1 style="font-family:var(--f-display);font-weight:800;font-size:clamp(34px,5vw,52px);text-transform:uppercase;line-height:1;margin:8px 0 10px">Ask the question</h1>
+      <p style="margin:0 0 18px;color:var(--muted);max-width:56ch">Something fans are arguing about that isn't on the board? Send it in. We read every one. If it runs, it goes live with your name on it.</p>
+      <form id="sg" style="display:grid;gap:16px" novalidate>
+        <fieldset style="border:0;padding:0;margin:0"><legend style="font-size:13px;font-weight:600;margin-bottom:6px">Type</legend>
+          <div class="seg">
+            <label><input type="radio" name="kind" value="should" ${d.kind!=="will"?"checked":""}><b>Petition</b><span>“Should…” What ought to happen. Never settles.</span></label>
+            <label><input type="radio" name="kind" value="will" ${d.kind==="will"?"checked":""}><b>Forecast</b><span>“Will…” What will happen. Settles on the real outcome.</span></label>
+          </div>
+        </fieldset>
+        <div class="field"><label for="sq">Question</label><input id="sq" maxlength="${SUGGEST.qMax}" value="${esc(d.question)}" autocomplete="off"><span class="count-hint" id="sqc"></span></div>
+        <div class="field"><label for="sd" id="sdl"></label><textarea id="sd" maxlength="${SUGGEST.detailMax}">${esc(d.detail)}</textarea></div>
+        <div class="field"><label for="ss">Official document it relates to <span class="fine">(optional link)</span></label><input id="ss" type="url" inputmode="url" value="${esc(d.source_url)}" placeholder="premierleague.com, mancity.com, uefa.com, tas-cas.org…"></div>
+        <fieldset style="border:0;padding:0;margin:0"><legend style="font-size:13px;font-weight:600;margin-bottom:6px">If it runs</legend>
+          <div class="seg">
+            <label><input type="radio" name="credit" value="1" ${d.credit?"checked":""}><b>Credit me</b><span>${S.user?.first_name?`“Suggested by ${esc(S.user.first_name)}${S.user.club&&S.user.club!=="No club"?` · ${esc(S.user.club)} fan`:""}”`:"Your first name and club on the market"}</span></label>
+            <label><input type="radio" name="credit" value="0" ${d.credit?"":"checked"}><b>Keep me anonymous</b><span>“Suggested by a fan”</span></label>
+          </div>
+        </fieldset>
+        <div class="err" id="sgErr"></div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="btn solid" type="submit">${S.user?"Send it in":"Continue with email"}</button>${S.user?"":`<span class="fine">Free account, same one you vote with.</span>`}</div>
+      </form>
+    </section>
+    <div style="display:grid;gap:20px;min-width:0">
+      <section class="panel"><h2>How it'll look</h2><div id="sgPrev"></div></section>
+      <section class="panel"><h2>How it works</h2>
+        <ol class="steps"><li>Send a question. Up to ${SUGGEST.maxPending} can wait for review at once.</li><li>We check it: clear wording, a fair yes or no, and for forecasts, an outcome an official source will confirm.</li><li>We may tighten the wording. If it runs, it goes live with your credit on it.</li><li>We email you when it's live, so you get first vote.</li></ol>
+      </section>
+      ${S.user?`<section class="panel"><h2>Your suggestions</h2>${reqs.length? `<div class="tbl"><table class="list"><tbody>${reqs.map(r=>`<tr><td>${esc(r.question)}<br><span class="fine">${r.kind==="will"?"Forecast":"Petition"} · ${new Date(r.created_at).toLocaleDateString("en-GB",{day:"numeric",month:"short"})}</span></td><td style="text-align:right">${statusTag(r)}</td></tr>`).join("")}</tbody></table></div>` : `<p class="empty">Your first one will show up here.</p>`}</section>`:""}
+    </div>
+  </div>`;
+  const read=()=>({kind:$("input[name=kind]:checked",v).value, question:$("#sq",v).value, detail:$("#sd",v).value, source_url:$("#ss",v).value.trim(), credit:$("input[name=credit]:checked",v).value==="1"});
+  const sync=()=>{ const x=read();
+    $("#sq",v).placeholder = x.kind==="will"? "Will City appeal to CAS?" : "Should the Premier League publish the full decision?";
+    $("#sdl",v).innerHTML = x.kind==="will"? `How should it settle? <span class="fine">(required)</span>` : `Why it matters <span class="fine">(optional)</span>`;
+    $("#sd",v).placeholder = x.kind==="will"? "Settles YES if… Settles NO if… Which official source would confirm it?" : "One or two lines on why fans should weigh in.";
+    $("#sqc",v).textContent = `${x.question.length}/${SUGGEST.qMax}`;
+    $("#sgPrev",v).innerHTML = suggestPreview(x); store.set("pf_suggest_draft",x); };
+  v.querySelectorAll("#sg input, #sg textarea").forEach(el=>el.addEventListener("input",sync)); sync();
+  $("#sg",v).addEventListener("submit",async e=>{
+    e.preventDefault(); const x=read(); const err=$("#sgErr",v); err.textContent="";
+    let q=x.question.trim().replace(/\s+/g," ");
+    if(q.length<12){ err.textContent="Write the full question, like the examples on the board."; return; }
+    if(!/[?]$/.test(q)) q+="?";
+    if(x.kind==="will" && x.detail.trim().length<20){ err.textContent="Forecasts need a rule for how they settle."; return; }
+    if(x.source_url && !/^https?:\/\/\S+\.\S+/.test(x.source_url)){ err.textContent="That link doesn't look right. Paste the full address, starting https://"; return; }
+    if(S.user && reqs.filter(r=>r.status==="pending").length>=SUGGEST.maxPending){ err.textContent=`You have ${SUGGEST.maxPending} waiting already. We'll get to them.`; return; }
+    store.set("pf_pending_suggest",{kind:x.kind, question:q, detail:x.detail.trim()||null, source_url:x.source_url||null, credit:x.credit});
+    if(!S.user){ openEmail(null,{suggest:true}); return; }
+    if(!S.user.first_name){ openProfile(null); return; }
+    await finishSuggest();
+  });
+}
+async function finishSuggest(){
+  const d=store.get("pf_pending_suggest",null); if(!d) return;
+  const r=await api.submitRequest(d);
+  if(!r.ok){ closeModal(); toast(r.error||"Couldn't send it. Try again."); return; }
+  store.del("pf_pending_suggest"); store.del("pf_suggest_draft");
+  if(location.hash!=="#suggest") go("suggest"); else App.route(true);
+  modal(`<div class="eyebrow">Suggestion sent</div><h2>It's in the pile</h2>
+    <div class="pick" style="background:var(--surface-2)">${d.kind==="will"?"Forecast":"Petition"}<span class="fine" style="margin-left:auto">${esc(d.question)}</span></div>
+    <p>We'll email ${S.user?.email?`<strong>${esc(S.user.email)}</strong>`:"you"} if it goes live. Track it in your account.</p>
+    ${S.user?.newsletter? "" : `<div class="inbox"><strong>Want to hear when new markets open?</strong><span class="fine">The Pepstein Files: new files explained, new markets, club splits. Short and occasional.</span><div><button class="btn solid" id="nlYes2">Yes, send them</button></div></div>`}
+    <button class="btn" data-x>Done</button>`);
+  $("#nlYes2")?.addEventListener("click",async()=>{ S.user=await api.setNewsletter(true); toast("Subscribed to The Pepstein Files."); closeModal(); });
+}
+
+/* ------------------------------------------------------------
+   Fan profile: one optional question at a time
+   ------------------------------------------------------------ */
+function nextQuestion(){ if(!S.user) return null; const a=S.user.fan||{}; return FAN_QUESTIONS.find(q=>!(q.id in a))||null; }
+function questionBlock(q){
+  return `<div class="qblock" style="display:grid;gap:8px"><div class="eyebrow">Quick one · optional</div><strong style="color:var(--ink)">${esc(q.q)}</strong>
+    <div class="opts">${q.opts.map(o=>`<button type="button" data-ans="${esc(o)}">${esc(o)}</button>`).join("")}</div>
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><button type="button" data-skip class="fine" style="background:none;border:0;padding:0;text-decoration:underline">Skip</button><span class="fine">Only shown in aggregate.</span></div></div>`;
+}
+function bindQuestion(root,q,done){
+  const blk=root.querySelector(".qblock"); if(!blk) return;
+  const save=async val=>{ try{ S.user=await api.saveProfile({fan:{...(S.user.fan||{}),[q.id]:val}}); }catch(e){} blk.innerHTML = val? `<strong style="color:var(--ink)">Thanks. That's in.</strong><span class="fine">It'll show up in the splits once enough fans answer.</span>` : `<span class="fine">No problem. We won't ask that again.</span>`; done&&done(); };
+  blk.querySelectorAll("[data-ans]").forEach(b=>b.addEventListener("click",()=>save(b.dataset.ans)));
+  blk.querySelector("[data-skip]").addEventListener("click",()=>save(""));
+}
+function maybeNudge(){
+  if(maybeNudge.shown) return; const q=nextQuestion(); if(!q) return; maybeNudge.shown=true;
+  setTimeout(()=>{ const r=$("#nudgeRoot"); r.innerHTML=`<div class="nudge" role="dialog" aria-label="Quick question"><button class="x" type="button" data-nx aria-label="Close">×</button>${questionBlock(q)}</div>`;
+    bindQuestion(r,q,()=>setTimeout(()=>r.innerHTML="",1600)); r.querySelector("[data-nx]").addEventListener("click",()=>r.innerHTML=""); },700);
+}
+function askQuestion(q){ if(!q) return;
+  modal(`${questionBlock(q)}<button class="btn" data-x>Close</button>`);
+  bindQuestion($("#modalRoot"),q,()=>setTimeout(()=>{ closeModal(); App.route(true); },900));
+}
+
+/* ------------------------------------------------------------
    Vote flow: tap side → email → (link) → profile → counted
    ------------------------------------------------------------ */
 async function startVote(id,side){
@@ -938,7 +1183,8 @@ async function startVote(id,side){
     const changed=!!S.votes[id];
     await castAndRefresh(id,side);
     toast(changed? `Vote changed to ${side==="yes"?yesLabel(m):noLabel(m)}. Your old vote stays in the history.` : `Vote counted: ${side==="yes"?yesLabel(m):noLabel(m)}.`);
-    if(!changed && !S.user.newsletter) maybeOfferNewsletter(m,side);
+    if(!changed && !S.user.newsletter && !store.get("pf_nl_offered",false)) maybeOfferNewsletter(m,side);
+    else if(!changed) maybeNudge();
     return;
   }
   const pending={id,side}; store.set("pf_pending",pending);
@@ -947,7 +1193,7 @@ async function startVote(id,side){
 }
 async function castAndRefresh(id,side){
   try{ await api.cast(id,side); }catch(e){ toast("Couldn't save your vote. Try again."); console.error(e); return false; }
-  S.votes = await api.myVotes(); S.tallies = await api.tallies(); delete S.hist[id]; App.syncStrip(); App.route(); return true;
+  S.votes = await api.myVotes(); S.tallies = await api.tallies(); delete S.hist[id]; App.syncStrip(); App.route(true); return true;
 }
 async function finishVote(p){
   store.del("pf_pending"); const m=byId[p.id]; if(!m) return;
@@ -962,10 +1208,10 @@ function pickPill(p){ if(!p) return ""; const m=byId[p.id]; return `<div class="
 
 function openEmail(pending,opts={}){
   modal(`
-    <div class="eyebrow">${pending?"One step to count it":"Sign in"}</div>
-    <h2>${pending?"Lock in your vote":opts.newsletter?"Join The Pepstein Files":"Sign in with email"}</h2>
+    <div class="eyebrow">${pending?"One step to count it":opts.suggest?"One step to send it":"Sign in"}</div>
+    <h2>${pending?"Lock in your vote":opts.newsletter?"Join The Pepstein Files":opts.suggest?"Sign in to send it":"Sign in with email"}</h2>
     ${pickPill(pending)}
-    <p>We'll email you a sign-in link. No password. ${pending?"Your vote counts when you click it.":""}</p>
+    <p>We'll email you a sign-in link. No password. ${pending?"Your vote counts, and the results unlock, when you click it.":opts.suggest?"Your suggestion is sent when you click it, and we'll email you if it goes live.":""}</p>
     <form id="emailForm" class="field" novalidate>
       <label for="em">Email</label>
       <input id="em" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required>
@@ -999,11 +1245,11 @@ function openProfile(pending,editing){
     <div class="eyebrow">${editing?"Your profile":"You're in"}</div>
     <h2>${editing?"Edit profile":"Last bit"}</h2>
     ${pickPill(pending)}
-    <p>${editing?"Your club powers the club-by-club splits.":"Tell us who you support. It's how we work out the club-by-club splits."}</p>
+    <p>${editing?"Your club and country power the splits.":"Who do you support? It's how we show the club-by-club and country splits, including yours."}</p>
     <form id="pf" style="display:grid;gap:12px" novalidate>
+      <div class="field"><label for="cl">Club</label><select id="cl"><option value="">Choose…</option>${CLUBS.map(c=>`<option ${u.club===c?"selected":""}>${c}</option>`).join("")}</select></div>
+      <div class="field"><label for="ct">Country</label><select id="ct"><option value="">Choose…</option>${COUNTRIES.map(c=>`<option ${(u.country||(!editing&&guessCountry()))===c?"selected":""}>${c}</option>`).join("")}</select></div>
       <div class="field"><label for="fn">First name</label><input id="fn" autocomplete="given-name" value="${esc(u.first_name||"")}" required maxlength="40"></div>
-      <div class="field"><label for="ct">Country</label><select id="ct"><option value="">Choose…</option>${COUNTRIES.map(c=>`<option ${u.country===c?"selected":""}>${c}</option>`).join("")}</select></div>
-      <div class="field"><label for="cl">Club <span class="fine">(optional)</span></label><select id="cl"><option value="">Choose…</option>${CLUBS.map(c=>`<option ${u.club===c?"selected":""}>${c}</option>`).join("")}</select></div>
       <label class="check"><input type="checkbox" id="feedOpt" ${u.show_in_feed?"checked":""}><span>Show my first name, country and club in the petition's recent signers list.</span></label>
       <div class="err" id="pfErr"></div>
       <button class="btn solid" type="submit">${pending?"Count my vote":"Save"}</button>
@@ -1011,29 +1257,34 @@ function openProfile(pending,editing){
     <p class="fine">Your email is never shown. Your supporter number and club appear on the leaderboard. Your first name appears only if you tick the box.</p>`);
   $("#pf").addEventListener("submit",async e=>{
     e.preventDefault(); const fn=$("#fn").value.trim();
-    if(!fn){ $("#pfErr").textContent="Add a first name."; return; }
+    if(!$("#cl").value){ $("#pfErr").textContent="Choose a club, or “No club” if you don't have one."; return; }
     if(!$("#ct").value){ $("#pfErr").textContent="Choose a country."; return; }
-    const patch={first_name:fn,country:$("#ct").value,club:$("#cl").value||null,show_in_feed:$("#feedOpt").checked};
+    if(!fn){ $("#pfErr").textContent="Add a first name."; return; }
+    const patch={first_name:fn,country:$("#ct").value,club:$("#cl").value,show_in_feed:$("#feedOpt").checked};
     if(!editing && store.get("pf_nl_intent",false)){ patch.newsletter=true; if(api.mode==="live") patch.newsletter_at=new Date().toISOString(); }
     store.del("pf_nl_intent");
     try{ S.user=await api.saveProfile(patch); }catch(err){ $("#pfErr").textContent="Couldn't save. Try again."; return; }
     App.syncAcct();
-    if(pending){ await finishVote(pending); } else { closeModal(); toast(editing?"Profile saved.":"You're signed in."); App.route(); }
+    if(pending){ await finishVote(pending); }
+    else if(!editing && store.get("pf_pending_suggest",null)){ await finishSuggest(); }
+    else { closeModal(); toast(editing?"Profile saved.":"You're signed in."); App.route(); }
   });
 }
 function doneModal(m,side){
   const t=S.tallies[m.id]; const p=pct(t); const agree= side==="yes"? p : 100-p;
+  const q = S.user.newsletter? nextQuestion() : null; // one ask per moment: newsletter first, then fan questions
   modal(`
-    <div class="eyebrow">Vote counted</div>
+    <div class="eyebrow">Vote counted · results unlocked</div>
     <h2>You're supporter ${supNo(S.user.supporter_no||0)}</h2>
     ${pickPill({id:m.id,side})}
-    <p><strong style="color:var(--ink)">${agree}%</strong> of ${fmt(t.yes+t.no)} voters agree with you. You can change your vote any time. Every change is kept in the history.</p>
-    ${S.user.newsletter? `<p>You're on The Pepstein Files newsletter. We'll explain each new file when it drops.</p>`
-      : `<div class="inbox"><strong>Want the files explained when they drop?</strong><span class="fine">The Pepstein Files: short, occasional, plain English. Members get the club splits in every issue.</span><div><button class="btn solid" id="nlYes">Yes, send them</button></div></div>`}
+    <p><strong style="color:var(--ink)">${agree}%</strong> of ${fmt(tot(t))} voters agree with you. You can change your vote any time. Every change is kept in the history.</p>
+    ${!S.user.newsletter? `<div class="inbox"><strong>Want the files explained when they drop?</strong><span class="fine">The Pepstein Files: short, occasional, plain English. Members get the club splits in every issue.</span><div><button class="btn solid" id="nlYes">Yes, send them</button></div></div>`
+      : q? `<div class="inbox">${questionBlock(q)}</div>` : `<p>You're on The Pepstein Files newsletter. We'll explain each new file when it drops.</p>`}
     ${m.id===PETITION.market? `<div style="display:grid;gap:8px"><strong>Now get one friend to sign.</strong>${shareButtons()}</div><button class="btn" data-x>Done</button>`
       : `<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="shareIt">Copy link to share</button><button class="btn" data-x>Back to markets</button></div>`}`);
   bindShare($("#modalRoot"));
-  $("#nlYes")?.addEventListener("click",async()=>{ S.user=await api.setNewsletter(true); toast("Subscribed to The Pepstein Files."); closeModal(); App.route(); });
+  if(q){ maybeNudge.shown=true; bindQuestion($("#modalRoot"),q); }
+  $("#nlYes")?.addEventListener("click",async()=>{ S.user=await api.setNewsletter(true); toast("Subscribed to The Pepstein Files."); closeModal(); App.route(true); });
   $("#shareIt")?.addEventListener("click",()=>copy(`${CONFIG.SITE_URL}/#${m.id}`));
 }
 function maybeOfferNewsletter(m,side){ if(store.get("pf_nl_offered",false)) return; store.set("pf_nl_offered",true); doneModal(m,side); }
