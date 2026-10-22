@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta property="og:title" content="The Pepstein Files">
 <meta property="og:description" content="Should City be stripped of their titles? Vote, track the swings, read the files.">
 <meta name="theme-color" content="#101318">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' rx='44' fill='%2317171a'/%3E%3Ctext x='86' y='160' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-weight='700' font-size='178' fill='%23ecebe6'%3EP%3C/text%3E%3Cg fill='%23f2c94c' transform='translate(126 30) scale(.5)'%3E%3Crect x='40' width='20' height='100' rx='2'/%3E%3Crect x='40' width='20' height='100' rx='2' transform='rotate(60 50 50)'/%3E%3Crect x='40' width='20' height='100' rx='2' transform='rotate(120 50 50)'/%3E%3C/g%3E%3C/svg%3E">
 <title>The Pepstein Files</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Live public verdict on Manchester City's 115 charges. Vote yes or no on every open question, track the swings, read the files.">
@@ -14,7 +15,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap">
 <style>
-/* V4.2 direction: "the case file". Charcoal desk, paper documents, evidence-tape yellow,
+/* V4.4 = V4.2 + the new logo (THE / Pepstein* / FILES, yellow asterisk) and P* favicon.
+   V4.2 direction: "the case file". Charcoal desk, paper documents, evidence-tape yellow,
    rubber stamps for sealed results. Yes/No use two neutral hues so neither side reads as right. */
 :root{
   --bg:#ecebe6; --surface:#f8f7f3; --surface-2:#e3e1da; --ink:#17171a; --muted:#64625c; --line:#d3d0c7;
@@ -67,9 +69,14 @@ p{text-wrap:pretty}
 /* masthead */
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .top .wrap{display:flex;align-items:center;gap:16px;min-height:62px;flex-wrap:wrap;padding-block:8px}
-.brand{display:flex;align-items:center;gap:11px;text-decoration:none}
-.brand .mk{font-family:var(--f-display);font-weight:900;font-size:17px;line-height:1;background:var(--mark);color:var(--mark-ink);padding:5px 7px 4px;border-radius:3px;letter-spacing:.02em;transform:rotate(-3deg);box-shadow:2px 2px 0 var(--ink)}
-.brand .wm{font-family:var(--f-display);font-weight:900;font-size:25px;letter-spacing:.03em;text-transform:uppercase;line-height:1}
+/* the logo: THE / Pepstein* / FILES */
+.logo{display:inline-flex;flex-direction:column;align-items:flex-start;gap:4px;text-decoration:none;color:var(--ink);line-height:1}
+.logo .lb{font-family:var(--f-mono);font-weight:500;font-size:11px;letter-spacing:.5em;line-height:1}
+.logo .wd{display:flex;align-items:flex-start;font-family:var(--f-serif);font-style:italic;font-size:38px;line-height:.86;letter-spacing:-.025em;padding-bottom:.1em}
+.ast-svg{display:inline-block;flex:none;color:var(--mark)}
+.logo .ast-svg{width:.29em;height:.29em;margin:.01em 0 0 .05em;filter:drop-shadow(1px 1px 0 #17171a)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .logo .ast-svg{filter:none}}
+:root[data-theme="dark"] .logo .ast-svg{filter:none}
 .nav{display:flex;gap:2px;margin-left:auto;align-items:center;flex-wrap:wrap}
 .nav a{text-decoration:none;font-weight:500;font-size:14px;padding:7px 11px;border-radius:99px;color:var(--muted);transition:color .15s,background .15s}
 .nav a:hover{color:var(--ink)}
@@ -380,8 +387,10 @@ body[data-view="petition"] .strip{display:none}
 
 footer{border-top:1px solid var(--line);padding-block:40px 40px;color:var(--muted);font-size:13px;position:relative;z-index:2;overflow:hidden}
 footer .wrap{display:grid;gap:8px}
-footer .wordmark{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(48px,12.5vw,168px);line-height:.8;color:var(--ink);opacity:.08;letter-spacing:-.01em;margin:0 0 24px;white-space:nowrap}
-footer .wordmark span{color:var(--mark);opacity:1}
+footer .wordmark{display:flex;flex-direction:column;align-items:flex-start;gap:clamp(6px,1vw,14px);margin:0 0 28px;color:var(--ink)}
+footer .wordmark .lb{font-family:var(--f-mono);font-weight:500;font-size:clamp(11px,1.4vw,18px);letter-spacing:.5em;opacity:.3}
+footer .wordmark .wd{display:flex;align-items:flex-start;font-family:var(--f-serif);font-style:italic;font-size:clamp(72px,15vw,210px);line-height:.84;letter-spacing:-.025em;padding-bottom:.1em;opacity:.12}
+footer .wordmark .ast-svg{width:.29em;height:.29em;margin:.01em 0 0 .05em}
 
 @media (max-width:860px){
   .hero-body,.detail,.acct,.band,.docs,.sug{grid-template-columns:1fr}
@@ -399,7 +408,8 @@ footer .wordmark span{color:var(--mark);opacity:1}
   .nav a{white-space:nowrap;padding:6px 9px;font-size:13px}
   .nav a[data-go="newsletter"]{display:none}
   .nav #acctLink{margin-left:auto}
-  .brand .wm{font-size:21px}
+  .logo .wd{font-size:31px}
+  .logo .lb{font-size:9px}
   .split{grid-template-columns:86px 1fr 40px}
   .lp{padding-top:8px;gap:18px}
   .lp .vote-row{grid-template-columns:1fr}
@@ -424,6 +434,8 @@ body:has(.confirm-bar) .toast{bottom:calc(96px + env(safe-area-inset-bottom,0px)
 <body>
 
 
+
+
 <div id="demoBar" class="demo-bar" hidden><div class="wrap"><strong>Demo mode.</strong><span>Vote counts are simulated and sign-in is pretend. Your votes stay in this browser.</span><button type="button" id="resetDemo">Reset demo</button></div></div>
 
 <header class="top">
@@ -435,7 +447,7 @@ body:has(.confirm-bar) .toast{bottom:calc(96px + env(safe-area-inset-bottom,0px)
     </div>
   </div>
   <div class="wrap">
-    <a class="brand" href="#" data-go=""><span class="mk">115*</span><span class="wm">The Pepstein Files</span></a>
+    <a class="brand logo" href="#" data-go="" aria-label="The Pepstein Files, home"><span class="lb" aria-hidden="true">THE</span><span class="wd" aria-hidden="true">Pepstein<svg class="ast-svg" viewBox="0 0 100 100" aria-hidden="true"><g fill="currentColor"><rect x="41" y="2" width="18" height="96" rx="2"/><rect x="41" y="2" width="18" height="96" rx="2" transform="rotate(60 50 50)"/><rect x="41" y="2" width="18" height="96" rx="2" transform="rotate(120 50 50)"/></g></svg></span><span class="lb" aria-hidden="true">FILES</span></a>
     <nav class="nav" aria-label="Main">
       <a href="#" data-go="" data-nav="petition">The Petition</a>
       <a href="#markets" data-go="markets">Markets</a>
@@ -451,7 +463,7 @@ body:has(.confirm-bar) .toast{bottom:calc(96px + env(safe-area-inset-bottom,0px)
 
 <footer>
   <div class="wrap">
-    <p class="wordmark" aria-hidden="true">The Pepstein Files<span>*</span></p>
+    <div class="wordmark" aria-hidden="true"><span class="lb">THE</span><span class="wd">Pepstein<svg class="ast-svg" viewBox="0 0 100 100" aria-hidden="true"><g fill="currentColor"><rect x="41" y="2" width="18" height="96" rx="2"/><rect x="41" y="2" width="18" height="96" rx="2" transform="rotate(60 50 50)"/><rect x="41" y="2" width="18" height="96" rx="2" transform="rotate(120 50 50)"/></g></svg></span><span class="lb">FILES</span></div>
     <div><strong style="color:var(--ink)">No money. No prizes. Nothing to buy.</strong> Markets here are public votes. Nobody stakes or wins anything.</div>
     <div>Every “Read the files” link goes to an official document from the Premier League, the club, UEFA or CAS. Polymarket odds appear separately, labelled as outside market data. Not affiliated with the Premier League, Manchester City FC or Polymarket.</div>
     <div>We store your email, first name, country, club, your votes, any market suggestions you send and any optional fan-profile answers. Results are shown in aggregate. Your name is shown only if you choose to be listed as a signer or credited on a market. Newsletter only if you opt in. Unsubscribe, mute alerts, or clear your fan-profile answers any time from your account.</div>
@@ -1509,6 +1521,5 @@ function maybeOfferNewsletter(m,side){ if(store.get("pf_nl_offered",false)) retu
 
 App.start();
 </script>
-
 </body>
 </html>
