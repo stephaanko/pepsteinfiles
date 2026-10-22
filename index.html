@@ -12,289 +12,413 @@
 <meta name="description" content="Live public verdict on Manchester City's 115 charges. Vote yes or no on every open question, track the swings, read the files.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap">
 <style>
-/* Layout: trading-floor board. Sticky masthead, one headline market as the hero,
-   then a filterable grid of market cards. Detail and account views swap in place. */
+/* V4.2 direction: "the case file". Charcoal desk, paper documents, evidence-tape yellow,
+   rubber stamps for sealed results. Yes/No use two neutral hues so neither side reads as right. */
 :root{
-  --bg:#f3f4f6; --surface:#ffffff; --surface-2:#e9ecf0; --ink:#101318; --muted:#5a6270; --line:#d9dde4;
-  --yes:#0d8a57; --yes-soft:#dff3e9; --yes-ink:#ffffff;
-  --no:#c93a32; --no-soft:#fbe6e4; --no-ink:#ffffff;
-  --mark:#f1c84b; --mark-ink:#101318; --focus:#2457d6; --shade:rgba(16,19,24,.55);
-  --strip-bg:#101318; --strip-fg:#f3f4f6; --strip-line:rgba(243,244,246,.28);
+  --bg:#ecebe6; --surface:#f8f7f3; --surface-2:#e3e1da; --ink:#17171a; --muted:#64625c; --line:#d3d0c7;
+  --yes:#3e4ccc; --yes-soft:#e3e5fa; --yes-ink:#ffffff;
+  --no:#9c4a86; --no-soft:#f3e3ee; --no-ink:#ffffff;
+  --mark:#f2c94c; --mark-ink:#17171a; --focus:#3e4ccc; --shade:rgba(20,20,22,.55);
+  --paper:#fbf9f3; --paper-ink:#1d1c19; --paper-line:#e2ddcf;
+  --strip-bg:#17171a; --strip-fg:#ecebe6; --strip-line:rgba(236,235,230,.22);
   --f-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
   --f-body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-serif:"Instrument Serif",Georgia,"Times New Roman",serif;
   --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-  --r:10px; --wrap:1180px;
+  --r:12px; --wrap:1180px; --ease:cubic-bezier(.2,.7,.2,1);
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0b0e12; --surface:#141920; --surface-2:#1c232c; --ink:#edf0f4; --muted:#9aa3b1; --line:#27303b;
-  --yes:#2bbf83; --yes-soft:#11362a; --yes-ink:#06130d;
-  --no:#ff6a5e; --no-soft:#3b1c1a; --no-ink:#1a0806;
-  --mark:#e9c24a; --mark-ink:#101318; --focus:#7aa2ff; --shade:rgba(0,0,0,.7); color-scheme:dark;}}
+  --bg:#0f1012; --surface:#17181b; --surface-2:#202226; --ink:#eceae4; --muted:#9a988f; --line:#2b2d31;
+  --yes:#97a3ff; --yes-soft:rgba(151,163,255,.13); --yes-ink:#0f1012;
+  --no:#e3a2cf; --no-soft:rgba(227,162,207,.13); --no-ink:#0f1012;
+  --mark:#f2c94c; --mark-ink:#17171a; --focus:#97a3ff; --shade:rgba(0,0,0,.7); color-scheme:dark;}}
 :root[data-theme="dark"]{
-  --bg:#0b0e12; --surface:#141920; --surface-2:#1c232c; --ink:#edf0f4; --muted:#9aa3b1; --line:#27303b;
-  --yes:#2bbf83; --yes-soft:#11362a; --yes-ink:#06130d;
-  --no:#ff6a5e; --no-soft:#3b1c1a; --no-ink:#1a0806;
-  --mark:#e9c24a; --mark-ink:#101318; --focus:#7aa2ff; --shade:rgba(0,0,0,.7); color-scheme:dark;}
+  --bg:#0f1012; --surface:#17181b; --surface-2:#202226; --ink:#eceae4; --muted:#9a988f; --line:#2b2d31;
+  --yes:#97a3ff; --yes-soft:rgba(151,163,255,.13); --yes-ink:#0f1012;
+  --no:#e3a2cf; --no-soft:rgba(227,162,207,.13); --no-ink:#0f1012;
+  --mark:#f2c94c; --mark-ink:#17171a; --focus:#97a3ff; --shade:rgba(0,0,0,.7); color-scheme:dark;}
 
 *{box-sizing:border-box}
 html,body{margin:0}
 [hidden]{display:none!important}
-body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+/* faint paper grain */
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--strip-bg)}
 a{color:inherit}
 button,input,select{font:inherit;color:inherit}
 button{cursor:pointer}
 :focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 .num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.disp{font-family:var(--f-display);font-variant-numeric:tabular-nums}
 .wrap{max-width:var(--wrap);margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.eyebrow{font-family:var(--f-body);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 h1,h2,h3{text-wrap:balance;margin:0}
+p{text-wrap:pretty}
+
+/* entrance: one orchestrated reveal per view */
+.rise{opacity:0;transform:translateY(14px);animation:rise .7s var(--ease) forwards;animation-delay:calc(var(--d,0) * 80ms)}
+@keyframes rise{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.rise{animation:none;opacity:1;transform:none}}
 
 /* masthead */
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
-.top .wrap{display:flex;align-items:center;gap:16px;min-height:60px;flex-wrap:wrap;padding-block:8px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
-.brand .mk{font-family:var(--f-mono);font-weight:600;font-size:13px;background:var(--mark);color:var(--mark-ink);padding:3px 6px;border-radius:4px}
-.brand .wm{font-family:var(--f-display);font-weight:900;font-size:24px;letter-spacing:.02em;text-transform:uppercase;line-height:1}
-.nav{display:flex;gap:4px;margin-left:auto;align-items:center;flex-wrap:wrap}
-.nav a{text-decoration:none;font-weight:500;font-size:14px;padding:7px 10px;border-radius:8px;color:var(--muted)}
-.nav a:hover,.nav a[aria-current="page"]{color:var(--ink);background:var(--surface-2)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:9px 14px;font-weight:600;font-size:14px;text-decoration:none}
-.btn:hover{background:var(--surface-2)}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:16px;min-height:62px;flex-wrap:wrap;padding-block:8px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none}
+.brand .mk{font-family:var(--f-display);font-weight:900;font-size:17px;line-height:1;background:var(--mark);color:var(--mark-ink);padding:5px 7px 4px;border-radius:3px;letter-spacing:.02em;transform:rotate(-3deg);box-shadow:2px 2px 0 var(--ink)}
+.brand .wm{font-family:var(--f-display);font-weight:900;font-size:25px;letter-spacing:.03em;text-transform:uppercase;line-height:1}
+.nav{display:flex;gap:2px;margin-left:auto;align-items:center;flex-wrap:wrap}
+.nav a{text-decoration:none;font-weight:500;font-size:14px;padding:7px 11px;border-radius:99px;color:var(--muted);transition:color .15s,background .15s}
+.nav a:hover{color:var(--ink)}
+.nav a[aria-current="page"]{color:var(--ink);background:var(--surface-2)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:9px 16px;font-weight:600;font-size:14px;text-decoration:none;transition:background .15s,border-color .15s,transform .1s}
+.btn:hover{border-color:var(--muted)}
+.btn:active{transform:scale(.98)}
 .btn.solid{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.btn.solid:hover{opacity:.9}
-.demo-bar{background:var(--mark);color:var(--mark-ink);font-size:13px}
-.demo-bar .wrap{padding-block:7px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn.solid:hover{opacity:.92}
+.btn.hot{background:var(--mark);color:var(--mark-ink);border-color:var(--mark)}
+.nav .btn{padding:7px 14px;color:var(--ink)}
+.nav .btn.solid{color:var(--bg)}
+.demo-bar{background:var(--mark);color:var(--mark-ink);font-size:13px;position:relative;z-index:21}
+.demo-bar .wrap{padding-block:6px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .demo-bar button{background:none;border:0;text-decoration:underline;font-weight:600;padding:0;color:inherit}
 
-main{padding-block:28px 64px;display:grid;gap:40px}
+main{padding-block:28px 72px;display:grid;gap:56px;position:relative;z-index:2}
 
-/* headline market */
-.hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:28px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px}
-.hero h1{font-family:var(--f-display);font-weight:800;font-size:clamp(34px,5vw,58px);line-height:.98;text-transform:uppercase;letter-spacing:.005em;margin-top:10px}
-.hero .lede{color:var(--muted);max-width:52ch;margin:12px 0 0}
+/* chips */
 .chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.chip{font-family:var(--f-mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:5px;background:var(--surface-2);color:var(--muted)}
-.chip.should{background:var(--ink);color:var(--bg)}
+.chip{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:4px 8px;border-radius:99px;background:var(--surface-2);color:var(--muted)}
+.chip.should{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
 .chip.will{background:var(--mark);color:var(--mark-ink)}
-.chip.live::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--no);margin-right:6px;vertical-align:1px;animation:pulse 1.6s infinite}
+.chip.live::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#ff5a4e;margin-right:6px;vertical-align:1px;animation:pulse 1.6s infinite}
 @keyframes pulse{50%{opacity:.25}}
 @media (prefers-reduced-motion:reduce){.chip.live::before{animation:none}}
-.odds{display:flex;align-items:baseline;gap:18px;margin-top:22px;flex-wrap:wrap}
-.odds .big{font-family:var(--f-mono);font-weight:600;font-size:clamp(44px,6vw,64px);line-height:1;letter-spacing:-.03em}
-.odds .big.y{color:var(--yes)} .odds .big.n{color:var(--no)}
-.odds .lbl{font-size:13px;color:var(--muted);display:block;font-family:var(--f-body);letter-spacing:0;font-weight:500;margin-top:6px}
-.bar{height:8px;border-radius:99px;background:var(--no);overflow:hidden;display:flex}
-.bar span{background:var(--yes);display:block;height:100%;transition:width .5s}
+
+/* side tags: a small dot so colour is never the only signal */
+.dot{width:9px;height:9px;border-radius:50%;flex:none;display:inline-block}
+.dot.y{background:var(--yes)} .dot.n{background:var(--no)}
+
+/* vote buttons: equal weight, neutral until picked */
 .vote-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
-.vbtn{border:0;border-radius:10px;padding:14px 14px;text-align:left;display:flex;flex-direction:column;gap:2px;font-weight:700;font-size:16px;transition:transform .08s}
-.vbtn small{font-weight:500;font-size:12.5px;opacity:.85}
+.vbtn{position:relative;border:1.5px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:14px;padding:15px 16px;text-align:left;display:flex;flex-direction:column;gap:3px;font-weight:700;font-size:17px;line-height:1.2;transition:border-color .15s,background .15s,transform .08s}
+.vbtn .lab{display:flex;align-items:center;gap:9px}
+.vbtn .lab::after{content:"→";margin-left:auto;font-weight:500;opacity:.45;transition:transform .15s,opacity .15s}
+.vbtn small{font-weight:500;font-size:12.5px;color:var(--muted)}
 .vbtn:active{transform:scale(.98)}
-.vbtn.y{background:var(--yes-soft);color:var(--yes)} .vbtn.y:hover{background:var(--yes);color:var(--yes-ink)}
-.vbtn.n{background:var(--no-soft);color:var(--no)} .vbtn.n:hover{background:var(--no);color:var(--no-ink)}
-.vbtn.picked.y{background:var(--yes);color:var(--yes-ink)} .vbtn.picked.n{background:var(--no);color:var(--no-ink)}
-.meta{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:14px}
-.meta b{color:var(--ink);font-weight:600}
-.chart-box{display:flex;flex-direction:column;gap:10px;min-width:0}
-.chart-box svg{width:100%;height:auto;display:block}
-.chart-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
-
-/* market grid */
-.sec-head{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:14px}
-.sec-head h2{font-family:var(--f-display);font-weight:800;font-size:32px;text-transform:uppercase;line-height:1}
-.tabs{display:flex;gap:4px;background:var(--surface-2);padding:4px;border-radius:10px}
-.tabs button{border:0;background:none;padding:6px 12px;border-radius:7px;font-weight:600;font-size:13px;color:var(--muted)}
-.tabs button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:12px;text-decoration:none;color:inherit;transition:border-color .15s,transform .15s}
-.card:hover{border-color:var(--muted)}
-.card h3{font-size:17px;font-weight:600;line-height:1.3}
-.card .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.card .pct{font-family:var(--f-mono);font-weight:600;font-size:26px;letter-spacing:-.02em;line-height:1}
-.card .pct small{font-size:12px;color:var(--muted);font-weight:500;letter-spacing:0;margin-left:4px;font-family:var(--f-body)}
-.card .foot{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);gap:8px;margin-top:auto}
-.mine{font-family:var(--f-mono);font-size:11px;font-weight:600;padding:2px 6px;border-radius:5px}
-.mine.y{background:var(--yes-soft);color:var(--yes)} .mine.n{background:var(--no-soft);color:var(--no)}
-.spark{width:96px;height:32px;flex:none}
-.card{cursor:pointer}
-.card h3 a{text-decoration:none}
-.card h3 a:hover{text-decoration:underline}
+.vbtn.y:hover{border-color:var(--yes);background:var(--yes-soft)}
+.vbtn.n:hover{border-color:var(--no);background:var(--no-soft)}
+.vbtn:hover .lab::after{opacity:1;transform:translateX(3px)}
+.vbtn.picked.y{background:var(--yes);border-color:var(--yes);color:var(--yes-ink)}
+.vbtn.picked.n{background:var(--no);border-color:var(--no);color:var(--no-ink)}
+.vbtn.picked small{color:inherit;opacity:.8}
+.vbtn.picked .dot{background:currentColor}
+.vbtn.picked .lab::after{content:"✓";opacity:1}
+.vbtn:disabled{opacity:.5;cursor:default}
 .vote-row.sm{margin-top:0;gap:8px}
-.vote-row.sm .vbtn{padding:9px 10px;font-size:14px;text-align:center;align-items:center}
-.credit{font-size:12.5px;color:var(--muted)}
-.credit b{color:var(--ink);font-weight:600}
+.vote-row.sm .vbtn{padding:13px 14px;font-size:16px;border-radius:11px}
+.grid.three{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
 
-/* results stay blurred until you vote on that market */
+/* bars */
+.bar{height:8px;border-radius:99px;background:var(--no);overflow:hidden;display:flex;gap:2px}
+.bar span{background:var(--yes);display:block;height:100%;transition:width .6s var(--ease)}
+
+/* results stay sealed until you pick a side */
 .lockable{position:relative}
-.lockable.is-locked .lk{filter:blur(7px);opacity:.5;pointer-events:none;user-select:none}
+.lockable.is-locked .lk{filter:blur(8px) saturate(.4);opacity:.45;pointer-events:none;user-select:none}
 .lockable .veil{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:10px}
 .lockable.is-locked .veil{display:flex}
-.veil .lockpill{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:var(--bg);font-size:12.5px;font-weight:600;padding:6px 11px;border-radius:99px;box-shadow:0 2px 10px rgba(0,0,0,.18)}
-.veil .lockpill svg{width:13px;height:13px;flex:none}
-.veil .vote-row{margin-top:2px;width:min(260px,100%)}
-.veil .vbtn{padding:8px 10px;font-size:13.5px;text-align:center;align-items:center}
+.stamp{display:inline-flex;align-items:center;gap:7px;font-family:var(--f-display);font-weight:800;font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--mark);border:2px solid var(--mark);padding:4px 10px 3px;border-radius:4px;transform:rotate(-4deg);background:color-mix(in srgb,var(--surface) 82%,transparent);line-height:1.1}
+.stamp svg{width:12px!important;height:12px!important;flex:none}
+:root:not([data-theme="dark"]) .stamp{color:#b8860b;border-color:#b8860b}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .stamp{color:var(--mark);border-color:var(--mark)}}
+.veil .vote-row{margin-top:2px;width:min(280px,100%)}
+.veil .vbtn{padding:9px 12px;font-size:14px}
 .veil .fine{max-width:30ch}
 
-/* newsletter band */
-.band{background:var(--ink);color:var(--bg);border-radius:14px;padding:28px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:24px;align-items:center}
-.band h2{font-family:var(--f-display);font-weight:800;font-size:clamp(28px,4vw,40px);text-transform:uppercase;line-height:1}
-.band p{opacity:.8;margin:10px 0 0;max-width:54ch}
-.band ul{margin:12px 0 0;padding-left:18px;opacity:.85;font-size:14px}
-.band .eyebrow{color:var(--mark)}
-.band .btn{background:var(--mark);color:var(--mark-ink);border-color:var(--mark)}
+/* ===== landing: the petition ===== */
+.lp{display:grid;gap:22px;justify-items:center;text-align:center;padding-top:28px;position:relative}
+.kicker{display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;font-size:13px;color:var(--muted)}
+.tape{font-family:var(--f-display);font-weight:800;font-size:14px;letter-spacing:.14em;text-transform:uppercase;background:var(--mark);color:var(--mark-ink);padding:4px 10px 3px;transform:rotate(-2deg);display:inline-block}
+.lp h1{font-family:var(--f-display);font-weight:900;font-size:clamp(52px,10.5vw,148px);line-height:.86;text-transform:uppercase;letter-spacing:-.005em;max-width:12ch}
+.lp h1 .ast{color:var(--mark);font-size:.62em;vertical-align:.62em;margin-left:.02em}
+.lp .ask{font-size:clamp(17px,1.9vw,21px);max-width:44ch;margin:0;color:var(--muted)}
+.lp .ask b{color:var(--ink);font-weight:500}
+
+.plates{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+.plate{position:relative;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:12px 26px 10px 16px;text-align:left;min-width:150px}
+.plate .yr{font-family:var(--f-display);font-weight:800;font-size:30px;line-height:1;display:block;letter-spacing:.01em}
+.plate .lbl{font-size:11.5px;color:var(--muted);font-weight:500}
+.plate .star{position:absolute;top:-16px;right:-12px;font-family:var(--f-display);font-weight:900;font-size:76px;line-height:1;color:var(--mark);transform:rotate(12deg);text-shadow:2px 2px 0 var(--bg)}
+.plates-cap{font-size:12.5px;color:var(--muted);margin:0}
+.plates-cap a{color:inherit}
+
+.tally{width:min(720px,100%);display:grid;gap:12px;margin-top:10px}
+.tally-top{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;text-align:left}
+.tally .big{font-family:var(--f-display);font-weight:900;font-size:clamp(64px,9vw,108px);line-height:.85;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.tally .of{color:var(--muted);font-size:14px;text-align:right}
+.tally .of b{color:var(--ink);font-weight:600}
+.goal{position:relative;height:14px;border-radius:99px;background:var(--surface-2);overflow:hidden;box-shadow:inset 0 0 0 1px var(--line)}
+.goal span{display:block;height:100%;background:repeating-linear-gradient(-45deg,var(--mark) 0 10px,color-mix(in srgb,var(--mark) 82%,var(--ink)) 10px 20px);border-radius:99px;transition:width 1.4s var(--ease)}
+.goal i{position:absolute;top:0;bottom:0;width:1px;background:var(--line)}
+.ticks{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.lp .vote-row{width:min(720px,100%);margin-top:6px}
+.lp .vbtn{padding:20px 22px;font-size:21px;border-radius:16px}
+.lp .vbtn small{font-size:13.5px}
+.trust{display:flex;gap:8px 18px;flex-wrap:wrap;justify-content:center;font-size:13px;color:var(--muted)}
+.trust span::before{content:"✓ ";color:var(--ink)}
+
+/* section heads */
+.sec-head{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.sec-head h2{font-family:var(--f-display);font-weight:900;font-size:clamp(34px,4.4vw,48px);text-transform:uppercase;line-height:.92}
+.sec-head .eyebrow{margin-bottom:6px}
+
+/* the letter, as a document */
+.docs{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:28px;align-items:start}
+.paper{background:var(--paper);color:var(--paper-ink);border-radius:4px;padding:clamp(24px,4vw,48px);position:relative;box-shadow:0 1px 0 rgba(0,0,0,.04),0 22px 50px -24px rgba(0,0,0,.55);transform:rotate(-.4deg)}
+.paper::before{content:"";position:absolute;top:-10px;left:42px;width:90px;height:22px;background:color-mix(in srgb,var(--mark) 75%,transparent);transform:rotate(-3deg)}
+.paper .to{font-family:var(--f-body);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#7a756a;border-bottom:1px solid var(--paper-line);padding-bottom:12px;margin-bottom:18px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.paper .letter{font-family:var(--f-serif);font-size:clamp(19px,1.8vw,22px);line-height:1.5;max-width:58ch}
+.paper .letter p{margin:0 0 14px}
+.paper .sig{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-top:22px;padding-top:16px;border-top:1px dashed var(--paper-line);flex-wrap:wrap}
+.paper .sig .who{font-family:var(--f-serif);font-style:italic;font-size:22px}
+.paper .sig .who b{font-family:var(--f-display);font-style:normal;font-weight:800;font-size:26px}
+.paper .filed{font-family:var(--f-display);font-weight:800;font-size:18px;letter-spacing:.14em;color:#3e4ccc;border:2.5px solid #3e4ccc;padding:5px 12px 3px;border-radius:5px;transform:rotate(-8deg);opacity:.8;text-transform:uppercase}
+.slip{background:var(--surface);border:1px dashed var(--line);border-radius:10px;padding:18px 20px;margin-top:22px;display:grid;gap:6px}
+.slip q{font-family:var(--f-serif);font-size:20px;line-height:1.4;quotes:"“" "”"}
+.side{display:grid;gap:28px;min-width:0}
+.side h3{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.share-row{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.share-row .solid{grid-column:1/-1}
+.feed{display:grid;gap:0;margin:0;padding:0;list-style:none}
+.feed li{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:14px;align-items:baseline}
+.feed li:first-child{border-top:0}
+.feed .when{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);white-space:nowrap}
+.feed li.new{animation:flash 1.6s var(--ease)}
+@keyframes flash{from{background:color-mix(in srgb,var(--mark) 22%,transparent)}to{background:transparent}}
+
+.howrow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid var(--line)}
+.howrow div{padding:18px 18px 4px 0;display:grid;gap:6px;align-content:start}
+.howrow div+div{padding-left:18px;border-left:1px solid var(--line)}
+.howrow b{font-family:var(--f-display);font-size:34px;font-weight:900;line-height:1;color:var(--mark)}
+:root:not([data-theme="dark"]) .howrow b{color:var(--ink)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .howrow b{color:var(--mark)}}
+.howrow span{font-size:14px;color:var(--muted)}
+.howrow strong{color:var(--ink);font-weight:600;display:block}
+
+/* headline market (Markets view) */
+.hero{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(22px,4vw,44px);display:grid;gap:30px}
+.hero-top{display:grid;gap:14px;justify-items:center;text-align:center}
+.hero h1{font-family:var(--f-display);font-weight:900;font-size:clamp(40px,7vw,92px);line-height:.88;text-transform:uppercase;max-width:14ch}
+.hero .lede{color:var(--muted);max-width:56ch;margin:0}
+.hero .vbtn{padding:18px 20px;font-size:19px;border-radius:16px}
+.hero-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(20px,4vw,48px);align-items:stretch;border-top:1px solid var(--line);padding-top:30px}
+.hero-l{display:flex;flex-direction:column;min-width:0}
+.hero-l .meta{margin-top:auto;padding-top:16px}
+.odds{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.odds>div{display:grid;gap:4px}
+.odds .big{font-family:var(--f-display);font-weight:900;font-size:clamp(60px,7vw,92px);line-height:.85;font-variant-numeric:tabular-nums}
+.odds .big.y{color:var(--yes)} .odds .big.n{color:var(--no)}
+.odds .lbl{font-size:13.5px;color:var(--muted);font-weight:500;display:flex;align-items:center;gap:7px}
+.meta{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:14px;align-items:center}
+.meta b{color:var(--ink);font-weight:600}
+.chart-box{display:flex;flex-direction:column;gap:12px;min-width:0}
+.chart-box svg{width:100%;height:auto;display:block}
+.chart-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:auto;border-top:1px solid var(--line)}
+.kpis div{padding:14px 12px 0 0;display:grid;gap:2px}
+.kpis div+div{padding-left:14px;border-left:1px solid var(--line)}
+.kpis b{font-family:var(--f-display);font-weight:800;font-size:30px;line-height:1;font-variant-numeric:tabular-nums}
+.kpis span{font-size:12.5px;color:var(--muted)}
+.hero-poly{margin-top:16px;font-size:14px;border:1px dashed var(--line);border-radius:12px;padding:11px 14px;display:flex;gap:8px;flex-wrap:wrap;align-items:baseline}
+.hero-poly b{font-family:var(--f-mono)}
+
+/* market grid */
+.tabs{display:flex;gap:2px;background:var(--surface-2);padding:4px;border-radius:99px}
+.tabs button{border:0;background:none;padding:7px 14px;border-radius:99px;font-weight:600;font-size:13px;color:var(--muted)}
+.tabs button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:14px;text-decoration:none;color:inherit;transition:border-color .2s,transform .2s var(--ease),box-shadow .2s;cursor:pointer}
+.card:hover{border-color:color-mix(in srgb,var(--muted) 60%,var(--line));transform:translateY(-2px);box-shadow:0 14px 30px -18px rgba(0,0,0,.5)}
+.card h3{font-size:18px;font-weight:600;line-height:1.28;letter-spacing:-.005em}
+.card h3 a{text-decoration:none}
+.card .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.card .pct{font-family:var(--f-display);font-weight:900;font-size:40px;line-height:.9;font-variant-numeric:tabular-nums}
+.card .pct small{font-family:var(--f-body);font-size:12px;color:var(--muted);font-weight:500;margin-left:6px}
+.card .foot{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);gap:8px;margin-top:auto;padding-top:2px}
+.mine{white-space:nowrap;font-size:10.5px;font-weight:700;letter-spacing:.06em;padding:3px 8px;border-radius:99px;text-transform:uppercase;display:inline-flex;gap:5px;align-items:center}
+.mine.y{background:var(--yes-soft);color:var(--yes)} .mine.n{background:var(--no-soft);color:var(--no)}
+.mine.pend{box-shadow:inset 0 0 0 1px currentColor;background:transparent}
+.spark{width:96px;height:34px;flex:none}
+.credit{font-size:12.5px;color:var(--muted)}
+.credit b{color:var(--ink);font-weight:600}
+.mini-cta{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;border:1px dashed var(--line);border-radius:16px;padding:16px 18px;margin-top:16px;font-size:14px}
+
+/* newsletter: evidence-tape band */
+.band{background:var(--mark);color:var(--mark-ink);border-radius:20px;padding:clamp(24px,4vw,44px);display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px;align-items:center;position:relative;overflow:hidden}
+.band::after{content:"*";position:absolute;right:-20px;bottom:-120px;font-family:var(--f-display);font-weight:900;font-size:420px;line-height:1;color:var(--mark-ink);opacity:.07;pointer-events:none}
+.band h2{font-family:var(--f-display);font-weight:900;font-size:clamp(36px,5vw,60px);text-transform:uppercase;line-height:.9}
+.band p{margin:12px 0 0;max-width:52ch;font-size:16px}
+.band ul{margin:12px 0 0;padding-left:18px;font-size:14px;opacity:.85}
+.band .eyebrow{color:var(--mark-ink);opacity:.7}
+.band .btn{background:var(--mark-ink);color:var(--mark);border-color:var(--mark-ink);padding:13px 22px;font-size:15px}
+.band .fine{color:var(--mark-ink);opacity:.7}
 
 /* detail */
 .back{font-size:14px;color:var(--muted);text-decoration:none;display:inline-flex;gap:6px}
 .back:hover{color:var(--ink)}
 .detail{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px;align-items:start}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;min-width:0}
-.panel h2{font-size:13px;font-family:var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:12px}
-.detail h1{font-family:var(--f-display);font-weight:800;font-size:clamp(32px,4.4vw,50px);line-height:1;text-transform:uppercase;margin-top:10px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;min-width:0}
+.panel h2{font-size:12px;font-family:var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:14px}
+.detail h1{font-family:var(--f-display);font-weight:900;font-size:clamp(36px,5vw,60px);line-height:.92;text-transform:uppercase;margin:12px 0 18px}
 .prose{max-width:65ch}
 .prose p{margin:0 0 10px}
 .src{display:grid;gap:8px;margin:0;padding:0;list-style:none}
-.src a{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;text-decoration:none;font-size:14px}
-.src a:hover{background:var(--surface-2)}
+.src a{display:flex;justify-content:space-between;gap:10px;padding:11px 13px;border:1px solid var(--line);border-radius:10px;text-decoration:none;font-size:14px;transition:border-color .15s}
+.src a:hover{border-color:var(--muted)}
 .src .k{font-family:var(--f-mono);font-size:11px;color:var(--muted);white-space:nowrap}
-.splits{display:grid;gap:9px}
+.splits{display:grid;gap:10px}
 .split{display:grid;grid-template-columns:140px 1fr 46px;gap:10px;align-items:center;font-size:13px}
 .split .bar{height:6px}
-.locked{position:relative}
-.locked .splits{filter:blur(5px);opacity:.6;pointer-events:none;user-select:none}
-.locked .gate{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:12px}
 .toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:14px}
 .toggle:first-of-type{border-top:0}
 .sw{appearance:none;width:40px;height:24px;border-radius:99px;background:var(--surface-2);border:1px solid var(--line);position:relative;flex:none;cursor:pointer;transition:background .15s}
 .sw::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--muted);transition:transform .15s,background .15s}
-.sw:checked{background:var(--yes)} .sw:checked::after{transform:translateX(16px);background:var(--yes-ink)}
+.sw:checked{background:var(--ink)} .sw:checked::after{transform:translateX(16px);background:var(--bg)}
 
 /* account */
 .acct{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:20px;align-items:start}
-.card-id{border-radius:14px;padding:22px;background:var(--ink);color:var(--bg);display:grid;gap:18px;position:relative;overflow:hidden;aspect-ratio:1.586;max-width:100%}
-.card-id .no{font-family:var(--f-mono);font-size:clamp(30px,5vw,44px);font-weight:600;letter-spacing:-.02em}
+.card-id{border-radius:16px;padding:22px;background:var(--mark);color:var(--mark-ink);display:grid;gap:18px;position:relative;overflow:hidden;aspect-ratio:1.586;max-width:100%}
+.card-id .no{font-family:var(--f-display);font-size:clamp(40px,6vw,56px);font-weight:900;line-height:.9}
 .card-id .nm{font-family:var(--f-display);font-weight:800;font-size:26px;text-transform:uppercase;line-height:1}
-.card-id .ast{position:absolute;right:-18px;top:-46px;font-family:var(--f-display);font-weight:900;font-size:220px;color:var(--mark);line-height:1;opacity:.95}
-.card-id .bottom{align-self:end;display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:.75;gap:10px}
+.card-id .ast{position:absolute;right:-10px;top:-50px;font-family:var(--f-display);font-weight:900;font-size:240px;color:var(--mark-ink);line-height:1;opacity:.12}
+.card-id .eyebrow{color:var(--mark-ink)!important;opacity:.7}
+.card-id .bottom{align-self:end;display:flex;justify-content:space-between;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;opacity:.75;gap:10px}
 table.list{width:100%;border-collapse:collapse;font-size:14px}
 table.list td,table.list th{padding:9px 6px;border-top:1px solid var(--line);text-align:left;vertical-align:top}
-table.list th{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;border-top:0}
+table.list th{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;border-top:0}
 .tbl{overflow-x:auto}
 .empty{color:var(--muted);font-size:14px;padding:6px 0}
-.stat-row{display:flex;gap:24px;flex-wrap:wrap}
+.stat-row{display:flex;gap:28px;flex-wrap:wrap}
 .stat-row div{display:flex;flex-direction:column}
-.stat-row b{font-family:var(--f-mono);font-size:26px;font-weight:600}
+.stat-row b{font-family:var(--f-display);font-size:36px;font-weight:900;line-height:1}
 .stat-row span{font-size:12.5px;color:var(--muted)}
 
-/* petition strip (top of every page) */
-.strip{background:var(--strip-bg);color:var(--strip-fg);border-bottom:1px solid var(--strip-line)}
-.strip .wrap{display:flex;align-items:center;gap:10px 16px;flex-wrap:wrap;padding-block:8px;min-height:44px}
-.strip .count{font-family:var(--f-mono);font-weight:600;font-size:15px;color:var(--mark)}
-.strip .txt{font-size:14px}
-.strip .mini{flex:1 1 140px;max-width:220px;height:6px;border-radius:99px;background:var(--strip-line);overflow:hidden}
+/* petition strip (non-landing pages) */
+.strip{background:var(--strip-bg);color:var(--strip-fg)}
+.strip .wrap{display:flex;align-items:center;gap:10px 16px;flex-wrap:wrap;padding-block:7px;min-height:42px}
+.strip .count{font-family:var(--f-display);font-weight:800;font-size:18px;color:var(--mark);letter-spacing:.02em}
+.strip .txt{font-size:13.5px}
+.strip .mini{flex:1 1 140px;max-width:220px;height:5px;border-radius:99px;background:var(--strip-line);overflow:hidden}
 .strip .mini span{display:block;height:100%;background:var(--mark)}
 .strip .acts{display:flex;gap:8px;margin-left:auto}
-.strip .btn{padding:6px 12px;font-size:13px;background:transparent;color:var(--strip-fg);border-color:var(--strip-line)}
+.strip .btn{padding:5px 13px;font-size:13px;background:transparent;color:var(--strip-fg);border-color:var(--strip-line)}
 .strip .btn.hot{background:var(--mark);color:var(--mark-ink);border-color:var(--mark)}
-.strip .btn:hover{opacity:.9}
+body[data-view="petition"] .strip{display:none}
 
-/* petition page */
-.pet{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px;align-items:start}
-.pet-hero{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px;display:grid;gap:16px}
-.pet-hero h1{font-family:var(--f-display);font-weight:900;font-size:clamp(40px,6vw,72px);line-height:.95;text-transform:uppercase}
-.pet-count{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-.pet-count b{font-family:var(--f-mono);font-size:clamp(40px,6vw,60px);font-weight:600;letter-spacing:-.03em;line-height:1}
-.pet-count span{color:var(--muted)}
-.goal{height:12px;border-radius:99px;background:var(--surface-2);overflow:hidden}
-.goal span{display:block;height:100%;background:var(--yes);transition:width .6s}
-.letter{font-size:16px;line-height:1.65;max-width:62ch}
-.letter p{margin:0 0 12px}
-.letter .to{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.feed{display:grid;gap:0;margin:0;padding:0;list-style:none}
-.feed li{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:14px}
-.feed li:first-child{border-top:0}
-.feed .when{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);white-space:nowrap}
-.share-row{display:flex;gap:8px;flex-wrap:wrap}
-.share-row a,.share-row button{flex:1 1 120px}
-.steps{margin:0;padding-left:18px;display:grid;gap:6px;font-size:14px}
-
-/* money vs fans (Polymarket) */
+/* money vs fans */
 .poly{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);border-top:1px dashed var(--line);padding-top:10px}
 .poly>span{white-space:nowrap}
-.poly .tag{font-family:var(--f-mono);font-size:10.5px;font-weight:600;letter-spacing:.06em;border:1px solid var(--line);border-radius:4px;padding:1px 5px;color:var(--muted)}
+.poly .tag{font-family:var(--f-mono);font-size:10.5px;font-weight:600;letter-spacing:.04em;border:1px solid var(--line);border-radius:4px;padding:1px 5px;color:var(--muted)}
 .poly b{color:var(--ink);font-family:var(--f-mono);font-weight:600}
 .mvf{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.mvf div{background:var(--surface-2);border-radius:9px;padding:12px;display:grid;gap:2px}
-.mvf b{font-family:var(--f-mono);font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.mvf div{background:var(--surface-2);border-radius:12px;padding:14px;display:grid;gap:2px}
+.mvf b{font-family:var(--f-display);font-size:44px;font-weight:900;line-height:1}
 .mvf span{font-size:12.5px;color:var(--muted)}
 .gap{font-weight:600;font-size:14px;margin:12px 0 6px}
-.hero-poly{margin-top:16px;font-size:14px;background:var(--surface-2);border-radius:9px;padding:10px 12px;display:flex;gap:8px;flex-wrap:wrap;align-items:baseline}
-.hero-poly b{font-family:var(--f-mono)}
 
-/* suggest a market */
+/* suggest */
 .sug{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:20px;align-items:start}
 .seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.seg label{border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;display:grid;gap:2px;background:var(--bg)}
+.seg label{border:1px solid var(--line);border-radius:12px;padding:11px 13px;cursor:pointer;display:grid;gap:2px;background:var(--bg)}
 .seg label b{font-size:14.5px}
 .seg label span{font-size:12.5px;color:var(--muted)}
 .seg input{position:absolute;opacity:0;pointer-events:none}
 .seg label:has(input:checked){border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink);background:var(--surface)}
 .seg label:has(input:focus-visible){outline:2px solid var(--focus);outline-offset:2px}
-.field textarea{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:10px 12px;width:100%;font:inherit;color:inherit;resize:vertical;min-height:84px}
+.field textarea{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:10px 12px;width:100%;font:inherit;color:inherit;resize:vertical;min-height:84px}
 .count-hint{font-family:var(--f-mono);font-size:11px;color:var(--muted);justify-self:end}
-.status{font-family:var(--f-mono);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:5px;white-space:nowrap}
+.status{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:99px;white-space:nowrap}
 .status.pending{background:var(--surface-2);color:var(--muted)}
-.status.approved,.status.live{background:var(--yes-soft);color:var(--yes)}
-.status.declined{background:var(--no-soft);color:var(--no)}
-.mini-cta{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--surface);border:1px dashed var(--line);border-radius:var(--r);padding:14px 16px;margin-top:14px;font-size:14px}
+.status.approved,.status.live{background:var(--mark);color:var(--mark-ink)}
+.status.declined{background:var(--surface-2);color:var(--muted);text-decoration:line-through}
 
-/* quick question (progressive profile) */
+/* progressive profile + confirm bar */
 .opts{display:flex;flex-wrap:wrap;gap:6px}
 .opts button{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:6px 12px;font-size:13.5px;font-weight:500}
 .opts button:hover{border-color:var(--ink)}
-.nudge{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:55;width:min(360px,calc(100% - 32px));background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:10px;box-shadow:0 12px 32px rgba(0,0,0,.18)}
+.nudge{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:55;width:min(360px,calc(100% - 32px));background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;display:grid;gap:10px;box-shadow:0 12px 32px rgba(0,0,0,.25)}
 .nudge .x{position:absolute;top:8px;right:8px;border:0;background:none;color:var(--muted);font-size:18px;line-height:1;padding:6px}
+.confirm-bar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:45;width:min(640px,calc(100% - 24px));background:var(--ink);color:var(--bg);border-radius:18px;padding:12px 12px 12px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 18px 40px -10px rgba(0,0,0,.5);animation:barIn .45s var(--ease)}
+@keyframes barIn{from{transform:translate(-50%,20px);opacity:0}}
+.confirm-bar .t{font-size:14px;line-height:1.35;flex:1;min-width:0}
+.confirm-bar .t b{font-weight:700}
+.confirm-bar .t span{opacity:.7;display:block;font-size:12.5px}
+.confirm-bar .btn{background:var(--mark);color:var(--mark-ink);border-color:var(--mark);white-space:nowrap}
+.confirm-bar .x{background:none;border:0;color:inherit;opacity:.6;font-size:18px;padding:4px 6px}
 
 /* modal */
-.scrim{position:fixed;inset:0;background:var(--shade);z-index:50;display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
-.modal{background:var(--surface);border-radius:14px;width:min(440px,100%);padding:24px;display:grid;gap:14px;max-height:100%;overflow:auto;border:1px solid var(--line)}
-.modal h2{font-family:var(--f-display);font-weight:800;font-size:30px;text-transform:uppercase;line-height:1}
+.scrim{position:fixed;inset:0;background:var(--shade);z-index:50;display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));backdrop-filter:blur(3px)}
+.modal{background:var(--surface);border-radius:20px;width:min(460px,100%);padding:26px;display:grid;gap:14px;max-height:100%;overflow:auto;border:1px solid var(--line);animation:rise .35s var(--ease)}
+.modal h2{font-family:var(--f-display);font-weight:900;font-size:36px;text-transform:uppercase;line-height:.92}
 .modal p{margin:0;color:var(--muted);font-size:14px}
+.modal .share-row{grid-template-columns:repeat(2,1fr)}
 .field{display:grid;gap:5px}
 .field label{font-size:13px;font-weight:600}
-.field input,.field select{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:10px 12px;width:100%}
+.field input,.field select{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:11px 12px;width:100%}
 .check{display:flex;gap:10px;align-items:flex-start;font-size:13.5px}
-.check input{margin-top:3px;accent-color:var(--yes)}
-.pick{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:9px;font-weight:600}
+.check{font-weight:400!important}
+.check input{margin-top:3px;accent-color:var(--ink);width:auto!important;flex:none}
+.pick{display:flex;align-items:center;gap:10px;padding:11px 13px;border-radius:12px;font-weight:600}
 .pick.y{background:var(--yes-soft);color:var(--yes)} .pick.n{background:var(--no-soft);color:var(--no)}
 .fine{font-size:12px;color:var(--muted)}
-.err{color:var(--no);font-size:13px;min-height:1em}
-.inbox{border:1px dashed var(--line);border-radius:10px;padding:14px;display:grid;gap:8px;background:var(--bg)}
-.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:11px 16px;border-radius:10px;font-size:14px;font-weight:500;z-index:60;max-width:calc(100% - 32px);box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.err{color:#e5484d;font-size:13px;min-height:1em}
+.inbox{border:1px dashed var(--line);border-radius:12px;padding:14px;display:grid;gap:8px;background:var(--bg)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:11px 16px;border-radius:12px;font-size:14px;font-weight:500;z-index:60;max-width:calc(100% - 32px);box-shadow:0 8px 24px rgba(0,0,0,.25)}
 
-footer{border-top:1px solid var(--line);padding-block:26px 40px;color:var(--muted);font-size:13px}
+footer{border-top:1px solid var(--line);padding-block:40px 40px;color:var(--muted);font-size:13px;position:relative;z-index:2;overflow:hidden}
 footer .wrap{display:grid;gap:8px}
+footer .wordmark{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(48px,12.5vw,168px);line-height:.8;color:var(--ink);opacity:.08;letter-spacing:-.01em;margin:0 0 24px;white-space:nowrap}
+footer .wordmark span{color:var(--mark);opacity:1}
 
 @media (max-width:860px){
-  .hero,.detail,.acct,.band,.pet,.sug{grid-template-columns:1fr}
-  .pet-hero{padding:20px}
-  .hero{padding:20px}
-  .band{padding:22px}
+  .hero-body,.detail,.acct,.band,.docs,.sug{grid-template-columns:1fr}
+  .howrow{grid-template-columns:1fr 1fr}
+  .howrow div:nth-child(3){padding-left:0;border-left:0}
+  .paper{transform:none}
 }
 @media (max-width:520px){
+  main{gap:44px}
   .strip .mini,.strip .long{display:none}
   .strip .wrap{flex-wrap:nowrap}
   .strip .txt{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
   .strip .btn{padding:5px 10px}
   .nav{margin-left:0;width:100%;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
-  .nav a{white-space:nowrap}
+  .nav a{white-space:nowrap;padding:6px 9px;font-size:13px}
   .nav a[data-go="newsletter"]{display:none}
   .nav #acctLink{margin-left:auto}
-  .brand .wm{font-size:20px}
-  .nav a{padding:6px 8px;font-size:13px}
+  .brand .wm{font-size:21px}
   .split{grid-template-columns:86px 1fr 40px}
+  .lp{padding-top:8px;gap:18px}
+  .lp .vote-row{grid-template-columns:1fr}
+  .lp .vbtn{padding:16px 18px;font-size:19px}
+  .plate{min-width:0;flex:1 1 30%;padding:10px 14px 9px 11px}
+  .plate .yr{font-size:22px}
+  .plate .lbl{font-size:10.5px}
+  .plate .star{font-size:42px;top:-9px;right:-6px}
+  .howrow{grid-template-columns:1fr}
+  .howrow div+div{padding-left:0;border-left:0;border-top:1px solid var(--line)}
+  .kpis b{font-size:24px}
+  .confirm-bar{border-radius:14px;padding:10px 10px 10px 14px}
+  .confirm-bar .t span{display:none}
+  .card .pct{font-size:36px}
+  .hero .vbtn{padding:14px 14px;font-size:17px}
+  .hero{padding:20px 16px}
 }
+body:has(.confirm-bar) .toast{bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+
 </style>
 </head>
 <body>
@@ -305,15 +429,15 @@ footer .wrap{display:grid;gap:8px}
 <header class="top">
   <div class="strip" role="region" aria-label="The 115 Petition">
     <div class="wrap">
-      <span class="txt"><span class="count num" id="stripCount">0</span><span class="long"> people have</span> signed <a href="#petition" data-go="petition" style="color:inherit"><strong>The 115 Petition</strong></a></span>
+      <span class="txt"><span class="count" id="stripCount">0</span><span class="long"> people have</span> signed <a href="#petition" data-go="petition" style="color:inherit"><strong>The 115 Petition</strong></a></span>
       <div class="mini" aria-hidden="true"><span id="stripBar" style="width:0%"></span></div>
       <div class="acts"><button class="btn hot" type="button" id="stripSign">Sign</button><button class="btn" type="button" id="stripShare">Share</button></div>
     </div>
   </div>
   <div class="wrap">
-    <a class="brand" href="#markets" data-go="markets"><span class="mk">115*</span><span class="wm">The Pepstein Files</span></a>
+    <a class="brand" href="#" data-go=""><span class="mk">115*</span><span class="wm">The Pepstein Files</span></a>
     <nav class="nav" aria-label="Main">
-      <a href="#petition" data-go="petition">Petition</a>
+      <a href="#" data-go="" data-nav="petition">The Petition</a>
       <a href="#markets" data-go="markets">Markets</a>
       <a href="#leaderboard" data-go="leaderboard">Leaderboard</a>
       <a href="#suggest" data-go="suggest">Suggest</a>
@@ -327,6 +451,7 @@ footer .wrap{display:grid;gap:8px}
 
 <footer>
   <div class="wrap">
+    <p class="wordmark" aria-hidden="true">The Pepstein Files<span>*</span></p>
     <div><strong style="color:var(--ink)">No money. No prizes. Nothing to buy.</strong> Markets here are public votes. Nobody stakes or wins anything.</div>
     <div>Every “Read the files” link goes to an official document from the Premier League, the club, UEFA or CAS. Polymarket odds appear separately, labelled as outside market data. Not affiliated with the Premier League, Manchester City FC or Polymarket.</div>
     <div>We store your email, first name, country, club, your votes, any market suggestions you send and any optional fan-profile answers. Results are shown in aggregate. Your name is shown only if you choose to be listed as a signer or credited on a market. Newsletter only if you opt in. Unsubscribe, mute alerts, or clear your fan-profile answers any time from your account.</div>
@@ -335,6 +460,7 @@ footer .wrap{display:grid;gap:8px}
 
 <div id="modalRoot"></div>
 <div id="nudgeRoot"></div>
+<div id="barRoot"></div>
 <div id="toastRoot"></div>
 
 <script>
@@ -378,6 +504,18 @@ const PETITION = {
     "We ask the Board to remove the Premier League titles Manchester City won in the seasons where the Commission found breaches of the rules."
   ],
   counter: "The titles were won on the pitch and should stand, whatever the sanctions."
+};
+
+/* ------------------------------------------------------------
+   The record book, shown on the landing page.
+   City's Premier League titles in the seasons the financial
+   charges cover (2009/10 to 2017/18, per the Feb 2023 referral).
+   If the Commission's findings cover different seasons, edit here.
+   ------------------------------------------------------------ */
+const RECORD = {
+  titles: ["2011–12","2013–14","2017–18"],
+  caption: "City's league titles in the seasons the financial charges cover (2009/10 to 2017/18).",
+  src: "referral"
 };
 
 /* ------------------------------------------------------------
@@ -522,7 +660,10 @@ const store = {
 function pct(t){ const tot=(t?.yes||0)+(t?.no||0); return tot? Math.round((t.yes/tot)*100) : 50; }
 function tot(t){ return t? (t.total ?? ((t.yes||0)+(t.no||0))) : 0; }
 // Results unlock per market, once you've voted on it.
-function unlocked(m){ return !!S.votes[m.id]; }
+function unlocked(m){ return !!(S.votes[m.id]||S.picks[m.id]); }
+// Your side on a market: a confirmed vote, or a pick that isn't counted yet.
+function sideOf(id){ return S.votes[id]||S.picks[id]||null; }
+function pendingPicks(){ return Object.keys(S.picks).filter(id=>!S.votes[id]||S.votes[id]!==S.picks[id]); }
 // Placeholder numbers rendered under the blur, so the real split never reaches the page before you vote.
 function fakePct(id){ return Math.round(22+seedRand(id+"veil")()*56); }
 function fakeSeries(id){ const r=seedRand(id+"veilchart"); let p=50; const out=[]; const now=Date.now(); for(let i=0;i<20;i++){ p=Math.min(85,Math.max(15,p+(r()-.5)*14)); out.push({day:new Date(now-(19-i)*864e5),yesPct:p,total:0}); } return out; }
@@ -538,6 +679,7 @@ const DEMO_BASE = { // simulated starting numbers [yesShare, total]
   "deduction":[.88,7720], "deduction-30":[.46,5210], "relegated":[.19,6630], "title-lost":[.38,5980], "transfer-ban":[.51,2440], "appeal":[.62,3310], "by-2027":[.29,2870]
 };
 const DEMO_START = new Date("2026-09-29T12:00:00Z");
+const DECISION = new Date("2026-09-29T12:00:00Z"); // Commission decision published
 function demoHistory(id){
   const [share,total]=DEMO_BASE[id]; const r=seedRand(id);
   const days=Math.max(2,Math.floor((Date.now()-DEMO_START)/864e5)+1);
@@ -596,7 +738,7 @@ const Demo = {
   async submitRequest(r){ const list=store.get("pf_demo_requests",[]); list.push({...r,id:"r"+Date.now(),status:"pending",created_at:new Date().toISOString()}); store.set("pf_demo_requests",list); return {ok:true}; },
   async myRequests(){ return store.get("pf_demo_requests",[]).slice().reverse(); },
   async signOut(){ store.del("pf_demo_user"); },
-  reset(){ ["pf_demo_user","pf_demo_votes","pf_demo_log","pf_demo_mutes","pf_demo_pending_email","pf_pending","pf_pending_suggest","pf_demo_requests","pf_nl_offered","pf_nl_intent"].forEach(k=>store.del(k)); }
+  reset(){ ["pf_demo_user","pf_demo_votes","pf_demo_log","pf_demo_mutes","pf_demo_pending_email","pf_pending","pf_pending_suggest","pf_demo_requests","pf_nl_offered","pf_nl_intent","pf_picks"].forEach(k=>store.del(k)); }
 };
 
 /* ------------------------------------------------------------
@@ -645,7 +787,7 @@ const Live = {
    App
    ------------------------------------------------------------ */
 let api = Demo;
-const S = { user:null, tallies:{}, votes:{}, filter:"all", hist:{} };
+const S = { user:null, tallies:{}, votes:{}, picks:store.get("pf_picks",{}), filter:"all", hist:{} };
 
 const App = {
   async start(){
@@ -660,9 +802,9 @@ const App = {
     if(S.user) await this.onSignedIn(true);
     window.addEventListener("hashchange",()=>this.route());
     document.addEventListener("click",e=>{ const a=e.target.closest("[data-go]"); if(a){ e.preventDefault(); go(a.dataset.go); }});
-    $("#stripSign").addEventListener("click",()=>{ if(S.votes[PETITION.market]==="yes") go("petition"); else startVote(PETITION.market,"yes"); });
+    $("#stripSign").addEventListener("click",()=>go(""));
     $("#stripShare").addEventListener("click",()=>shareOpen());
-    $("#resetDemo").addEventListener("click",()=>{ Demo.reset(); S.user=null; S.votes={}; this.refresh().then(()=>{ go("markets"); toast("Demo reset."); }); });
+    $("#resetDemo").addEventListener("click",()=>{ Demo.reset(); S.user=null; S.votes={}; S.picks={}; confirmBar(); this.refresh().then(()=>{ go("markets"); toast("Demo reset."); }); });
     this.route();
   },
   async refresh(){
@@ -684,26 +826,30 @@ const App = {
     const pending = store.get("pf_pending",null);
     if(!S.user.first_name){ openProfile(pending); return; }
     if(pending){ await finishVote(pending); }
+    else if(pendingPicks().length){ await flushPicks(); await castAndRefresh(null); }
     else if(store.get("pf_pending_suggest",null)){ await finishSuggest(); }
     else if(!silent){ closeModal(); App.route(); toast("You're signed in."); }
   },
   route(keepScroll){
     let h = decodeURIComponent(location.hash.replace(/^#/,""));
-    if(/access_token|error_description|type=/.test(h)) h="markets";
+    if(/access_token|error_description|type=/.test(h)) h="";
     document.querySelectorAll(".nav a").forEach(a=>a.removeAttribute("aria-current"));
     const v=$("#view");
+    const view = byId[h]? "detail" : (h===""||h==="petition")? "petition" : h;
+    document.body.dataset.view = view;
     if(byId[h]){ renderDetail(v,byId[h]); }
-    else if(h==="petition"){ renderPetition(v); mark("petition"); }
+    else if(h===""||h==="petition"){ renderPetition(v); mark("petition"); }
     else if(h==="me"){ renderMe(v); mark("me"); }
     else if(h==="leaderboard"){ renderBoard(v); mark("leaderboard"); }
     else if(h==="suggest"){ renderSuggest(v); mark("suggest"); }
     else if(h==="newsletter"){ renderHome(v); mark("newsletter"); requestAnimationFrame(()=>$("#nl")?.scrollIntoView({behavior:"smooth",block:"start"})); return; }
     else { renderHome(v); mark("markets"); }
     if(!keepScroll) window.scrollTo({top:0});
+    confirmBar();
   }
 };
-function mark(id){ const a=document.querySelector(`.nav a[data-go="${id}"]`); if(a) a.setAttribute("aria-current","page"); }
-function go(h){ if(location.hash==="#"+h) App.route(); else location.hash=h; }
+function mark(id){ const a=document.querySelector(`.nav a[data-nav="${id}"]`)||document.querySelector(`.nav a[data-go="${id}"]`); if(a) a.setAttribute("aria-current","page"); }
+function go(h){ const cur=location.hash.replace(/^#/,""); if(cur===h) App.route(); else location.hash=h; }
 function loadScript(src){ return new Promise((res,rej)=>{ const s=document.createElement("script"); s.src=src; s.onload=res; s.onerror=rej; document.head.appendChild(s); }); }
 async function hist(id){ if(!S.hist[id]) S.hist[id]=await api.history(id); return S.hist[id]; }
 
@@ -740,32 +886,33 @@ function chartSVG(pts){
    ------------------------------------------------------------ */
 function kindChip(m){ if(m.status==="resolved") return `<span class="chip">Settled · ${m.outcome==="yes"?"Yes":"No"}</span>`; return m.kind==="should"? `<span class="chip should">Petition</span>` : `<span class="chip will">Forecast</span>`; }
 function yesLabel(m){ return m.yes||"Yes"; } function noLabel(m){ return m.no||"No"; }
-function mineTag(m){ const v=S.votes[m.id]; return v? `<span class="mine ${v==="yes"?"y":"n"}">YOU: ${v==="yes"?esc(yesLabel(m)).toUpperCase():esc(noLabel(m)).toUpperCase()}</span>`:""; }
+function mineTag(m){ const v=sideOf(m.id); if(!v) return ""; const pend=!S.votes[m.id]||S.votes[m.id]!==v;
+  return `<span class="mine ${v==="yes"?"y":"n"}${pend?" pend":""}" ${pend?'title="Picked, not counted yet. Confirm your email to count it."':""}>${pend?"Picked":"You"}: ${esc(v==="yes"?yesLabel(m):noLabel(m))}</span>`; }
 
 const LOCK_SVG = `<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1.5" fill="currentColor"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>`;
 // Compact Yes/No pair: used on cards and inside the blur veils.
 function miniVote(m){
-  const v=S.votes[m.id]; const closed=m.status!=="open";
+  const v=sideOf(m.id); const closed=m.status!=="open";
   return `<div class="vote-row sm">
-    <button class="vbtn y ${v==="yes"?"picked":""}" data-vote="${m.id}" data-side="yes" ${closed?"disabled":""} aria-label="${esc(yesLabel(m))}: ${esc(m.q)}">${esc(yesLabel(m))}</button>
-    <button class="vbtn n ${v==="no"?"picked":""}" data-vote="${m.id}" data-side="no" ${closed?"disabled":""} aria-label="${esc(noLabel(m))}: ${esc(m.q)}">${esc(noLabel(m))}</button></div>`;
+    <button class="vbtn y ${v==="yes"?"picked":""}" data-vote="${m.id}" data-side="yes" ${closed?"disabled":""} aria-label="${esc(yesLabel(m))}: ${esc(m.q)}"><span class="lab"><span class="dot y"></span>${esc(yesLabel(m))}</span></button>
+    <button class="vbtn n ${v==="no"?"picked":""}" data-vote="${m.id}" data-side="no" ${closed?"disabled":""} aria-label="${esc(noLabel(m))}: ${esc(m.q)}"><span class="lab"><span class="dot n"></span>${esc(noLabel(m))}</span></button></div>`;
 }
 // Wraps results in a blur until the visitor has voted on this market.
 // opts.buttons: show Yes/No inside the veil; opts.note: line under the pill.
 function lockWrap(m, inner, opts={}){
-  const open=unlocked(m);
-  const label=opts.label||"Vote to see results";
+  const open= opts.counted? !!S.votes[m.id] : unlocked(m);
+  const label=opts.label||"Sealed · pick a side";
   return `<div class="lockable ${open?"":"is-locked"}"${opts.style?` style="${opts.style}"`:""}><div class="lk" ${open?"":'aria-hidden="true"'}>${inner}</div>
-    ${open?"":`<div class="veil"><span class="lockpill">${LOCK_SVG}${esc(label)}</span>${opts.note?`<span class="fine">${esc(opts.note)}</span>`:""}${opts.buttons?miniVote(m):""}</div>`}</div>`;
+    ${open?"":`<div class="veil"><span class="stamp">${LOCK_SVG}${esc(label)}</span>${opts.note?`<span class="fine">${esc(opts.note)}</span>`:""}${opts.buttons?miniVote(m):""}</div>`}</div>`;
 }
 function creditLine(m){ return m.by? `<span class="credit">Suggested by <b>${esc(m.by.name)}</b>${m.by.club&&m.by.club!=="No club"?` · ${esc(m.by.club)} fan`:""}</span>` : ""; }
 
 function voteButtons(m){
-  const v=S.votes[m.id]; const closed=m.status!=="open";
-  const sub=(side)=> closed? "Voting closed" : v===side? "Your vote" : v? "Change to this" : (side==="yes"? (m.yesSub||"Vote yes") : (m.noSub||"Vote no"));
+  const v=sideOf(m.id); const counted=S.votes[m.id]===v; const closed=m.status!=="open";
+  const sub=(side)=> closed? "Voting closed" : v===side? (counted?"Your vote":"Picked · not counted yet") : v? "Change to this" : (side==="yes"? (m.yesSub||"Vote yes") : (m.noSub||"Vote no"));
   return `<div class="vote-row">
-    <button class="vbtn y ${v==="yes"?"picked":""}" data-vote="${m.id}" data-side="yes" ${closed?"disabled":""}>${esc(yesLabel(m))}<small>${esc(sub("yes"))}</small></button>
-    <button class="vbtn n ${v==="no"?"picked":""}" data-vote="${m.id}" data-side="no" ${closed?"disabled":""}>${esc(noLabel(m))}<small>${esc(sub("no"))}</small></button></div>`;
+    <button class="vbtn y ${v==="yes"?"picked":""}" data-vote="${m.id}" data-side="yes" ${closed?"disabled":""}><span class="lab"><span class="dot y"></span>${esc(yesLabel(m))}</span><small>${esc(sub("yes"))}</small></button>
+    <button class="vbtn n ${v==="no"?"picked":""}" data-vote="${m.id}" data-side="no" ${closed?"disabled":""}><span class="lab"><span class="dot n"></span>${esc(noLabel(m))}</span><small>${esc(sub("no"))}</small></button></div>`;
 }
 function bindVotes(root){ root.querySelectorAll("[data-vote]").forEach(b=>b.addEventListener("click",e=>{ e.preventDefault(); e.stopPropagation(); startVote(b.dataset.vote,b.dataset.side); })); }
 
@@ -775,35 +922,44 @@ async function renderHome(v){
   const hp=POLY.m[h.id];
   v.innerHTML = `
   <section class="hero" aria-labelledby="hq">
-    <div>
-      <div class="chips"><span class="chip should">Petition</span><span class="chip live">Live</span><span class="chip">Headline market</span></div>
-      <h1 id="hq">${esc(h.q)}</h1>
-      <p class="lede">Guilty on almost every charge. Sanctions still to come. Pick a side to see where everyone else landed. Your vote counts once you confirm your email, and you can change it any time.</p>
-      ${lockWrap(h, `<div class="odds">
-        <div><span class="big y num">${p}%</span><span class="lbl">${esc(yesLabel(h))}</span></div>
-        <div><span class="big n num">${100-p}%</span><span class="lbl">${esc(noLabel(h))}</span></div>
-      </div>
-      <div class="bar" style="margin-top:14px"><span style="width:${p}%"></span></div>`, {label:"Vote to see the split"})}
-      ${voteButtons(h)}
-      ${hp? lockWrap(h, `<div class="hero-poly"><span class="poly" style="border:0;padding:0"><span class="tag">$ POLYMARKET</span></span><span>Money says <b>${hOpen?hp.pct:fakePct(h.id+"p")}%</b> chance it actually happens.</span><a href="#${h.id}" data-go="${h.id}" style="font-size:13px">Money vs. fans →</a></div>`, {label:"Money vs. fans unlocks when you vote"}) : ""}
-      <div class="meta"><span><b class="num">${fmt(t.yes)}</b> signed the petition</span>${hOpen?`<span><b class="num">${fmt(tot(t))}</b> verified votes</span>`:""}<a href="#petition" data-go="petition">Read the petition →</a></div>
+    <div class="hero-top">
+      <div class="chips rise"><span class="chip should">Petition</span><span class="chip live">Live</span><span class="chip">Headline market</span></div>
+      <h1 id="hq" class="rise" style="--d:1">${esc(h.q)}</h1>
+      <p class="lede rise" style="--d:2">Guilty on almost every charge. Sanctions still to come. Pick a side and the results open straight away. Confirm your email to make it count, and change it any time.</p>
     </div>
-    <div class="chart-box">
-      <div class="chart-head"><span class="eyebrow">% saying strip them</span><span class="eyebrow">Since the decision</span></div>
-      ${lockWrap(h, `<div id="heroChart">${chartSVG(hOpen?null:fakeSeries(h.id))}</div>`, {label:"Vote to see how it's moved"})}
+    <div class="hero-body rise" style="--d:3">
+      <div class="hero-l">
+        ${lockWrap(h, `<div class="odds">
+          <div><span class="big y">${p}%</span><span class="lbl"><span class="dot y"></span>${esc(yesLabel(h))}</span></div>
+          <div><span class="big n">${100-p}%</span><span class="lbl"><span class="dot n"></span>${esc(noLabel(h))}</span></div>
+        </div>
+        <div class="bar" style="margin-top:16px"><span style="width:${p}%"></span></div>`, {label:"Sealed · pick a side"})}
+        ${voteButtons(h)}
+        ${hp? lockWrap(h, `<div class="hero-poly"><span class="poly" style="border:0;padding:0"><span class="tag">$ POLYMARKET</span></span><span>Money says <b>${hOpen?hp.pct:fakePct(h.id+"p")}%</b> chance it actually happens.</span><a href="#${h.id}" data-go="${h.id}" style="font-size:13px;margin-left:auto">Money vs. fans →</a></div>`, {label:"Money vs. fans · pick a side"}) : ""}
+        <div class="meta"><a href="#" data-go="">Read the petition →</a><a href="#${h.id}" data-go="${h.id}">Club splits & sources →</a></div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-head"><span class="eyebrow">% saying strip them</span><span class="eyebrow">Since the decision</span></div>
+        ${lockWrap(h, `<div id="heroChart">${chartSVG(hOpen?null:fakeSeries(h.id))}</div>`, {label:"Sealed · pick a side"})}
+        <div class="kpis">
+          <div><b>${fmt(t.yes)}</b><span>signed the petition</span></div>
+          <div><b>${fmt(tot(t))}</b><span>verified votes</span></div>
+          <div><b>${Math.max(0,Math.floor((Date.now()-DECISION)/864e5))}</b><span>days since the decision</span></div>
+        </div>
+      </div>
     </div>
   </section>
 
   <section aria-labelledby="mk">
     <div class="sec-head">
-      <div><div class="eyebrow">Every open question in the case</div><h2 id="mk">Markets</h2></div>
+      <div><div class="eyebrow">Every open question in the case</div><h2 id="mk">The board</h2></div>
       <div class="tabs" role="group" aria-label="Filter markets">
         <button data-f="all" aria-pressed="${S.filter==="all"}">All</button>
         <button data-f="should" aria-pressed="${S.filter==="should"}">Petitions</button>
         <button data-f="will" aria-pressed="${S.filter==="will"}">Forecasts</button>
       </div>
     </div>
-    <p class="fine" style="margin:-4px 0 14px">Petitions ask what <em>should</em> happen and never settle. Forecasts ask what <em>will</em> happen and settle on the real outcome. Results stay hidden until you vote, so nobody just follows the crowd.</p>
+    <p class="fine" style="margin:-4px 0 14px">Petitions ask what <em>should</em> happen and never settle. Forecasts ask what <em>will</em> happen and settle on the real outcome. Results stay sealed until you pick a side, so nobody just follows the crowd. No sign-up needed to see them.</p>
     <div class="grid" id="grid">${others.filter(m=>S.filter==="all"||m.kind===S.filter).map(cardHTML).join("")}</div>
     <div class="mini-cta"><span><strong>Got a question we're missing?</strong> <span class="fine">Suggest a petition or forecast. If we run it, your name goes on it.</span></span><a class="btn" href="#suggest" data-go="suggest">Suggest a market</a></div>
   </section>
@@ -821,9 +977,9 @@ function cardHTML(m){
     <div class="row">${kindChip(m)}${mineTag(m)}</div>
     <h3><a href="#${m.id}" data-go="${m.id}">${esc(m.q)}</a></h3>
     ${lockWrap(m, `<div style="display:grid;gap:12px">
-      <div class="row"><div class="pct num">${p}%<small>yes</small></div><span data-spark="${m.id}">${sparkSVG(open?null:fakeSeries(m.id))}</span></div>
+      <div class="row"><div class="pct">${p}%<small>yes</small></div><span data-spark="${m.id}">${sparkSVG(open?null:fakeSeries(m.id))}</span></div>
       <div class="bar"><span style="width:${p}%"></span></div>
-      ${polyLine(m,p)}</div>`, {label:"Vote to reveal"})}
+      ${polyLine(m,p)}</div>`, {label:"Sealed"})}
     ${miniVote(m)}
     <div class="foot"><span><span class="num">${fmt(tot(t))}</span> votes</span><span>${m.kind==="will"? (m.closes?"Closes "+esc(m.closes):"Settles on ruling") : "Never settles"}</span></div>
     ${creditLine(m)}
@@ -842,8 +998,8 @@ function newsletterBand(){
     <div>
       <div class="eyebrow">The newsletter</div>
       <h2 id="nlh">The Pepstein Files</h2>
-      <p>When a new document drops, you get a short, plain-English explainer. What it says, what changed, what happens next. Two minutes, now and then.</p>
-      <ul><li>Members also get the club-by-club vote splits in every issue.</li><li>And the forecast leaderboard once markets start settling.</li></ul>
+      <p>Every new document, ruling and statement on the 115 charges, explained in plain English when it lands. Plus what fans around the world actually think about it, and how that's shifting.</p>
+      <ul><li>New files and rulings, as they drop</li><li>Fan sentiment: club and country splits, fans vs. money</li></ul>
     </div>
     <div style="display:grid;gap:10px;justify-items:start">
       ${on? `<p style="margin:0"><strong>You're subscribed.</strong></p><a class="btn" href="#me" data-go="me">Manage in your account</a>`
@@ -868,20 +1024,20 @@ async function renderDetail(v,m){
         <h1>${esc(m.q)}</h1>
         ${m.by?`<div style="margin-top:8px">${creditLine(m)}</div>`:""}
         ${lockWrap(m, `<div class="odds">
-          <div><span class="big y num">${p}%</span><span class="lbl">${esc(yesLabel(m))}</span></div>
-          <div><span class="big n num">${100-p}%</span><span class="lbl">${esc(noLabel(m))}</span></div>
+          <div><span class="big y">${p}%</span><span class="lbl"><span class="dot y"></span>${esc(yesLabel(m))}</span></div>
+          <div><span class="big n">${100-p}%</span><span class="lbl"><span class="dot n"></span>${esc(noLabel(m))}</span></div>
         </div>
-        <div class="bar" style="margin-top:14px"><span style="width:${p}%"></span></div>`, {label:"Vote to see the split"})}
+        <div class="bar" style="margin-top:16px"><span style="width:${p}%"></span></div>`, {label:"Sealed · pick a side"})}
         ${voteButtons(m)}
-        <div class="meta"><span><b class="num">${fmt(tot(t))}</b> verified votes</span>${mine?'<span>You can change your vote. Every change is kept in the history.</span>':'<span>Results unlock when you vote. One vote per verified email.</span>'}</div>
+        <div class="meta"><span><b class="num">${fmt(tot(t))}</b> verified votes</span>${mine?'<span>You can change your vote. Every change is kept in the history.</span>':'<span>Pick a side to open the results. One counted vote per verified email.</span>'}</div>
       </section>
-      <section class="panel"><h2>Yes over time</h2>${lockWrap(m, `<div id="dChart">${chartSVG(open?null:fakeSeries(m.id))}</div>`, {label:"Vote to see the swings"})}</section>
+      <section class="panel"><h2>Yes over time</h2>${lockWrap(m, `<div id="dChart">${chartSVG(open?null:fakeSeries(m.id))}</div>`, {label:"Sealed · pick a side"})}</section>
       <section class="panel"><h2>What this asks</h2><div class="prose">${m.about.map(p=>`<p>${esc(p)}</p>`).join("")}${m.res?`<p><strong>How it settles.</strong> ${esc(m.res)}</p>`:""}</div></section>
     </div>
     <div style="display:grid;gap:20px;min-width:0">
       <section class="panel" aria-label="Votes by club">
         <h2>How each club voted</h2>
-        ${lockWrap(m, `<div class="splits" id="splits">${open?'<div class="empty">Loading…</div>':fakeSplits()}</div>`, {label:"Members only", note:"Vote on this market to see the club-by-club split.", buttons:true, style:"min-height:190px"})}
+        ${lockWrap(m, `<div class="splits" id="splits">${S.votes[m.id]?'<div class="empty">Loading…</div>':fakeSplits()}</div>`, {label:"Members only", note:"Confirm a vote on this market to see the club-by-club split.", buttons:true, counted:true, style:"min-height:190px"})}
       </section>
       ${POLY.m[m.id]?moneyPanel(m,p):""}
       <section class="panel"><h2>Read the files</h2><ul class="src">${m.src.map(k=>SOURCES[k]).map(s=>`<li><a href="${s.u}" target="_blank" rel="noopener"><span>${esc(s.t)}</span><span class="k">${esc(s.k)}</span></a></li>`).join("")}</ul></section>
@@ -897,13 +1053,13 @@ async function renderDetail(v,m){
   $("#mute",v)?.addEventListener("change",async e=>{ await api.setMute(m.id,!e.target.checked); toast(e.target.checked?"Alerts on for this market.":"Alerts muted for this market."); });
   if(open){
     $("#dChart").innerHTML = chartSVG(await hist(m.id));
-    const sp=await api.splits(m.id); $("#splits").innerHTML = sp.length? sp.map(splitRow).join("") : `<div class="empty">Clubs appear here once at least five of their fans have voted.</div>`;
+    if(S.votes[m.id]){ const sp=await api.splits(m.id); $("#splits").innerHTML = sp.length? sp.map(splitRow).join("") : `<div class="empty">Clubs appear here once at least five of their fans have voted.</div>`; }
   }
 }
 function moneyPanel(m,p){ const x=POLY.m[m.id]; const open=unlocked(m); const money=open? x.pct : fakePct(m.id+"p");
   return `<section class="panel" aria-label="Money versus fans"><h2>Money vs. fans</h2>
     ${lockWrap(m, `<div class="mvf"><div><span>Fans here say ${m.kind==="should"?"it should":"yes"}</span><b style="color:var(--yes)">${p}%</b><span>free votes</span></div><div><span>Polymarket says it will</span><b>${money}%</b><span>real-money odds</span></div></div>
-    <p class="gap">${open?esc(gapLine(m,p)):"Fans and money are 00 points apart."}</p>`, {label:"Vote to see fans vs. money", buttons:true})}
+    <p class="gap">${open?esc(gapLine(m,p)):"Fans and money are 00 points apart."}</p>`, {label:"Sealed · pick a side", buttons:true})}
     <p class="fine" style="margin:0 0 10px">${x.kind==="same"?"Their market:":"Their question is close, not identical:"} “${esc(x.q)}”</p>
     <a class="btn" href="${x.u}" target="_blank" rel="noopener">See live odds on Polymarket ↗</a>
     <p class="fine" style="margin:10px 0 0">Outside market data, not an official source. Snapshot from ${esc(POLY.updated)}; odds move. Polymarket is a real-money site with its own rules on who can use it. We have no link with it and earn nothing from it.</p>
@@ -934,46 +1090,80 @@ function bindShare(root){ root.querySelectorAll("[data-copyshare]").forEach(b=>b
 function ago(iso){ const s=Math.max(1,Math.round((Date.now()-new Date(iso))/1000)); if(s<60) return "just now"; const m=Math.round(s/60); if(m<60) return m+" min ago"; const h=Math.round(m/60); if(h<24) return h+" hr ago"; return Math.round(h/24)+" d ago"; }
 
 async function renderPetition(v){
-  const t=S.tallies[PETITION.market]||{yes:0,no:0}; const mine=S.votes[PETITION.market];
+  const t=S.tallies[PETITION.market]||{yes:0,no:0}; const mine=sideOf(PETITION.market); const counted=!!mine && S.votes[PETITION.market]===mine;
   const pctGoal=Math.min(100,t.yes/PETITION.goal*100); const left=Math.max(0,PETITION.goal-t.yes);
+  const reduced=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const anim=!renderPetition.done && !reduced; renderPetition.done=true;
+  const teaser=["relegate","deduction","title-lost"].map(id=>byId[id]).filter(Boolean);
+  const k=PETITION.goal/5, tick=n=>n>=1000? (n/1000)+"k" : String(n);
   v.innerHTML = `
-  <div class="pet">
-    <div style="display:grid;gap:20px;min-width:0">
-      <section class="pet-hero" aria-labelledby="pt">
-        <div class="chips"><span class="chip should">Petition</span><span class="chip live">Live</span></div>
-        <h1 id="pt">${esc(PETITION.name)}</h1>
-        <p style="margin:0;font-size:17px;font-weight:500;max-width:56ch">${esc(PETITION.ask)}</p>
-        <div class="pet-count"><b class="num">${fmt(t.yes)}</b><span>signatures · goal ${fmt(PETITION.goal)}</span></div>
-        <div class="goal" role="progressbar" aria-valuemin="0" aria-valuemax="${PETITION.goal}" aria-valuenow="${t.yes}" aria-label="Signatures toward goal"><span style="width:${pctGoal}%"></span></div>
-        <p class="fine" style="margin:0">${left? `${fmt(left)} more to reach the goal. Delivered to the Premier League on ${esc(PETITION.deliverWhen)}.` : `Goal reached. Delivered to the Premier League on ${esc(PETITION.deliverWhen)}.`}</p>
-        <div class="vote-row" style="margin-top:4px">
-          <button class="vbtn y ${mine==="yes"?"picked":""}" data-vote="${PETITION.market}" data-side="yes">${mine==="yes"?"You've signed":"Sign the petition"}<small>${mine==="yes"?"Now share it":"Free. Takes 30 seconds."}</small></button>
-          <button class="vbtn n ${mine==="no"?"picked":""}" data-vote="${PETITION.market}" data-side="no">${mine==="no"?"You counter-signed":"Sign the counter-petition"}<small>${mine? `${fmt(t.no)} say keep the titles` : "Count shown after you sign"}</small></button>
-        </div>
-      </section>
-      <section class="panel"><h2>The petition</h2>
-        <div class="letter"><p class="to">${esc(PETITION.to)}</p>${PETITION.body.map(x=>`<p>${esc(x)}</p>`).join("")}<p style="color:var(--muted)">Signed, ${fmt(t.yes)} fans</p></div>
-      </section>
-      <section class="panel"><h2>The counter-petition</h2>
-        <div class="letter"><p>${esc(PETITION.counter)}</p><p class="fine" style="margin:0">${mine? `${fmt(t.no)} people have counter-signed.` : "Sign either side to see how many have counter-signed."} Both totals are delivered together.</p></div>
-      </section>
-      <section class="panel"><h2>How we count</h2>
-        <ol class="steps"><li>One signature per verified email. You confirm by clicking a link we email you.</li><li>Signing the petition and the counter-petition are the same vote, so nobody can do both. You can switch sides, and every switch is logged.</li><li>Totals update live. No bots, no imports, no signatures bought or added by hand.</li><li>We deliver counts and the club-by-club split, not names or emails.</li></ol>
-      </section>
+  <section class="lp" aria-labelledby="pt">
+    <div class="kicker rise"><span class="tape">${esc(PETITION.name)}</span><span>Premier League v Manchester City · Decision published 29 Sep 2026 · Sanctions pending</span></div>
+    <h1 id="pt" class="rise" style="--d:1">${esc(byId[PETITION.market].q)}</h1>
+    <p class="ask rise" style="--d:2">The ask: <b>${esc(PETITION.ask)}</b></p>
+    <div class="rise" style="--d:3;display:grid;gap:12px;justify-items:center">
+      <div class="plates">${RECORD.titles.map(y=>`<div class="plate"><span class="yr">${esc(y)}</span><span class="lbl">League champions</span><span class="star" aria-hidden="true">*</span></div>`).join("")}</div>
+      <p class="plates-cap">${esc(RECORD.caption)} <a href="${SOURCES[RECORD.src].u}" target="_blank" rel="noopener">Source ↗</a></p>
     </div>
-    <div style="display:grid;gap:20px;min-width:0">
-      <section class="panel"><h2>Share it</h2><p class="fine" style="margin:0 0 12px">Every share is worth more than a signature. Send it to the group chat.</p>${shareButtons()}</section>
-      <section class="panel"><h2>Recent signers</h2><ul class="feed" id="feed"><li class="empty">Loading…</li></ul>
-        <p class="fine" style="margin:10px 0 0">Only people who chose to be listed appear here: first name, country and club.</p></section>
-      <section class="panel"><h2>Delivery</h2>
-        <div class="prose"><p>On ${esc(PETITION.deliverWhen)} we'll send the Premier League an open letter with the final count, the counter-petition count and the club-by-club split, and publish it here.</p><p class="fine" style="margin:0">Signers get the letter by email.</p></div>
-      </section>
-      <section class="panel"><h2>Read the files</h2><ul class="src">${["decision","plStatement","referral"].map(k=>SOURCES[k]).map(s=>`<li><a href="${s.u}" target="_blank" rel="noopener"><span>${esc(s.t)}</span><span class="k">${esc(s.k)}</span></a></li>`).join("")}</ul></section>
+    <div class="tally rise" style="--d:4">
+      <div class="tally-top"><div class="big" id="petCount">${fmt(anim?0:t.yes)}</div><div class="of"><b>signatures</b><br>Goal ${fmt(PETITION.goal)} · ${left? fmt(left)+" to go" : "reached"}</div></div>
+      <div class="goal" role="progressbar" aria-valuemin="0" aria-valuemax="${PETITION.goal}" aria-valuenow="${t.yes}" aria-label="Signatures toward goal"><span id="petBar" style="width:${anim?0:pctGoal}%"></span>${[20,40,60,80].map(x=>`<i style="left:${x}%"></i>`).join("")}</div>
+      <div class="ticks" aria-hidden="true">${[0,1,2,3,4,5].map(i=>`<span>${tick(i*k)}</span>`).join("")}</div>
     </div>
-  </div>`;
-  bindVotes(v); bindShare(v);
+    <div class="vote-row rise" style="--d:5">
+      <button class="vbtn y ${mine==="yes"?"picked":""}" data-vote="${PETITION.market}" data-side="yes"><span class="lab"><span class="dot y"></span>${mine==="yes"? (counted?"You've signed":"Confirm to sign") : "Yes, strip them"}</span><small>${mine==="yes"? (counted?"Now get one friend to sign":"Picked. Not counted until you confirm your email.") : "Sign the petition · free, 30 seconds"}</small></button>
+      <button class="vbtn n ${mine==="no"?"picked":""}" data-vote="${PETITION.market}" data-side="no"><span class="lab"><span class="dot n"></span>${mine==="no"? (counted?"You counter-signed":"Confirm to counter-sign") : "No, keep them"}</span><small>${mine? `${fmt(t.no)} have counter-signed` : "Sign the counter-petition"}</small></button>
+    </div>
+    <div class="trust rise" style="--d:6"><span>One per verified email</span><span>Switch sides any time</span><span>Nothing to buy</span><span>We deliver counts, never names</span></div>
+  </section>
+
+  <section aria-labelledby="lt">
+    <div class="sec-head"><div><div class="eyebrow">Read it before you sign</div><h2 id="lt">The letter</h2></div></div>
+    <div class="docs">
+      <div>
+        <article class="paper">
+          <div class="to"><span>${esc(PETITION.to)}</span><span>Sent ${esc(PETITION.deliverWhen)}</span></div>
+          <div class="letter">${PETITION.body.map(x=>`<p>${esc(x)}</p>`).join("")}</div>
+          <div class="sig"><span class="who">Signed, <b>${fmt(t.yes)}</b> fans</span><span class="filed">Open for signatures</span></div>
+        </article>
+        <div class="slip"><span class="eyebrow">The counter-petition</span><q>${esc(PETITION.counter)}</q><span class="fine">${mine? `${fmt(t.no)} people have counter-signed.` : "Pick either side to see how many have counter-signed."} Both totals are delivered together.</span></div>
+        <p class="fine" style="margin:14px 2px 0;max-width:60ch">A petition can't force the league's hand. What it can do is put a number on what fans think, on the record, on the day it matters.</p>
+      </div>
+      <div class="side">
+        <div><h3>Share it</h3><p class="fine" style="margin:0 0 12px">Every share is worth more than a signature. Send it to the group chat.</p>${shareButtons()}</div>
+        <div><h3>Recent signers</h3><ul class="feed" id="feed"><li class="empty">Loading…</li></ul>
+          <p class="fine" style="margin:10px 0 0">Only people who chose to be listed appear here: first name, country and club.</p></div>
+        <div><h3>Read the files</h3><ul class="src">${["decision","plStatement","referral"].map(k=>SOURCES[k]).map(s=>`<li><a href="${s.u}" target="_blank" rel="noopener"><span>${esc(s.t)}</span><span class="k">${esc(s.k)}</span></a></li>`).join("")}</ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="hc">
+    <div class="sec-head"><div><div class="eyebrow">No bots. No imports.</div><h2 id="hc">How we count</h2></div></div>
+    <div class="howrow">
+      <div><b>01</b><span><strong>One per email</strong>You confirm by clicking a link we email you.</span></div>
+      <div><b>02</b><span><strong>One side only</strong>The petition and counter-petition are the same vote. Switch any time. Every switch is logged.</span></div>
+      <div><b>03</b><span><strong>Live totals</strong>Nothing bought, imported or added by hand.</span></div>
+      <div><b>04</b><span><strong>Sent to the league</strong>When the sanctions are announced, we publish an open letter and send it to the Premier League Board with both totals and the club split. Final totals follow after the appeal.</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="ob">
+    <div class="sec-head"><div><div class="eyebrow">${MARKETS.length-1} more open questions</div><h2 id="ob">On the board</h2></div><a class="btn" href="#markets" data-go="markets">See every market →</a></div>
+    <div class="grid three">${teaser.map(cardHTML).join("")}</div>
+  </section>
+
+  ${newsletterBand()}`;
+  bindVotes(v); bindShare(v); bindNewsletter(v);
+  if(anim){
+    const el=$("#petCount",v), bar=$("#petBar",v), to=t.yes, D=1500; let t0=null;
+    setTimeout(()=>{ bar.style.width=pctGoal+"%";
+      const step=n=>{ if(t0==null) t0=n; const q=Math.min(1,(n-t0)/D), e=1-Math.pow(1-q,3); el.textContent=fmt(Math.round(to*e)); if(q<1) requestAnimationFrame(step); };
+      requestAnimationFrame(step); }, 420);
+  }
+  for(const m of teaser){ if(!unlocked(m)) continue; const el=v.querySelector(`[data-spark="${m.id}"]`); if(el) el.innerHTML=sparkSVG(await hist(m.id)); }
   const rs=await api.recentSigners();
-  $("#feed").innerHTML = rs.length? rs.map(r=>`<li><span><strong>${esc(r.first_name)}</strong> · ${esc(r.country||"")}${r.club?` · <span class="fine">${esc(r.club)}</span>`:""}</span><span class="when">${ago(r.signed_at)}</span></li>`).join("") : `<li class="empty">Be the first name on the list.</li>`;
+  $("#feed").innerHTML = rs.length? rs.slice(0,8).map(r=>`<li><span><strong>${esc(r.first_name)}</strong> · ${esc(r.country||"")}${r.club?` · <span class="fine">${esc(r.club)}</span>`:""}</span><span class="when">${ago(r.signed_at)}</span></li>`).join("") : `<li class="empty">Be the first name on the list.</li>`;
 }
 
 async function copy(text){ try{ await navigator.clipboard.writeText(text); toast("Link copied."); }catch(e){ const r=$("#modalRoot"); r.innerHTML=`<div class="scrim" data-close><div class="modal" role="dialog" aria-modal="true" aria-label="Copy link"><h2>Copy link</h2><input id="cpy" readonly value="${esc(text)}" style="border:1px solid var(--line);border-radius:8px;padding:10px;background:var(--bg)"><button class="btn" data-x>Done</button></div></div>`; const i=$("#cpy"); i.focus(); i.select(); bindClose(); } }
@@ -1070,7 +1260,7 @@ function suggestPreview(d){
   return `<article class="card" style="cursor:default" aria-label="Preview of your market">
     <div class="row">${kindChip(m)}<span class="chip">Preview</span></div>
     <h3>${esc(m.q)}</h3>
-    ${lockWrap(m, `<div style="display:grid;gap:12px"><div class="row"><div class="pct num">${fakePct("p"+m.q)}%<small>yes</small></div>${sparkSVG(fakeSeries("p"+m.q))}</div><div class="bar"><span style="width:50%"></span></div></div>`, {label:"Vote to reveal"})}
+    ${lockWrap(m, `<div style="display:grid;gap:12px"><div class="row"><div class="pct">${fakePct("p"+m.q)}%<small>yes</small></div>${sparkSVG(fakeSeries("p"+m.q))}</div><div class="bar"><span style="width:50%"></span></div></div>`, {label:"Vote to reveal"})}
     <div class="vote-row sm"><button class="vbtn y" type="button" disabled>Yes</button><button class="vbtn n" type="button" disabled>No</button></div>
     ${who? creditLine(m) : `<span class="credit">Suggested by a fan</span>`}
   </article>`;
@@ -1187,17 +1377,45 @@ async function startVote(id,side){
     else if(!changed) maybeNudge();
     return;
   }
-  const pending={id,side}; store.set("pf_pending",pending);
+  // Not signed in: the pick opens the results right away. It counts once they confirm their email.
+  const had=S.picks[id];
+  if(had===side && id!==PETITION.market){ confirmNow(id); return; }
+  S.picks[id]=side; store.set("pf_picks",S.picks);
+  App.route(true);
+  if(id===PETITION.market){ setTimeout(()=>confirmNow(id),650); return; } // a signature needs a verified email
+  if(!had) toast(`Results open. Your pick isn't counted until you confirm your email.`);
+}
+// Ask for the email for every pick so far, with this one shown first.
+function confirmNow(id){
+  const ids=pendingPicks(); if(!ids.length) return;
+  const first = id && S.picks[id]? id : ids[ids.length-1];
+  const pending={id:first, side:S.picks[first]}; store.set("pf_pending",pending);
   if(S.user && !S.user.first_name){ openProfile(pending); return; }
-  openEmail(pending);
+  openEmail(pending,{count:ids.length});
+}
+// Floating bar: how many picks are waiting to be counted.
+function confirmBar(){
+  const r=$("#barRoot"); if(!r) return; const n=pendingPicks().length;
+  if(!n || (S.user&&S.user.first_name) || confirmBar.hidden){ r.innerHTML=""; return; }
+  r.innerHTML=`<div class="confirm-bar" role="region" aria-label="Uncounted votes"><div class="t"><b>${n} ${n===1?"pick isn't":"picks aren't"} counted yet.</b><span>Confirm your email once and every pick counts. No password.</span></div><button class="btn" type="button" id="cbGo">Make ${n===1?"it":"them"} count</button><button class="x" type="button" id="cbX" aria-label="Hide">×</button></div>`;
+  $("#cbGo").addEventListener("click",()=>confirmNow());
+  $("#cbX").addEventListener("click",()=>{ confirmBar.hidden=true; r.innerHTML=""; });
+}
+// After sign-in: cast every pick that was waiting.
+async function flushPicks(skipId){
+  for(const id of pendingPicks()){ if(id===skipId) continue; try{ await api.cast(id,S.picks[id]); }catch(e){ console.error(e); } }
+  S.picks={}; store.del("pf_picks");
 }
 async function castAndRefresh(id,side){
-  try{ await api.cast(id,side); }catch(e){ toast("Couldn't save your vote. Try again."); console.error(e); return false; }
-  S.votes = await api.myVotes(); S.tallies = await api.tallies(); delete S.hist[id]; App.syncStrip(); App.route(true); return true;
+  if(id){ try{ await api.cast(id,side); }catch(e){ toast("Couldn't save your vote. Try again."); console.error(e); return false; } }
+  S.votes = await api.myVotes(); S.tallies = await api.tallies(); if(id) delete S.hist[id]; else S.hist={}; App.syncStrip(); App.route(true); return true;
 }
 async function finishVote(p){
   store.del("pf_pending"); const m=byId[p.id]; if(!m) return;
+  const extra=pendingPicks().filter(id=>id!==p.id).length;
+  await flushPicks(p.id);
   const ok=await castAndRefresh(p.id,p.side); if(!ok) return;
+  if(extra) toast(`${extra+1} votes counted.`);
   doneModal(m,p.side);
 }
 
@@ -1209,9 +1427,9 @@ function pickPill(p){ if(!p) return ""; const m=byId[p.id]; return `<div class="
 function openEmail(pending,opts={}){
   modal(`
     <div class="eyebrow">${pending?"One step to count it":opts.suggest?"One step to send it":"Sign in"}</div>
-    <h2>${pending?"Lock in your vote":opts.newsletter?"Join The Pepstein Files":opts.suggest?"Sign in to send it":"Sign in with email"}</h2>
-    ${pickPill(pending)}
-    <p>We'll email you a sign-in link. No password. ${pending?"Your vote counts, and the results unlock, when you click it.":opts.suggest?"Your suggestion is sent when you click it, and we'll email you if it goes live.":""}</p>
+    <h2>${pending? (pending.id===PETITION.market&&pending.side==="yes"?"Sign it for real":"Make it count") :opts.newsletter?"Join The Pepstein Files":opts.suggest?"Sign in to send it":"Sign in with email"}</h2>
+    ${pickPill(pending)}${opts.count>1?`<p class="fine" style="margin-top:-6px">+ ${opts.count-1} other ${opts.count===2?"pick":"picks"}, counted at the same time.</p>`:""}
+    <p>We'll email you a sign-in link. No password. ${pending?"Your vote counts when you click it. One counted vote per email, so the totals stay honest.":opts.suggest?"Your suggestion is sent when you click it, and we'll email you if it goes live.":""}</p>
     <form id="emailForm" class="field" novalidate>
       <label for="em">Email</label>
       <input id="em" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required>
@@ -1274,7 +1492,7 @@ function doneModal(m,side){
   const t=S.tallies[m.id]; const p=pct(t); const agree= side==="yes"? p : 100-p;
   const q = S.user.newsletter? nextQuestion() : null; // one ask per moment: newsletter first, then fan questions
   modal(`
-    <div class="eyebrow">Vote counted · results unlocked</div>
+    <div class="eyebrow">Vote counted</div>
     <h2>You're supporter ${supNo(S.user.supporter_no||0)}</h2>
     ${pickPill({id:m.id,side})}
     <p><strong style="color:var(--ink)">${agree}%</strong> of ${fmt(tot(t))} voters agree with you. You can change your vote any time. Every change is kept in the history.</p>
